@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    //float determines distance required for object interaction
+    public float radius = 3f;
+
+    //boolean to determine if an object is currently being interacted with
+    public bool isInteracting;
+
+    public Animator animator;
+
+
+    //creates wire sphere surrounding object of size radius
+    private void OnDrawGizmosSelected()
     {
-        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void Interact()
     {
-        
+        if (!isInteracting)
+        {
+            isInteracting = true;
+            Debug.Log("item is being interacted with");
+            animator.SetBool("isInteracting", isInteracting);
+
+        }
     }
 }
