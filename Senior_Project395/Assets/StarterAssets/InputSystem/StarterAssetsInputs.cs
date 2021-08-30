@@ -13,6 +13,13 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 
+		/*LEFT OFF HERE: trying to get inspect function to work. Can't figure out how to work with PlayerInput system.
+		 * currently, pressing f should be binded to an inspect function, but it doesn't trigger your debug statement.
+		 * figure out why - go into FirstPersonController.cs and create parameters for inspect function.
+		 * 
+		 * */
+		public bool inspect;
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -45,6 +52,11 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnInspect(InputValue value)
+        {
+			InspectInput(value.isPressed);
+        }
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -69,6 +81,12 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
+
+		public void InspectInput(bool newInspectState)
+        {
+			inspect = newInspectState;
+			Debug.Log("New Inspect State");
+        }
 
 #if !UNITY_IOS || !UNITY_ANDROID
 
