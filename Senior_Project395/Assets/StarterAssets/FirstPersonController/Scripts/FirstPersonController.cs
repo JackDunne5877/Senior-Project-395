@@ -97,7 +97,6 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
-			InspectItemCheck();
 		}
 
 		private void LateUpdate()
