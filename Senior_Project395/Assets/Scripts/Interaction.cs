@@ -24,7 +24,6 @@ public class Interaction : MonoBehaviour
         if (!isInteracting)
         {
             isInteracting = true;
-            Debug.Log("item is being interacted with");
             animator.SetBool("isInteracting", isInteracting);
 
         }

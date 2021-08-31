@@ -12,13 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-
-		/*LEFT OFF HERE: trying to get inspect function to work. Can't figure out how to work with PlayerInput system.
-		 * currently, pressing f should be binded to an inspect function, but it doesn't trigger your debug statement.
-		 * figure out why - go into FirstPersonController.cs and create parameters for inspect function.
-		 * 
-		 * */
-		public bool inspect;
+		public static bool inspect;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -46,6 +40,7 @@ namespace StarterAssets
 		public void OnJump(InputValue value)
 		{
 			JumpInput(value.isPressed);
+
 		}
 
 		public void OnSprint(InputValue value)
@@ -84,8 +79,11 @@ namespace StarterAssets
 
 		public void InspectInput(bool newInspectState)
         {
-			inspect = newInspectState;
-			Debug.Log("New Inspect State");
+            if (Interactable.isInRange)
+            {
+				inspect = newInspectState;
+			}
+
         }
 
 #if !UNITY_IOS || !UNITY_ANDROID

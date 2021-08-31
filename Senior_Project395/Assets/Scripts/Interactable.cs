@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using StarterAssets;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -7,28 +8,26 @@ using UnityEngine.InputSystem;
 public class Interactable : MonoBehaviour
 {
     //boolean to determine if an item is in interactable range of player
-    public bool isInRange;
+    public static bool isInRange;
     public KeyCode interactKey;
     public UnityEvent interactAction;
 
     private void Update()
     {
-        if (isInRange) //if we're in range to interact
+        if (StarterAssetsInputs.inspect) //if we're in range to interact
         {
             /*
-            if (Input.GetKeyDown(interactKey))
-            {
-                PlayerInput.
-                interactAction.Invoke(); //instantiate event
-                Debug.Log("interacting with object");
-            } */
+            Here is where you can invoke an action, which might help trigger an animation
+            interactAction.Invoke(); //instantiate event */
+            Debug.Log("interacting with object");
+            
         }
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("MyPlayer"))
+        if (other.gameObject.CompareTag("Player"))
         {
             isInRange = true;
         }

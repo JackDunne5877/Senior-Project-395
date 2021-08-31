@@ -226,10 +226,21 @@
                 {
                     "name": "",
                     "id": "1474b5b9-cf1b-4930-98ae-e977b189fd98",
-                    "path": "<Keyboard>/#(f)",
-                    "interactions": "Hold",
+                    "path": "<Keyboard>/f",
+                    "interactions": "Press,Press(behavior=1)",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Inspect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8b5e43e-aba4-49d2-aa30-2606534e00a9",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Inspect",
                     "isComposite": false,
                     "isPartOfComposite": false
