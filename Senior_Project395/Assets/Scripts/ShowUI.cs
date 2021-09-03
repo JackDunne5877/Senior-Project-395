@@ -16,7 +16,6 @@ public class ShowUI : MonoBehaviour
         showDesc = false;
         uiObject = GameObject.Find("InteractionTextBckgrnd");
         uiObjectDesc = GameObject.Find("InteractionDescBckgrnd");
-        //Debug.Log("set object to var" + uiObjectChild);
         uiObject.SetActive(false);
         uiObjectDesc.SetActive(false);
     }
@@ -24,14 +23,7 @@ public class ShowUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (showDesc)
-        {
-            uiObjectChild.SetActive(true);
-            //set parent false while this set active
-            Debug.Log("should be showing txt here forehead");
-        }
-        uiObjectChild.SetActive(false); */
+      
     }
 
     //method ran in interactable when player is in range of object, setting the UI object active ("press f to inspect")
@@ -40,11 +32,10 @@ public class ShowUI : MonoBehaviour
         if (showTxt)
         {
             uiObject.SetActive(true);
-            Debug.Log("Actually fucking got here wow");
-
         }
         else {
             uiObject.SetActive(false);
+            uiObjectDesc.SetActive(false);
 
         }
     }
@@ -54,13 +45,9 @@ public class ShowUI : MonoBehaviour
     {
         if (showDesc)
         {
-            //disable uiObject and enable description object
-            //uiObject.SetActive(false);
             showTxt = false;
-            Debug.Log("Ur really close mate");
             uiObjectDesc.SetActive(true);
+            uiObject.SetActive(false);
         }
-        uiObjectDesc.SetActive(false);
-        uiObject.SetActive(true);
     }
 }

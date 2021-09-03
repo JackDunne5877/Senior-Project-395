@@ -4,6 +4,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour
 {
@@ -11,18 +12,19 @@ public class Interactable : MonoBehaviour
     public static bool isInRange;
     public KeyCode interactKey;
     public UnityEvent interactAction;
+    public bool isBeingInteracted = false;
+    public bool isInRangeOfThisObject = false;
 
-  
+    //Testing out dynamic text box to change description for each object
+    public string objectDescription;  
 
     private void Update()
     {
-        if (StarterAssetsInputs.inspect) //if we're in range to interact
+        //if we're in range to interact
+        if (StarterAssetsInputs.inspect && isInRangeOfThisObject) 
         {
-            /*
-            Here is where you can invoke an action, which might help trigger an animation
-            interactAction.Invoke(); //instantiate event */
-
-
+            Debug.Log(objectDescription);
+            ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = objectDescription;
 
             ShowUI.showDesc = true;
             ShowUI.descriptionChecker();
@@ -31,37 +33,29 @@ public class Interactable : MonoBehaviour
         }
     }
 
-
+    //when entering/colliding with 3d physics sphere
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            isInRange = true;
-            //here should be trigger a UI textbox saying "press f to inspect item" etc
-            //uiObject.SetActive(true);
+            isInRangeOfThisObject = true;
+            isInRange = true;   
             ShowUI.showTxt = true;
             ShowUI.InteractChecker();
-            Debug.Log("showTxt var is true");
 
-            if (StarterAssetsInputs.inspect)
-            {
-                ShowUI.showDesc = true;
-                ShowUI.descriptionChecker();
-            }
         }
     }
 
-
+    //when exiting range of 3d physics sphere
     private void OnTriggerExit(Collider other)
     {
         isInRange = false;
-
-        //NOTE: might have to put this stuff in it's own script, but for now should be good
-        //uiObject.SetActive(false);
+        isInRangeOfThisObject = false;
         ShowUI.showTxt = false;
         ShowUI.showDesc = false;
         ShowUI.InteractChecker();
         Debug.Log("Player no longer in range");
         StarterAssetsInputs.inspect = false;
+        ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = "";
     }
 }
