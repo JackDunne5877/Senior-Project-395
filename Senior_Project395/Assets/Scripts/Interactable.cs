@@ -22,9 +22,10 @@ public class Interactable : MonoBehaviour
             Here is where you can invoke an action, which might help trigger an animation
             interactAction.Invoke(); //instantiate event */
 
-            //ShowUI.showDesc = true;
 
-            
+
+            ShowUI.showDesc = true;
+            ShowUI.descriptionChecker();
             Debug.Log("interacting with object");
             
         }
@@ -41,6 +42,12 @@ public class Interactable : MonoBehaviour
             ShowUI.showTxt = true;
             ShowUI.InteractChecker();
             Debug.Log("showTxt var is true");
+
+            if (StarterAssetsInputs.inspect)
+            {
+                ShowUI.showDesc = true;
+                ShowUI.descriptionChecker();
+            }
         }
     }
 
@@ -52,7 +59,9 @@ public class Interactable : MonoBehaviour
         //NOTE: might have to put this stuff in it's own script, but for now should be good
         //uiObject.SetActive(false);
         ShowUI.showTxt = false;
+        ShowUI.showDesc = false;
         ShowUI.InteractChecker();
         Debug.Log("Player no longer in range");
+        StarterAssetsInputs.inspect = false;
     }
 }

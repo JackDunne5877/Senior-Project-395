@@ -227,7 +227,7 @@
                     "name": "",
                     "id": "1474b5b9-cf1b-4930-98ae-e977b189fd98",
                     "path": "<Keyboard>/f",
-                    "interactions": "Press,Press(behavior=1)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Inspect",

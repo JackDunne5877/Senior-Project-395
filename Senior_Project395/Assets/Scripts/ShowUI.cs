@@ -5,20 +5,20 @@ using UnityEngine;
 public class ShowUI : MonoBehaviour
 {
     public static GameObject uiObject;
-    //public static GameObject uiObjectChild;
+    public static GameObject uiObjectDesc;
     public static bool showTxt;
-    //public static bool showDesc;
+    public static bool showDesc;
 
     // Start is called before the first frame update
     void Start()
     {
         showTxt = false;
-        //showDesc = false;
+        showDesc = false;
         uiObject = GameObject.Find("InteractionTextBckgrnd");
-        //uiObjectChild = GameObject.Find("DescriptionBckgrnd");
+        uiObjectDesc = GameObject.Find("InteractionDescBckgrnd");
         //Debug.Log("set object to var" + uiObjectChild);
         uiObject.SetActive(false);
-        //uiObjectChild.SetActive(false);
+        uiObjectDesc.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +34,7 @@ public class ShowUI : MonoBehaviour
         uiObjectChild.SetActive(false); */
     }
 
+    //method ran in interactable when player is in range of object, setting the UI object active ("press f to inspect")
     public static void InteractChecker()
     {
         if (showTxt)
@@ -46,5 +47,20 @@ public class ShowUI : MonoBehaviour
             uiObject.SetActive(false);
 
         }
+    }
+
+    //method to set object description to show up
+    public static void descriptionChecker()
+    {
+        if (showDesc)
+        {
+            //disable uiObject and enable description object
+            //uiObject.SetActive(false);
+            showTxt = false;
+            Debug.Log("Ur really close mate");
+            uiObjectDesc.SetActive(true);
+        }
+        uiObjectDesc.SetActive(false);
+        uiObject.SetActive(true);
     }
 }
