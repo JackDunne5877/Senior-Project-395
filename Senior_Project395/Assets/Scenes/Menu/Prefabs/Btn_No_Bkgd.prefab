@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2998482087069884646}
   - component: {fileID: 2998482087069884647}
   m_Layer: 5
-  m_Name: PlayBtn
+  m_Name: Btn_No_Bkgd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

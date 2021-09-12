@@ -8,23 +8,28 @@ namespace Com.Orion.MP
     public class Launcher : MonoBehaviourPunCallbacks
     {
         #region Private Serializable Fields
-        [Tooltip("The level that loads when play is clicked in launcher")]
+
+
+        [Tooltip("The level that loads when play is clicked")]
         [SerializeField]
-        private string firstLevel;
+        private int levelIndex = 1;
+
         [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
         [SerializeField]
-        private byte maxPlayersPerRoom = 4;
-        [Tooltip("The Ui Panel to let the user enter name, connect and play")]
+        private byte maxPlayersPerRoom = 2;
+        
+        [Tooltip("The UI Panel to let the user enter name, connect and play")]
         [SerializeField]
         private GameObject controlPanel;
+        
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
         [SerializeField]
         private GameObject progressLabel;
+        
         #endregion
 
 
         #region Private Fields
-
 
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
@@ -37,10 +42,6 @@ namespace Com.Orion.MP
 
         #region MonoBehaviour CallBacks
 
-
-        /// <summary>
-        /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
-        /// </summary>
         void Awake()
         {
             // #Critical
@@ -48,22 +49,15 @@ namespace Com.Orion.MP
             PhotonNetwork.AutomaticallySyncScene = true;
         }
 
-
-        /// <summary>
-        /// MonoBehaviour method called on GameObject by Unity during initialization phase.
-        /// </summary>
         void Start()
         {
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
         }
-
-
         #endregion
 
 
         #region Public Methods
-
 
         /// <summary>
         /// Start the connection process.
@@ -83,7 +77,6 @@ namespace Com.Orion.MP
             else
             {
                 // #Critical, we must first and foremost connect to Photon Online Server.
-
                 isConnecting = PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = gameVersion;
             }
@@ -91,8 +84,6 @@ namespace Com.Orion.MP
         #endregion
 
         #region MonoBehaviourPunCallbacks Callbacks
-
-
         public override void OnConnectedToMaster()
         {
             if (isConnecting)
@@ -101,8 +92,6 @@ namespace Com.Orion.MP
                 PhotonNetwork.JoinRandomRoom();
             }
         }
-
-
         public override void OnDisconnected(DisconnectCause cause)
         {
             progressLabel.SetActive(false);
@@ -124,12 +113,11 @@ namespace Com.Orion.MP
             Debug.Log("Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
             if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
-                Debug.Log("We load the 'Room for 1' ");
-
+                Debug.Log("Load level index: " + levelIndex);
 
                 // #Critical
-                // Load the Room Level.
-                PhotonNetwork.LoadLevel(firstLevel);
+                // Load the Level.
+                PhotonNetwork.LoadLevel(levelIndex);
             }
         }
 
