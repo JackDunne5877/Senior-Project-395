@@ -1,11 +1,12 @@
 using UnityEngine;
+using Photon.Pun;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
 
 namespace StarterAssets
 {
-	public class StarterAssetsInputs : MonoBehaviour
+	public class StarterAssetsInputs : MonoBehaviourPun
 	{
 		[Header("Character Input Values")]
 		public Vector2 move;
@@ -25,25 +26,37 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			if (photonView.IsMine)
+			{
+				MoveInput(value.Get<Vector2>());
+			}
 		}
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (photonView.IsMine)
 			{
-				LookInput(value.Get<Vector2>());
+				if (cursorInputForLook)
+				{
+					LookInput(value.Get<Vector2>());
+				}
 			}
 		}
 
 		public void OnJump(InputValue value)
 		{
-			JumpInput(value.isPressed);
+			if (photonView.IsMine)
+			{
+				JumpInput(value.isPressed);
+			}
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			SprintInput(value.isPressed);
+			if (photonView.IsMine)
+			{
+				SprintInput(value.isPressed);
+			}
 		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
@@ -52,29 +65,44 @@ namespace StarterAssets
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			move = newMoveDirection;
-		} 
+			if (photonView.IsMine)
+			{
+				move = newMoveDirection;
+			}
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
-			look = newLookDirection;
+			if (photonView.IsMine)
+			{
+				look = newLookDirection;
+			}
 		}
 
 		public void JumpInput(bool newJumpState)
 		{
-			jump = newJumpState;
+			if (photonView.IsMine)
+			{
+				jump = newJumpState;
+			}
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
+			if (photonView.IsMine)
+			{
+				sprint = newSprintState;
+			}
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
+			if (photonView.IsMine)
+			{
+				SetCursorState(cursorLocked);
+			}
 		}
 
 		private void SetCursorState(bool newState)

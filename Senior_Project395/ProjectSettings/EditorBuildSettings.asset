@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Beach Scene/Beach.unity
     guid: da26a6a531264be4d98a2d9db0398814
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Multiplayer/Launcher.unity
     guid: 351d21481f281d941b8ba02989920fcd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Multiplayer/MPDEMO.unity
     guid: e6ec7634cfe9ddb46b03ffa0e6573d5a
   m_configObjects:

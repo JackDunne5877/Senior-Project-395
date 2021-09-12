@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
+using Photon.Pun;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -12,7 +13,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 	[RequireComponent(typeof(PlayerInput))]
 #endif
-	public class FirstPersonController : MonoBehaviour
+	public class FirstPersonController : MonoBehaviourPun
 	{
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
@@ -75,6 +76,10 @@ namespace StarterAssets
 
 		private void Awake()
 		{
+			if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			// get a reference to our main camera
 			if (_mainCamera == null)
 			{
@@ -84,6 +89,10 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 
@@ -94,6 +103,10 @@ namespace StarterAssets
 
 		private void Update()
 		{
+			if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
@@ -101,7 +114,10 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			if (photonView.IsMine)
+			{
+				CameraRotation();
+			}
 		}
 
 		private void GroundedCheck()
