@@ -114,7 +114,7 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				CameraRotation();
 			}

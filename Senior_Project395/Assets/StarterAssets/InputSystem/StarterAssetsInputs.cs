@@ -26,7 +26,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				MoveInput(value.Get<Vector2>());
 			}
@@ -34,7 +34,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				if (cursorInputForLook)
 				{
@@ -45,7 +45,7 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				JumpInput(value.isPressed);
 			}
@@ -53,7 +53,7 @@ namespace StarterAssets
 
 		public void OnSprint(InputValue value)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				SprintInput(value.isPressed);
 			}
@@ -65,7 +65,7 @@ namespace StarterAssets
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				move = newMoveDirection;
 			}
@@ -73,7 +73,7 @@ namespace StarterAssets
 
 		public void LookInput(Vector2 newLookDirection)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				look = newLookDirection;
 			}
@@ -81,7 +81,7 @@ namespace StarterAssets
 
 		public void JumpInput(bool newJumpState)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				jump = newJumpState;
 			}
@@ -89,7 +89,7 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				sprint = newSprintState;
 			}
@@ -99,7 +99,7 @@ namespace StarterAssets
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			if (photonView.IsMine)
+			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
 				SetCursorState(cursorLocked);
 			}
