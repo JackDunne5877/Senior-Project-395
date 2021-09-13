@@ -716,6 +716,50 @@ MonoBehaviour:
   name: Weapon
   m_EditorColor: {r: 0.8962264, g: 0.17846043, b: 0.012682426, a: 1}
   m_Cooldown: 1
+--- !u!114 &-4723342298352985832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14be5e3e6cf2204293682bf65bce5dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Id: 89779ebf-c17b-434b-bf4a-50e910a3f0e7
+  m_ItemName: Sword
+  m_UseItemNameAsDisplayName: 1
+  m_DisplayName: New Item
+  m_Icon: {fileID: 21300000, guid: 1ba4cc20b1594cc4dbcad40a27d00e1a, type: 3}
+  m_Prefab: {fileID: 4750170694926642069, guid: 8bc81d053a61c4ca19fdf8425adce810,
+    type: 3}
+  m_Description: 
+  m_Category: {fileID: -6294223960729143046}
+  m_IsSellable: 1
+  m_BuyPrice: 0
+  m_CanBuyBack: 1
+  m_BuyCurrency: {fileID: -8859189835947310016}
+  m_SellPrice: 0
+  m_SellCurrency: {fileID: -8859189835947310016}
+  m_Stack: 1
+  m_MaxStack: 1
+  m_IsDroppable: 1
+  m_DropSound: {fileID: 0}
+  m_OverridePrefab: {fileID: 0}
+  m_IsCraftable: 0
+  m_CraftingDuration: 2
+  m_UseCraftingSkill: 0
+  m_SkillWindow: Skills
+  m_CraftingSkill: {fileID: 0}
+  m_RemoveIngredientsWhenFailed: 0
+  m_MinCraftingSkillValue: 0
+  m_CraftingAnimatorState: Blacksmithy
+  m_CraftingModifier:
+    modifiers: []
+  ingredients: []
+  properties: []
 --- !u!114 &-4474190543486091594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1318,6 +1362,7 @@ MonoBehaviour:
   - {fileID: 3253036230510403830}
   - {fileID: -7220855601628582702}
   - {fileID: 757395598172549354}
+  - {fileID: -4723342298352985832}
   currencies:
   - {fileID: -2811142919616601772}
   - {fileID: -6442420119529586086}
