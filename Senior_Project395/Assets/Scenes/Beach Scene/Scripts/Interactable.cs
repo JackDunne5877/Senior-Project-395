@@ -23,6 +23,7 @@ public class Interactable : MonoBehaviour
         //if we're in range to interact
         if (StarterAssetsInputs.interact && isInRangeOfThisObject)
         {
+            isBeingInteracted = true;
             Debug.Log(objectDescription);
             ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = objectDescription;
 
@@ -31,6 +32,7 @@ public class Interactable : MonoBehaviour
             Debug.Log("interacting with object");
 
         }
+        
     }
 
     //when entering/colliding with 3d physics sphere
@@ -51,6 +53,7 @@ public class Interactable : MonoBehaviour
     {
         isInRange = false;
         isInRangeOfThisObject = false;
+        isBeingInteracted = false;
         ShowUI.showTxt = false;
         ShowUI.showDesc = false;
         ShowUI.InteractChecker();
