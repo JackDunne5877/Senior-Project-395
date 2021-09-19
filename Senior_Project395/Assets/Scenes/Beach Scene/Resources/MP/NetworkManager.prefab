@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3531e6f92a066ca4da320f18c9be0804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 7679317884445212918, guid: 9432f4a57f4916f4892f649259a66f7d,
+  playerPrefab: {fileID: 6310052879649356839, guid: c79bb1c5442f0494c827d4508a600344,
     type: 3}
   spawnPoint: {x: 130, y: 60, z: 20}
   spawnAngle: {x: 0, y: 180, z: 0}
