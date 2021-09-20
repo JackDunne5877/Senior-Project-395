@@ -95,8 +95,10 @@ namespace Com.Orion.MP
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            progressLabel.SetActive(false);
-            controlPanel.SetActive(true);
+            if (progressLabel != null && controlPanel != null) {
+                progressLabel.SetActive(false);
+                controlPanel.SetActive(true);
+            }
             Debug.LogWarningFormat("Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
             isConnecting = false;
         }
