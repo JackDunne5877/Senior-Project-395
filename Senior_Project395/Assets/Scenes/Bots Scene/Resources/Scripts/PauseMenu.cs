@@ -22,10 +22,23 @@ public class PauseMenu : MonoBehaviour
         if (!toggle && Input.GetButtonDown("Cancel")) {
             toggle = true;
             pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
+            FlipCursorState();
+
             Debug.Log("Paused");
         }
         if (Input.GetButtonUp("Cancel")) {
             toggle = false;
+        }
+        
+    }
+
+    void FlipCursorState() {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else {
+            Cursor.lockState = CursorLockMode.Locked;
         }
         
     }
