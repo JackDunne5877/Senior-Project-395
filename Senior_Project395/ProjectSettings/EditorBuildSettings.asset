@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Beach Scene/Beach.unity
     guid: da26a6a531264be4d98a2d9db0398814
+  - enabled: 1
+    path: Assets/Scenes/Bots Scene/Bots.unity
+    guid: dedb17247494938409d966163b8e474d
   - enabled: 0
     path: Assets/Scenes/Multiplayer/Launcher.unity
     guid: 351d21481f281d941b8ba02989920fcd
