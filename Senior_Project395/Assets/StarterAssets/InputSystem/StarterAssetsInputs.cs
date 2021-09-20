@@ -1,6 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM || STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
 
@@ -27,45 +27,56 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				MoveInput(value.Get<Vector2>());
+				return;
 			}
+			MoveInput(value.Get<Vector2>());
+
 		}
 
 		public void OnLook(InputValue value)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				if (cursorInputForLook)
-				{
-					LookInput(value.Get<Vector2>());
-				}
+				return;
+			}
+
+			if (cursorInputForLook)
+			{
+				LookInput(value.Get<Vector2>());
 			}
 		}
 
 		public void OnJump(InputValue value)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				JumpInput(value.isPressed);
+				return;
 			}
+
+			JumpInput(value.isPressed);
+
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				SprintInput(value.isPressed);
+				return;
 			}
+			SprintInput(value.isPressed);
+
 		}
 
 		public void OnInteract(InputValue value)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				InteractInput(value.isPressed);
+				return;
 			}
+			InteractInput(value.isPressed);
+
 		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
@@ -74,52 +85,64 @@ namespace StarterAssets
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				move = newMoveDirection;
+				return;
 			}
+			move = newMoveDirection;
+
 		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				look = newLookDirection;
+				return;
 			}
+			look = newLookDirection;
+
 		}
 
 		public void JumpInput(bool newJumpState)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				jump = newJumpState;
+				return;
 			}
+			jump = newJumpState;
+
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				sprint = newSprintState;
+				return;
 			}
+			sprint = newSprintState;
+
 		}
 
 		public void InteractInput(bool newInteractState)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				interact = newInteractState;
+				return;
 			}
+			interact = newInteractState;
+
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
 			{
-				SetCursorState(cursorLocked);
+				return;
 			}
+			SetCursorState(cursorLocked);
+
 		}
 
 		private void SetCursorState(bool newState)
@@ -130,5 +153,5 @@ namespace StarterAssets
 #endif
 
 	}
-	
+
 }

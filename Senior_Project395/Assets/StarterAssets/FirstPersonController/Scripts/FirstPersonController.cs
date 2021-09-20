@@ -15,6 +15,7 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviourPun
 	{
+
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed = 4.0f;
@@ -114,10 +115,12 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
-			if (photonView.IsMine && PhotonNetwork.IsConnected == true)
+			if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
 			{
-				CameraRotation();
+				return;
 			}
+
+			CameraRotation();
 		}
 
 		private void GroundedCheck()
@@ -127,6 +130,14 @@ namespace StarterAssets
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 		}
 
+		public void ChangeSens(float newRotationSpeed) {
+			if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			Debug.Log(newRotationSpeed);
+			RotationSpeed = newRotationSpeed;
+		}
 		private void CameraRotation()
 		{
 			// if there is an input
