@@ -13,6 +13,10 @@ public class BuildingGenerator : MonoBehaviour
     public float floorThickness;
     public float minSplittableRoomDimensionSize;
     public float minWallLength;
+    public float doorWidth;
+    public float doorWallClearance;
+    public float doorThickness;
+    public Material doorMaterial;
 
     private GameObject buildingParent;
     private Vector3 buildingPos;
@@ -53,7 +57,6 @@ public class BuildingGenerator : MonoBehaviour
         {
                 extWalls.Add(new Wall(
                 null,
-                null,
                 new Vector2(buildingPos.z + (midpoints[i,0]) * ((buildingWidth / 2f)-(wallThickness/2f)), buildingPos.x + (midpoints[i, 1]) * ((buildingDepth / 2f) - (wallThickness / 2f))),
                 (midpoints[i, 2]*90),
                 midpoints[i, 2] == 0 ? buildingWidth : buildingDepth
@@ -76,11 +79,9 @@ public class BuildingGenerator : MonoBehaviour
 
             if (map.rooms[0].isBigEnoughToSplit(minSplittableRoomDimensionSize))
             {
-                Debug.Log("room with width: " + map.rooms[0].width + " and depth: " + map.rooms[0].depth + " is splittable");
                 interiorWalls.Add(splitWithWall(map.rooms, 0));
             }
             else {
-                Debug.Log("room with width: " + map.rooms[0].width + " and depth: " + map.rooms[0].depth + " is NOT splittable");
                 map.rooms.RemoveAt(0);
             }
         }
@@ -89,7 +90,6 @@ public class BuildingGenerator : MonoBehaviour
 
     private Wall splitWithWall(List<Room> rooms, int roomNum)
     {
-        Debug.Log("splitting with wall");
         Room originalRoom = rooms[roomNum];
         float originalTop = originalRoom.pos.y + (originalRoom.depth / 2.0f); //y coord
         float originalBottom = originalRoom.pos.y - (originalRoom.depth / 2.0f); //y coord
@@ -106,8 +106,7 @@ public class BuildingGenerator : MonoBehaviour
         {
             //HORIZONTAL SPLIT
             splitOrigin = new Vector2(originalRoom.pos.x, Random.Range(originalBottom + minWallLength , originalTop - minWallLength));
-            Debug.Log(splitOrigin.x + "  " + splitOrigin.y);
-            splitWall = new Wall(null, null, splitOrigin, 0, originalRoom.width);
+            splitWall = new Wall(null, splitOrigin, 0, originalRoom.width);
             //add bottom
             rooms.Add(new Room(
                 new Vector2(originalRoom.pos.x, (splitOrigin.y + originalBottom)/2.0f), //center
@@ -129,7 +128,7 @@ public class BuildingGenerator : MonoBehaviour
         {
             //VERTICAL SPLIT
             splitOrigin = new Vector2(Random.Range(originalLeft + minWallLength, originalRight - minWallLength),originalRoom.pos.y);
-            splitWall = new Wall(null, null, splitOrigin, 90, originalRoom.depth);
+            splitWall = new Wall(null, splitOrigin, 90, originalRoom.depth);
             //add left
             rooms.Add(new Room(
                 new Vector2((splitOrigin.x + originalLeft) / 2.0f, originalRoom.pos.y), //center
@@ -148,6 +147,7 @@ public class BuildingGenerator : MonoBehaviour
             );
         }
         rooms.Remove(originalRoom);
+        splitWall.doors.Add(Random.Range(doorWallClearance + (doorWidth / 2.0f), splitWall.length - doorWallClearance - (doorWidth / 2.0f)));
         return splitWall;
     }
 
@@ -177,11 +177,54 @@ public class BuildingGenerator : MonoBehaviour
 
     private void GenerateWall(Wall wallDef, int levelNum, GameObject level)
     {
-        GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall.transform.parent = level.transform;
-        wall.transform.position = new Vector3(wallDef.pos.x, (ceilingHeight / 2) + (ceilingHeight*(float)levelNum), wallDef.pos.y);
-        wall.transform.localScale = new Vector3(wallDef.length, wallThickness, ceilingHeight);
-        wall.transform.eulerAngles = new Vector3(90, wallDef.direction, 0);
+        List<float[]> wallPieces = new List<float[]>();//{[start][stop], [start][stop], [start][stop]}
+        List<float[]> doorPieces = new List<float[]>();
+
+        float wallDistanceCovered = 0; //will always keep track of the starting point for the next wall
+        wallDef.doors.Sort();
+        Debug.Log("wall start: " + wallDef.pos.x + ", "+wallDef.pos.y);
+        Debug.Log("wall length: " + wallDef.length);
+        foreach (float d in wallDef.doors)
+        {
+            float doorStart = d - (doorWidth / 2.0f);//relative to whole wall
+            float doorStop = d + (doorWidth / 2.0f); //relative to whole wall
+            Debug.Log("d:" + doorStart);
+            Debug.Log(":d:" + doorStop);
+
+            wallPieces.Add(new float[2] {wallDistanceCovered, doorStart });
+            doorPieces.Add(new float[2] { doorStart, doorStop });
+            wallDistanceCovered = doorStop;
+
+        }
+
+        Debug.Log("");
+
+        wallPieces.Add(new float[2] { wallDistanceCovered, wallDef.length }); // add the rest of the wall
+
+        foreach(float[] wallPiece in wallPieces) {
+            GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall.transform.parent = level.transform;
+            wall.transform.position = new Vector3(
+                wallDef.pos.x + (wallDef.direction == 90? 0 : ((wallPiece[0]+wallPiece[1])/2.0f)), 
+                (ceilingHeight / 2) + (ceilingHeight * (float)levelNum),
+                wallDef.pos.y + (wallDef.direction == 0 ? 0 : ((wallPiece[0] + wallPiece[1] )/ 2.0f))
+                ); //possible flip around
+            wall.transform.localScale = new Vector3(wallPiece[1]-wallPiece[0], wallThickness, ceilingHeight);
+            wall.transform.eulerAngles = new Vector3(90, wallDef.direction, 0);
+        }
+        foreach( float[] doorPiece in doorPieces)
+        {
+            GameObject door = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            door.GetComponent<Renderer>().material = doorMaterial;
+            door.transform.parent = level.transform;
+            door.transform.position = new Vector3(
+                wallDef.pos.x + (wallDef.direction == 90 ? 0 : ((doorPiece[0]+doorPiece[1]) / 2.0f)),
+                (ceilingHeight / 2) + (ceilingHeight * (float)levelNum),
+                wallDef.pos.y + (wallDef.direction == 0 ? 0 : ((doorPiece[0] + doorPiece[1]) / 2.0f))
+                ); //possible flip around
+            door.transform.localScale = new Vector3(doorPiece[1] - doorPiece[0], doorThickness, ceilingHeight);
+            door.transform.eulerAngles = new Vector3(90, wallDef.direction, 0);
+        }
     }
 
     // Update is called once per frame
@@ -233,10 +276,8 @@ public class Room
 
 public class Wall {
     //positions along the wall that doors appear
-    public float[] doors;
+    public List<float> doors; 
 
-    //[start][stop] pairs along the wall that are blanks
-    public float[][] blanks;
 
     public Vector2 pos;
 
@@ -244,10 +285,10 @@ public class Wall {
     public int direction;
     public float length;
 
-    public Wall(float[] doors, float[][] blanks, Vector2 pos, int direction, float length)
+    public Wall(List<float> doors, Vector2 pos, int direction, float length)
     {
-        this.doors = doors;
-        this.blanks = blanks;
+
+        this.doors = doors != null ? doors : new List<float>();
         this.pos = pos;
         this.direction = direction;
         this.length = length;
