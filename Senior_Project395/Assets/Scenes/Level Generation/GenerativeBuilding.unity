@@ -518,18 +518,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 737247198}
+  doorPrefab: {fileID: 5166410463687249416, guid: b8057026804edc34782f41e0fbee7f7c,
+    type: 3}
   buildingWidth: 100
   buildingDepth: 70
-  levels: 1
+  levels: 4
   ceilingHeight: 10
   wallThickness: 0.5
   floorThickness: 0.2
-  minSplittableRoomDimensionSize: 40
+  minSplittableRoomDimensionSize: 30
+  maxSplitAttempts: 10
+  MaxInteriorWalls: 20
   minWallLength: 5
   doorWidth: 4
   doorWallClearance: 0
   doorThickness: 0.25
-  doorMaterial: {fileID: 2100000, guid: e9a787a1111f76f45812672c8a7de670, type: 2}
 --- !u!4 &1276998780
 Transform:
   m_ObjectHideFlags: 0
