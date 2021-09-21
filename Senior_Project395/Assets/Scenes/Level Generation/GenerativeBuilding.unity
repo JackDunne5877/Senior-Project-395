@@ -522,7 +522,7 @@ MonoBehaviour:
     type: 3}
   buildingWidth: 100
   buildingDepth: 70
-  levels: 4
+  levels: 20
   ceilingHeight: 10
   wallThickness: 0.5
   floorThickness: 0.2

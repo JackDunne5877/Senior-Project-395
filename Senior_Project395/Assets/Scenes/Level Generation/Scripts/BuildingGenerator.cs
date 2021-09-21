@@ -83,7 +83,7 @@ public class BuildingGenerator : MonoBehaviour
 
             if (map.rooms[0].isBigEnoughToSplit(minSplittableRoomDimensionSize))
             {
-                Wall newWall = splitWithWall(map, 0);
+                Wall newWall = splitWithWall(map, interiorWalls, 0);
                 if (newWall != null)
                 {
                     interiorWalls.Add(newWall);
@@ -96,7 +96,7 @@ public class BuildingGenerator : MonoBehaviour
         return interiorWalls;
     }
 
-    private Wall splitWithWall(LevelMap map, int roomNum)
+    private Wall splitWithWall(LevelMap map, List<Wall> existingWalls, int roomNum)
     {
         List<Room> rooms = map.rooms; 
         Room originalRoom = rooms[roomNum];
@@ -119,7 +119,7 @@ public class BuildingGenerator : MonoBehaviour
                 splitAttempts++;
                 splitOrigin = new Vector2(originalRoom.pos.x, UnityEngine.Random.Range(originalBottom + minWallLength, originalTop - minWallLength));
                 splitWall = new Wall(null, splitOrigin, 0, originalRoom.width);
-            } while (isWallCollidingWithDoors(map, splitWall) && splitAttempts<= maxSplitAttempts);
+            } while (isWallCollidingWithDoors(existingWalls, splitWall) && splitAttempts <= maxSplitAttempts);
 
             if(splitAttempts > maxSplitAttempts)
             {
@@ -127,8 +127,6 @@ public class BuildingGenerator : MonoBehaviour
                 rooms.Remove(originalRoom);
                 return null;
             }
-
-            isWallCollidingWithDoors(map, splitWall);
             //add bottom
             rooms.Add(new Room(
                 new Vector2(originalRoom.pos.x, (splitOrigin.y + originalBottom)/2.0f), //center
@@ -149,9 +147,12 @@ public class BuildingGenerator : MonoBehaviour
         else
         {
             //VERTICAL SPLIT
-            splitOrigin = new Vector2(UnityEngine.Random.Range(originalLeft + minWallLength, originalRight - minWallLength),originalRoom.pos.y);
-            //TODO Check if colliding with a door
-            splitWall = new Wall(null, splitOrigin, 90, originalRoom.depth);
+            do
+            {
+                splitAttempts++;
+                splitOrigin = new Vector2(UnityEngine.Random.Range(originalLeft + minWallLength, originalRight - minWallLength),originalRoom.pos.y);
+                splitWall = new Wall(null, splitOrigin, 90, originalRoom.depth);
+            } while (isWallCollidingWithDoors(existingWalls, splitWall) && splitAttempts <= maxSplitAttempts);
             //add left
             rooms.Add(new Room(
                 new Vector2((splitOrigin.x + originalLeft) / 2.0f, originalRoom.pos.y), //center
@@ -174,11 +175,11 @@ public class BuildingGenerator : MonoBehaviour
         return splitWall;
     }
 
-    private bool isWallCollidingWithDoors(LevelMap map, Wall newWall)
+    private bool isWallCollidingWithDoors(List<Wall> existingWalls, Wall newWall)
     {
-        foreach(Wall existingWall in map.walls)
+        foreach(Wall existingWall in existingWalls)
         {
-            foreach(float door in existingWall.doors)
+            foreach (float door in existingWall.doors)
             {
                 //find door center
                 //wall pos + door(in X or Y depending on dir)
@@ -188,12 +189,12 @@ public class BuildingGenerator : MonoBehaviour
                 if(existingWall.direction == 90)
                 {
                     //this is vertical wall, travel along y axis
-                    doorCenter = existingWall.pos + new Vector2(0, door);
+                    doorCenter = existingWall.pos + new Vector2(0, door - (existingWall.length / 2f));
                 }
                 else
                 {
                     //this is horizontal wall, travel along x axis
-                    doorCenter = existingWall.pos + new Vector2(door, 0);
+                    doorCenter = existingWall.pos + new Vector2(door - (existingWall.length / 2f), 0);
                 }
 
                 Vector2 newWallStartCoord;
@@ -211,13 +212,13 @@ public class BuildingGenerator : MonoBehaviour
                     newWallEndCoord = newWall.pos + new Vector2((newWall.length / 2f),0);
                 }
 
-                if(
+                if (
                     Vector2.Distance(newWallStartCoord, doorCenter) < ((doorWidth / 2f) + doorWallClearance)
                     ||
                     Vector2.Distance(newWallEndCoord, doorCenter) < ((doorWidth / 2f) + doorWallClearance)
                     )
                 {
-                    Debug.Log("prevented a BAD wall");
+                    //this wall collides, tell it to pick another one!
                     return true;
                 }
             }
