@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+public class MenuActivator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject pauseMenu;
+    private GameObject menu;
 
     //private bool isPaused = false;
     private bool toggle = false;
@@ -13,16 +13,19 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pauseMenu.SetActive(false);
+        menu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        AdjustCursorState();
+
         if (!toggle && Input.GetButtonDown("Cancel")) {
             toggle = true;
-            pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
-            FlipCursorState();
+            menu.SetActive(!menu.activeInHierarchy);
+            //FlipCursorState();
 
             Debug.Log("Paused");
         }
@@ -32,14 +35,12 @@ public class PauseMenu : MonoBehaviour
         
     }
 
-    void FlipCursorState() {
-        if (Cursor.lockState == CursorLockMode.Locked)
-        {
+    void AdjustCursorState() {
+        if (menu.activeInHierarchy) { 
             Cursor.lockState = CursorLockMode.None;
         }
         else {
             Cursor.lockState = CursorLockMode.Locked;
         }
-        
     }
 }
