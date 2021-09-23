@@ -61,18 +61,27 @@ namespace Com.Orion.MP
 
         #region Private Methods
 
+        //in the future, modify this function to add more room options, 
+        //example, if user is male, create a room that accepts females only, etc...
+        //or set settings of room to have info: ex: (is male, into females, age min 18, age max 25)
+        //then filter rooms in "JoinRandomRoom" to be within those parameters
+        private Hashtable CreateRoomOptionsHashTable() {
+            return new Hashtable { { MAP_PROP_KEY, (byte)levelIndex } };
+        }
         private void CreateRoom()
         {
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.CustomRoomPropertiesForLobby = new string[1]{ MAP_PROP_KEY };
-            roomOptions.CustomRoomProperties = new Hashtable { { MAP_PROP_KEY, (byte)levelIndex }};
+            roomOptions.CustomRoomProperties = CreateRoomOptionsHashTable();
             roomOptions.MaxPlayers = maxPlayersPerRoom;
             PhotonNetwork.CreateRoom(null, roomOptions, null);
         }
 
         private void JoinRandomRoom()
         {
-            Hashtable expectedCustomRoomProperties = new Hashtable { { MAP_PROP_KEY, (byte)levelIndex } };
+            //right now this is set up to match the create room, but can be easily changed to be the opposite, or to match 
+            //the info on available room
+            Hashtable expectedCustomRoomProperties = CreateRoomOptionsHashTable();
             PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, maxPlayersPerRoom);
         }
 
