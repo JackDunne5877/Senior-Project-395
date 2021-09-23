@@ -1157,15 +1157,15 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 2307340033091221195}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6700698683558152492 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9005220659476430823, guid: 2d3a85ecde41a8246a79669975912b74,
-    type: 3}
-  m_PrefabInstance: {fileID: 2307340033091221195}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6700698683558152489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74,
+    type: 3}
+  m_PrefabInstance: {fileID: 2307340033091221195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6700698683558152492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9005220659476430823, guid: 2d3a85ecde41a8246a79669975912b74,
     type: 3}
   m_PrefabInstance: {fileID: 2307340033091221195}
   m_PrefabAsset: {fileID: 0}
