@@ -1,12 +1,14 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Com.Orion.MP
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {
+        public const string MAP_PROP_KEY = "map";
+
         #region Private Serializable Fields
 
 
@@ -17,15 +19,15 @@ namespace Com.Orion.MP
         [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
         [SerializeField]
         private byte maxPlayersPerRoom = 2;
-        
+
         [Tooltip("The UI Panel to let the user enter name, connect and play")]
         [SerializeField]
         private GameObject controlPanel;
-        
+
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
         [SerializeField]
         private GameObject progressLabel;
-        
+
         #endregion
 
 
@@ -47,6 +49,7 @@ namespace Com.Orion.MP
             // #Critical
             // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
             PhotonNetwork.AutomaticallySyncScene = true;
+
         }
 
         void Start()
@@ -56,6 +59,24 @@ namespace Com.Orion.MP
         }
         #endregion
 
+        #region Private Methods
+
+        private void CreateRoom()
+        {
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.CustomRoomPropertiesForLobby = new string[1]{ MAP_PROP_KEY };
+            roomOptions.CustomRoomProperties = new Hashtable { { MAP_PROP_KEY, (byte)levelIndex }};
+            roomOptions.MaxPlayers = maxPlayersPerRoom;
+            PhotonNetwork.CreateRoom(null, roomOptions, null);
+        }
+
+        private void JoinRandomRoom()
+        {
+            Hashtable expectedCustomRoomProperties = new Hashtable { { MAP_PROP_KEY, (byte)levelIndex } };
+            PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, maxPlayersPerRoom);
+        }
+
+        #endregion
 
         #region Public Methods
 
@@ -73,7 +94,8 @@ namespace Com.Orion.MP
             if (PhotonNetwork.IsConnected)
             {
                 // #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
-                PhotonNetwork.JoinRandomRoom();
+                //PhotonNetwork.JoinRandomRoom();
+                JoinRandomRoom();
             }
             else
             {
@@ -90,12 +112,14 @@ namespace Com.Orion.MP
             if (isConnecting)
             {
                 Debug.Log("Launcher: OnConnectedToMaster() was called by PUN");
-                PhotonNetwork.JoinRandomRoom();
+                // PhotonNetwork.JoinRandomRoom();
+                JoinRandomRoom();
             }
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            if (progressLabel != null && controlPanel != null) {
+            if (progressLabel != null && controlPanel != null)
+            {
                 progressLabel.SetActive(false);
                 controlPanel.SetActive(true);
             }
@@ -108,7 +132,8 @@ namespace Com.Orion.MP
             Debug.Log("Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
             // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+            //PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+            CreateRoom();
         }
 
         public override void OnJoinedRoom()
