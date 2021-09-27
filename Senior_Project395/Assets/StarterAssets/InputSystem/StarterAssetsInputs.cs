@@ -13,8 +13,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		public static bool interact;
-		public static bool switchWeapon;
+		static public bool interact;
+		static public bool switchWeapon;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -150,8 +150,9 @@ namespace StarterAssets
 				return;
 			}
 			switchWeapon = newInteractState;
+            Debug.Log("Shit's being pressed my guy");
 
-		}
+        }
 
 #if !UNITY_IOS || !UNITY_ANDROID
 

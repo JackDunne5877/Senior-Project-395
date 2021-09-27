@@ -11,6 +11,7 @@ public class GunsMenu : MonoBehaviour
     int currentGun = 0;
     void Start()
     {
+        Guns = Resources.LoadAll("gun prefabs") as GameObject[];
         Guns[0].SetActive(true);
     }
 
@@ -59,6 +60,7 @@ public class GunsMenu : MonoBehaviour
 
     private void Update()
     {
+        switchWeapon();
         if ((Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)))
         {
             Buttons.SetActive(false);
@@ -67,6 +69,5 @@ public class GunsMenu : MonoBehaviour
         {
             Buttons.SetActive(true);
         }
-        switchWeapon();
     }
 }
