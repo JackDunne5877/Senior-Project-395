@@ -13,7 +13,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		static public bool interact;
+		public static bool interact;
+		public static bool switchWeapon;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -78,6 +79,15 @@ namespace StarterAssets
 			InteractInput(value.isPressed);
 
 		}
+
+		public void OnSwitchWeapon(InputValue value)
+        {
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			SwitchWeaponInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -130,6 +140,16 @@ namespace StarterAssets
 				return;
 			}
 			interact = newInteractState;
+
+		}
+
+		public void SwitchWeaponInput(bool newInteractState)
+		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			switchWeapon = newInteractState;
 
 		}
 
