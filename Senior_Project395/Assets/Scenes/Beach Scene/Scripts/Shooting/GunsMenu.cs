@@ -7,11 +7,25 @@ using UnityEngine.EventSystems;
 public class GunsMenu : MonoBehaviour
 {
     public GameObject Buttons;
-    public GameObject[] Guns = new GameObject[4];
+    public GameObject[] Guns;
     int currentGun = 0;
+    public KeyCode switchGun;
+
     void Start()
     {
-        Guns = Resources.LoadAll("gun prefabs") as GameObject[];
+        //Guns = new GameObject[4];
+        Buttons = new GameObject();
+
+        //disable all other guns that aren't the first weapon
+        for(int i = 0; i < Guns.Length; i++)
+        {
+            if(i > 0)
+            {
+                Guns[i].SetActive(false);
+            }
+        }
+
+        //equip the first weapon
         Guns[0].SetActive(true);
     }
 
@@ -50,9 +64,16 @@ public class GunsMenu : MonoBehaviour
     //function triggered when switching between weapons
     public void switchWeapon()
     {
+        /*
         if (StarterAssetsInputs.switchWeapon)
         {
             Debug.Log("Switching to another weapon!");
+            NextGun();
+        } */
+
+        //check for input & make sure there is a next gun available
+        if (Input.GetKeyDown(KeyCode.Alpha2) /*&& Guns[currentGun++] != null */)
+        {
             NextGun();
         }
     }
