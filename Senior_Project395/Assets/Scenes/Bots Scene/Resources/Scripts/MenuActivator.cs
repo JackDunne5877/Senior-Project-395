@@ -9,7 +9,7 @@ public class MenuActivator : MonoBehaviour
 
     //private bool isPaused = false;
     private bool toggle = false;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +27,14 @@ public class MenuActivator : MonoBehaviour
             menu.SetActive(!menu.activeInHierarchy);
             //FlipCursorState();
 
-            Debug.Log("Paused");
+            //Debug.Log("Paused");
         }
         if (Input.GetButtonUp("Cancel")) {
             toggle = false;
         }
         
     }
+
 
     void AdjustCursorState() {
         if (menu.activeInHierarchy) { 

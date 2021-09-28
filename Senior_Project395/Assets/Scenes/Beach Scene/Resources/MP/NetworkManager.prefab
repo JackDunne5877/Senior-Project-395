@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3531e6f92a066ca4da320f18c9be0804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voicePrefab: {fileID: 8749267088657231181, guid: 7d09c459387334242975683ad25a140c,
+    type: 3}
   playerPrefab: {fileID: 6310052879649356839, guid: c79bb1c5442f0494c827d4508a600344,
     type: 3}
   spawnPoint: {x: 130, y: 60, z: 20}
