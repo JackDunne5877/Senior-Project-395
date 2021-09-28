@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8749267088657231179}
   m_Layer: 0
   m_Name: Voice
-  m_TagString: Untagged
+  m_TagString: Voice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -12,13 +12,13 @@ namespace Com.Orion.MP{
         [SerializeField]
         private GameObject speakerIconImage;
 
-        [SerializeField]
         private Recorder voice;
 
 
         // Start is called before the first frame update
         void Start()
         {
+            voice = GameObject.FindGameObjectWithTag("Voice").GetComponent<Recorder>();
             speakerIconImage.SetActive(false);
             voice.TransmitEnabled = false;
         }

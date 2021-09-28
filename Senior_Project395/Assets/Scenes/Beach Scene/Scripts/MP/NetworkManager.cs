@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Voice.PUN;
 
 namespace Com.Orion.MP
 {
     public class NetworkManager : MonoBehaviourPunCallbacks
     {
+        //[Tooltip("The prefab to use for setting up voice chat")]
+        //[SerializeField]
+        //private GameObject voicePrefab;
+
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
         public static NetworkManager Instance;
@@ -41,8 +46,15 @@ namespace Com.Orion.MP
                     Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
                 }
             }
-
-
+            /*
+            //delete any extraneous voice prefabs before joining
+            if (!PhotonNetwork.IsMasterClient) {
+                GameObject[] voicePrefabs = GameObject.FindGameObjectsWithTag("Voice");
+                foreach (var v in voicePrefabs) {
+                    GameObject.Destroy(v);
+                }
+            }
+            */
             Instance = this;
         }
         #region Private Methods
@@ -70,9 +82,9 @@ namespace Com.Orion.MP
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-
                 LoadArena();
+                //PhotonVoiceNetwork.Instantiate(voicePrefab);
+                //GameObject.Instantiate(voicePrefab);
             }
         }
 

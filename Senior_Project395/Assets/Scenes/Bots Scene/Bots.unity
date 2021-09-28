@@ -15528,7 +15528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcfb7910f336e20479585796597a007c, type: 3}
---- !u!1001 &1820098309
+--- !u!1001 &1858123960
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -15597,18 +15597,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d09c459387334242975683ad25a140c, type: 3}
---- !u!114 &1820098310 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8749267088657231179, guid: 7d09c459387334242975683ad25a140c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1820098309}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1858508774
 GameObject:
   m_ObjectHideFlags: 0
@@ -20889,7 +20877,7 @@ PrefabInstance:
         type: 3}
       propertyPath: voice
       value: 
-      objectReference: {fileID: 1820098310}
+      objectReference: {fileID: 0}
     - target: {fileID: 7164505333917072561, guid: fc28523b5be00234bb7b890dae337db5,
         type: 3}
       propertyPath: m_RootOrder
