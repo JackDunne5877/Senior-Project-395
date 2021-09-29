@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "PickUpGun",
+                    "type": "Button",
+                    "id": "cc9ef140-00f7-448e-a7bb-89646f6d5315",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -269,6 +277,17 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Switch weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e025c4a2-1e40-47d4-8b87-a5f0fd5cb9a2",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "PickUpGun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

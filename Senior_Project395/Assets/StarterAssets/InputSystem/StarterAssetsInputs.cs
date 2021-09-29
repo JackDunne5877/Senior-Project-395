@@ -15,6 +15,7 @@ namespace StarterAssets
 		public bool sprint;
 		static public bool interact;
 		static public bool switchWeapon;
+		static public bool pickUpGun;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -88,6 +89,15 @@ namespace StarterAssets
 			}
 			SwitchWeaponInput(value.isPressed);
 		}
+
+		public void OnPickUpGun(InputValue value)
+        {
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			PickUpGunInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -150,9 +160,17 @@ namespace StarterAssets
 				return;
 			}
 			switchWeapon = newInteractState;
-            Debug.Log("Shit's being pressed my guy");
 
         }
+
+		public void PickUpGunInput(bool newInteractState)
+        {
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			pickUpGun = newInteractState;
+		}
 
 #if !UNITY_IOS || !UNITY_ANDROID
 

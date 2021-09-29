@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
@@ -50,29 +51,16 @@ public class GunsMenu : MonoBehaviour
     //used when picking up a weapon or item
     public void addWeapon(GameObject weapon)
     {
-        for(int i = 0; i < Guns.Length; i++)
-        {
-            if(Guns[i] == null)
-            {
-                //add new gun to end of guns list
-                Guns.SetValue(weapon, i);
-            }
-        }
+        int tmpLength = Guns.Length + 1;
+        Array.Resize(ref Guns, tmpLength);
+        Guns[tmpLength - 1] = weapon;
     }
 
 
     //function triggered when switching between weapons
     public void switchWeapon()
     {
-        /*
-        if (StarterAssetsInputs.switchWeapon)
-        {
-            Debug.Log("Switching to another weapon!");
-            NextGun();
-        } */
-
-        //check for input & make sure there is a next gun available
-        if (Input.GetKeyDown(KeyCode.Alpha2) /*&& Guns[currentGun++] != null */)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             NextGun();
         }
