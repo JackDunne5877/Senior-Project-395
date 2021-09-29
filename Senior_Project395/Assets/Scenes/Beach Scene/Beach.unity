@@ -8927,6 +8927,11 @@ PrefabInstance:
       propertyPath: ground
       value: 
       objectReference: {fileID: 151129307}
+    - target: {fileID: 5411539877005947583, guid: a7872d7d6e1d17246afdb084c6b476cd,
+        type: 3}
+      propertyPath: minSplittableRoomDimensionSize
+      value: 70
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7872d7d6e1d17246afdb084c6b476cd, type: 3}
 --- !u!4 &913962607 stripped
@@ -19234,6 +19239,7 @@ MonoBehaviour:
   isBeingInteracted: 0
   isInRangeOfThisObject: 0
   currentGun: {fileID: 2064791488}
+  player: {fileID: 0}
   objectDescription: weapon equipped
 --- !u!135 &2064791492
 SphereCollider:

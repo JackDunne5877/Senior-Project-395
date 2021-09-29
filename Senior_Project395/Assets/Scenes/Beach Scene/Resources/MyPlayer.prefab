@@ -351,7 +351,6 @@ MonoBehaviour:
   Guns:
   - {fileID: 344233533513659344}
   - {fileID: 3904344821650295403}
-  switchGun: 50
 --- !u!1 &3342651371706472485
 GameObject:
   m_ObjectHideFlags: 0

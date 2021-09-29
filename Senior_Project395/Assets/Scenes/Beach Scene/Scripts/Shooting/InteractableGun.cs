@@ -8,7 +8,7 @@ public class InteractableGun : MonoBehaviour
 {
     //boolean to determine if an item is in interactable range of player
     public static bool isInRange;
-    public KeyCode interactKey;
+    //public KeyCode interactKey;
     public bool isBeingInteracted = false;
     public bool isInRangeOfThisObject = false;
     public GameObject currentGun;
@@ -26,7 +26,8 @@ public class InteractableGun : MonoBehaviour
     private void Update()
     {
         //if we're in range to interact
-        if (StarterAssetsInputs.pickUpGun && isInRangeOfThisObject)
+        //NOTE: clean up all input settings (here, interactable objects, gunsmenu), to be operated consistently
+        if (/*StarterAssetsInputs.pickUpGun*/ Input.GetKeyDown(KeyCode.F) && isInRangeOfThisObject)
         {
             isBeingInteracted = true;
             ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = objectDescription;
@@ -36,11 +37,13 @@ public class InteractableGun : MonoBehaviour
             Debug.Log("picking up gun");
 
             //add gun to inventory
-
+            Debug.Log("adding weapon to inventory");
             player.GetComponentInChildren<GunsMenu>().addWeapon(currentGun);
 
-            //instantiate currentGun as child of WeaponHolder
+            //instantiate currentGun as child of WeaponHolder, and reset positioning
             currentGun.transform.parent = GameObject.Find("WeaponHolder").transform;
+            currentGun.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            currentGun.transform.localPosition = Vector3.zero;
 
             currentGun.SetActive(false);
 

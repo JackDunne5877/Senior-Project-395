@@ -10,7 +10,7 @@ public class GunsMenu : MonoBehaviour
     public GameObject Buttons;
     public GameObject[] Guns;
     int currentGun = 0;
-    public KeyCode switchGun;
+    //public KeyCode switchGun;
 
     void Start()
     {
