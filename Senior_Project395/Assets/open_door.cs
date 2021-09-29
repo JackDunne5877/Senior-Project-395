@@ -34,6 +34,5 @@ public class open_door : MonoBehaviour
             pressed = false;
             door.SetActive(true);
         }
-        
     }
 }

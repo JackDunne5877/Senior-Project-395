@@ -299,6 +299,10 @@ public class BuildingGenerator : MonoBehaviour
         {
             GameObject door = Instantiate(doorPrefab);
             door.transform.parent = level.transform;
+            Transform doorHinge = door.transform.GetChild(0);
+            GameObject doorCube = doorHinge.GetChild(0).gameObject;
+            float doorWidth = (doorPiece[1] - doorPiece[0]);
+
             if (wallDef.direction == 90)
             {
                 door.transform.position = new Vector3(
@@ -315,8 +319,10 @@ public class BuildingGenerator : MonoBehaviour
                     wallDef.pos.y
                 );
             }
-            door.transform.localScale = new Vector3(doorPiece[1] - doorPiece[0], doorThickness, ceilingHeight);
+            doorCube.transform.localScale = new Vector3(doorWidth, doorThickness, ceilingHeight);
             door.transform.eulerAngles = new Vector3(90, wallDef.direction, 0);
+            doorHinge.localPosition = new Vector3(-doorWidth/ 2f, 0, 0);
+            doorCube.transform.localPosition = new Vector3(doorWidth / 2f, 0, 0);
         }
     }
 
