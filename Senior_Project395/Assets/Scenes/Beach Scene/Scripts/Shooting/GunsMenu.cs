@@ -10,11 +10,10 @@ public class GunsMenu : MonoBehaviour
     public GameObject Buttons;
     public GameObject[] Guns;
     int currentGun = 0;
-    //public KeyCode switchGun;
 
     void Start()
     {
-        //Guns = new GameObject[4];
+        //Don't know if this does anything, not sure what Buttons does
         Buttons = new GameObject();
 
         //disable all other guns that aren't the first weapon
@@ -23,6 +22,7 @@ public class GunsMenu : MonoBehaviour
             if(i > 0)
             {
                 Guns[i].SetActive(false);
+                Guns[i].GetComponentInChildren<InteractableGun>().isEquipped = true;
             }
         }
 
@@ -30,6 +30,7 @@ public class GunsMenu : MonoBehaviour
         Guns[0].SetActive(true);
     }
 
+    //cycle through to next weapon in Guns[]
     public void NextGun()
     {
         Guns[currentGun].SetActive(false);
@@ -38,6 +39,8 @@ public class GunsMenu : MonoBehaviour
             currentGun = 0;
         Guns[currentGun].SetActive(true);
     }
+
+    //cycle through to previous weapon in Guns[]
     public void PreviousGun()
     {
         Guns[currentGun].SetActive(false);
@@ -48,7 +51,7 @@ public class GunsMenu : MonoBehaviour
     }
 
 
-    //used when picking up a weapon or item
+    //used when picking up a weapon or item, adds weapon to Guns[]
     public void addWeapon(GameObject weapon)
     {
         int tmpLength = Guns.Length + 1;

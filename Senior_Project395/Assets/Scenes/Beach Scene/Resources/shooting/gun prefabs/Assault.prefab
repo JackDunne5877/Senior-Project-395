@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6069681114560016322}
   - component: {fileID: 4282233351039281387}
   - component: {fileID: 8616719125445586853}
+  - component: {fileID: 2064791490}
   m_Layer: 2
   m_Name: Assault
   m_TagString: Untagged
@@ -268,6 +269,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRange: 50
+--- !u!114 &2064791490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6069681114560016327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6dbe30858042994f80e699cc1ac0e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  isInteracting: 0
+  animator: {fileID: 0}
 --- !u!1 &6069681115378858988
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,6 +325,8 @@ GameObject:
   - component: {fileID: 7199080353881455520}
   - component: {fileID: 6072997332215395333}
   - component: {fileID: 8332619923801440463}
+  - component: {fileID: 2064791492}
+  - component: {fileID: 2064791491}
   m_Layer: 0
   m_Name: assault4
   m_TagString: Untagged
@@ -324,7 +342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7540034973679001882}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.63323, y: -0.381, z: 0.356}
+  m_LocalPosition: {x: 0.72, y: -0.4, z: 0.36}
   m_LocalScale: {x: 0.36561, y: 0.2154, z: 0.2139}
   m_Children:
   - {fileID: 6069681115378858989}
@@ -380,3 +398,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &2064791492
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540034973679001882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.7086625
+  m_Center: {x: 0.48749232, y: 0.15866236, z: 0.26281273}
+--- !u!114 &2064791491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540034973679001882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8990cf879f53f411d89871617e787ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBeingInteracted: 0
+  isInRangeOfThisObject: 0
+  isEquipped: 0
+  currentGun: {fileID: 6069681114560016327}
+  player: {fileID: 0}
+  currentPosition: {fileID: 0}
+  objectDescription: weapon equipped
