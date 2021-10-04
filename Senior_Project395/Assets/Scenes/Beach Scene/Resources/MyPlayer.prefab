@@ -1155,15 +1155,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
---- !u!20 &6700698683558152494 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74,
-    type: 3}
-  m_PrefabInstance: {fileID: 2307340033091221195}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6700698683558152489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74,
+    type: 3}
+  m_PrefabInstance: {fileID: 2307340033091221195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &6700698683558152494 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74,
     type: 3}
   m_PrefabInstance: {fileID: 2307340033091221195}
   m_PrefabAsset: {fileID: 0}
@@ -1272,17 +1272,28 @@ PrefabInstance:
       propertyPath: Guns.Array.data[1]
       value: 
       objectReference: {fileID: 6186040146858650221}
+    - target: {fileID: 6427343378147298120, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: gunEnd
+      value: 
+      objectReference: {fileID: 6186040148688518727}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a18930b19d3c4196a767607bafbb023, type: 3}
+--- !u!1 &6186040146858650221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3919496051577588836, guid: 1a18930b19d3c4196a767607bafbb023,
+    type: 3}
+  m_PrefabInstance: {fileID: 7187149454162830857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9136142401470900514 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2123442013067677483, guid: 1a18930b19d3c4196a767607bafbb023,
     type: 3}
   m_PrefabInstance: {fileID: 7187149454162830857}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6186040146858650221 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3919496051577588836, guid: 1a18930b19d3c4196a767607bafbb023,
+--- !u!4 &6186040148688518727 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3919496049750087758, guid: 1a18930b19d3c4196a767607bafbb023,
     type: 3}
   m_PrefabInstance: {fileID: 7187149454162830857}
   m_PrefabAsset: {fileID: 0}
