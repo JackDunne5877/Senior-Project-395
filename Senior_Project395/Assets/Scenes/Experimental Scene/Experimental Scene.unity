@@ -36096,8 +36096,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4219697920131820865, guid: c79bb1c5442f0494c827d4508a600344, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c79bb1c5442f0494c827d4508a600344, type: 3}
+--- !u!4 &1795902891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6186040148688518727, guid: c79bb1c5442f0494c827d4508a600344,
+    type: 3}
+  m_PrefabInstance: {fileID: 1795902890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1795902892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6186040146858650221, guid: c79bb1c5442f0494c827d4508a600344,
+    type: 3}
+  m_PrefabInstance: {fileID: 1795902890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1795902893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795902892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6323cc53710de4c84877cbda2e6784e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunDamage: 1
+  fireRate: 0.1
+  weaponRange: 50
+  hitForce: 100
+  gunEnd: {fileID: 1795902891}
 --- !u!1001 &1807634470
 PrefabInstance:
   m_ObjectHideFlags: 0
