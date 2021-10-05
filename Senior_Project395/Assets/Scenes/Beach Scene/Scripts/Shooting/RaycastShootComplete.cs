@@ -72,7 +72,8 @@ public class RaycastShootComplete : MonoBehaviour
                     int pointsEarned = dmgb.doDamage(gunDamage);
                     if (pointsEarned > 0)
                     {
-                        //TODO ADD POINTS
+                        Debug.Log("trying to add points in raycastShoot");
+                        GetComponentInParent<HUD_Controller>().AddPoints(pointsEarned);
                     }
                 }
 
