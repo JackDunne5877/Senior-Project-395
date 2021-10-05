@@ -1190,6 +1190,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1570544955906362374, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: fpsCam
+      value: 
+      objectReference: {fileID: 6700698683558152494}
+    - target: {fileID: 1570544955906362374, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2123442013067677483, guid: 1a18930b19d3c4196a767607bafbb023,
         type: 3}
       propertyPath: m_IsActive
@@ -1221,6 +1231,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528529911845654345, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4821251354097493208, guid: 1a18930b19d3c4196a767607bafbb023,
         type: 3}
@@ -1292,6 +1307,21 @@ PrefabInstance:
       propertyPath: gunEnd
       value: 
       objectReference: {fileID: 6186040148688518727}
+    - target: {fileID: 6427343378147298120, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: fireRate
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427343378147298120, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: isFullAuto
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427343378147298120, guid: 1a18930b19d3c4196a767607bafbb023,
+        type: 3}
+      propertyPath: laserDuration
+      value: 0.02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a18930b19d3c4196a767607bafbb023, type: 3}
 --- !u!1 &9136142401470900514 stripped

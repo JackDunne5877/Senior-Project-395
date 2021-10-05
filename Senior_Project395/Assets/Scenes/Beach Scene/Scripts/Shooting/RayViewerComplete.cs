@@ -20,6 +20,10 @@ public class RayViewerComplete : MonoBehaviour
     {
         // Create a vector at the center of our camera's viewport
         Vector3 lineOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        if(fpsCam == null)
+        {
+            Debug.Log("cam is null");
+        }
 
         // Draw a line in the Scene View  from the point lineOrigin in the direction of fpsCam.transform.forward * weaponRange, using the color green
         Debug.DrawRay(lineOrigin, fpsCam.transform.forward * weaponRange, Color.green);
