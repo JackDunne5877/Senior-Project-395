@@ -50,20 +50,26 @@ public class RaycastShootComplete : MonoBehaviour
             // Set the start position for our visual effect for our laser to the position of gunEnd
             laserLine.SetPosition(0, gunEnd.position);
 
+
             // Check if our raycast has hit anything
             if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
             {
                 // Set the end position for our laser line 
                 laserLine.SetPosition(1, hit.point);
+                Debug.Log("raycast hit: " + hit.collider.gameObject.name);
 
                 // Get a reference to a health script attached to the collider we hit
-                ShootableBox health = hit.collider.GetComponent<ShootableBox>();
+                Damageable dmgb = hit.collider.GetComponent<Damageable>();
 
                 // If there was a health script attached
-                if (health != null)
+                if (dmgb != null)
                 {
                     // Call the damage function of that script, passing in our gunDamage variable
-                    health.Damage(gunDamage);
+                    int pointsEarned = dmgb.doDamage(gunDamage);
+                    if (pointsEarned > 0)
+                    {
+                        //TODO ADD POINTS
+                    }
                 }
 
                 // Check if the object we hit has a rigidbody attached

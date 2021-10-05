@@ -6,7 +6,7 @@ public class RayViewerComplete : MonoBehaviour
 
     public float weaponRange = 50f;                       // Distance in Unity units over which the Debug.DrawRay will be drawn
 
-    private Camera fpsCam;                                // Holds a reference to the first person camera
+    public Camera fpsCam;                                // Holds a reference to the first person camera
 
 
     void Start()

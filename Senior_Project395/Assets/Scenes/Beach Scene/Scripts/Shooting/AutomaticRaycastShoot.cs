@@ -60,6 +60,7 @@ public class AutomaticRaycastShoot : MonoBehaviour
             {
                 // Set the end position for our laser line 
                 laserLine.SetPosition(1, hit.point);
+                Debug.Log("raycast hit: " + hit.collider.gameObject.name);
 
                 // Get a reference to a health script attached to the collider we hit
                 ShootableBox health = hit.collider.GetComponent<ShootableBox>();
