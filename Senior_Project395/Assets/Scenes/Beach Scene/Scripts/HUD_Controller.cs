@@ -10,14 +10,22 @@ public class HUD_Controller : MonoBehaviour
     public GameObject PointsTextObj;
     public GameObject HealthBarObj;
     
-    private PlayerNetworkManager PlayerNetMan;
+    private PlayerNetworkManager PlayerNetManager;
     private Text pointsText;
     private int Points = 0;
-    
+
+    public GameObject interactPromptObj;
+    public GameObject interactionDescriptionObj;
+    public bool showInteractPrompt = false;
+    public bool showInteractionDesc = false;
+
     void Start()
     {
-        PlayerNetMan = GetComponentInParent<PlayerNetworkManager>();
+        PlayerNetManager = GetComponentInParent<PlayerNetworkManager>();
         pointsText = PointsTextObj.GetComponent<Text>();
+
+        interactPromptObj.SetActive(false);
+        interactionDescriptionObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,5 +39,29 @@ public class HUD_Controller : MonoBehaviour
         Debug.Log("Adding points");
         Points += pts;
         pointsText.text = Points.ToString();
+    }
+
+    public void CheckInteractPromptVisibility()
+    {
+        if (showInteractPrompt)
+        {
+            interactPromptObj.SetActive(true);
+        }
+        else
+        {
+            interactPromptObj.SetActive(false);
+            interactionDescriptionObj.SetActive(false);
+        }
+    }
+
+    //method to set object description to show up
+    public void CheckDescriptionTextVisibility()
+    {
+        if (showInteractionDesc)
+        {
+            showInteractPrompt = false;
+            interactionDescriptionObj.SetActive(true);
+            interactPromptObj.SetActive(false);
+        }
     }
 }

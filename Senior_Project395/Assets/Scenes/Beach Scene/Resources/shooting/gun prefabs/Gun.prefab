@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4759895786386632386}
   - component: {fileID: 4759895786386632387}
   - component: {fileID: 3267592033577855466}
-  - component: {fileID: 7035151805960203940}
   m_Layer: 2
   m_Name: Gun
   m_TagString: Untagged
@@ -255,19 +254,8 @@ MonoBehaviour:
   weaponRange: 50
   hitForce: 100
   gunEnd: {fileID: 4759895787138628332}
---- !u!114 &7035151805960203940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4759895786386632390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd284084c15554cb8b41f9683d3e5d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponRange: 50
+  isFullAuto: 0
+  laserDuration: 0.07
 --- !u!1 &4759895787138628333
 GameObject:
   m_ObjectHideFlags: 0

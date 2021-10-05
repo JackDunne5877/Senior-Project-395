@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6069681114560016323}
   - component: {fileID: 6069681114560016322}
   - component: {fileID: 4282233351039281387}
-  - component: {fileID: 8616719125445586853}
   - component: {fileID: 2064791490}
   m_Layer: 2
   m_Name: Assault
@@ -256,19 +255,8 @@ MonoBehaviour:
   weaponRange: 50
   hitForce: 100
   gunEnd: {fileID: 6069681115378858989}
---- !u!114 &8616719125445586853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6069681114560016327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd284084c15554cb8b41f9683d3e5d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponRange: 50
+  isFullAuto: 0
+  laserDuration: 0.07
 --- !u!114 &2064791490
 MonoBehaviour:
   m_ObjectHideFlags: 0

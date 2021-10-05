@@ -59,7 +59,7 @@ public class InteractableGun : MonoBehaviour
             ShowUI.showDesc = false;
             ShowUI.InteractChecker();
             Debug.Log("Player no longer in range");
-            StarterAssetsInputs.interact = false;
+            //StarterAssetsInputs.interact = false;
             ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = "";
 
             
@@ -91,7 +91,8 @@ public class InteractableGun : MonoBehaviour
         ShowUI.showDesc = false;
         ShowUI.InteractChecker();
         Debug.Log("Player no longer in range");
-        StarterAssetsInputs.interact = false;
+        
+        //StarterAssetsInputs.interact = false;
         ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = "";
     }
 }

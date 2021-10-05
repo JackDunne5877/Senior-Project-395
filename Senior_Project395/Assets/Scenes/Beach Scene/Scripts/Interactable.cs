@@ -21,7 +21,7 @@ public class Interactable : MonoBehaviour
     private void Update()
     {
         //if we're in range to interact
-        if (StarterAssetsInputs.interact && isInRangeOfThisObject)
+        if (/*StarterAssetsInputs.interact &&*/ isInRangeOfThisObject)
         {
             isBeingInteracted = true;
             Debug.Log(objectDescription);
@@ -58,7 +58,7 @@ public class Interactable : MonoBehaviour
         ShowUI.showDesc = false;
         ShowUI.InteractChecker();
         Debug.Log("Player no longer in range");
-        StarterAssetsInputs.interact = false;
+        //StarterAssetsInputs.interact = false;
         ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = "";
     }
 }

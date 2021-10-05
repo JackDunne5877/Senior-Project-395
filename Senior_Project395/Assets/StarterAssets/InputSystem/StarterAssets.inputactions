@@ -43,7 +43,7 @@
                     "id": "da5b4187-3fcc-48ae-98e6-28c2dbed6004",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "Shoot",

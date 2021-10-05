@@ -13,7 +13,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		static public bool interact;
+		public bool interact;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -110,6 +110,7 @@ namespace StarterAssets
 				return;
 			}
 			jump = newJumpState;
+			Debug.Log("Jumped from StarterAssetsInputs");
 
 		}
 
@@ -130,7 +131,6 @@ namespace StarterAssets
 				return;
 			}
 			interact = newInteractState;
-
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID
