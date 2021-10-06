@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 8698887989913398913}
   - component: {fileID: 1149450723414402945}
   - component: {fileID: 7661453905059202147}
+  - component: {fileID: -4519817519344485449}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -257,3 +258,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-4519817519344485449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698887989913398975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthCapacity: 4
+  points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}

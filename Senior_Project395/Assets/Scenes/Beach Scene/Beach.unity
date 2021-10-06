@@ -2661,8 +2661,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &241508196
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2927,8 +2932,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &252153845
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4034,8 +4044,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &379717958
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4781,8 +4796,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &425198013
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5655,8 +5675,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &508494022
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10810,8 +10835,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1083584132
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12171,8 +12201,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!4 &1195974142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 491670, guid: 2a5dff5f76f112b41a5721a16df1160e,
@@ -14707,8 +14742,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1494932698
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16130,8 +16170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1597316286
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17425,8 +17470,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1709669232
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17558,8 +17608,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1717283953
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17736,8 +17791,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1732059906
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19945,8 +20005,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &1982750912
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21082,8 +21147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3997b0e630a0a54da72768647aec5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  healthCapacity: 4
   points: 100
+  damageLevelMats:
+  - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
+  - {fileID: 2100000, guid: 5fe5cb43abccd744d852c99fd1065ad4, type: 2}
+  - {fileID: 2100000, guid: cc615922148085941aee42e120eff884, type: 2}
+  - {fileID: 2100000, guid: 8e1d4d9d62e21d44dac1ccd5c9ae62fd, type: 2}
 --- !u!54 &2077826516
 Rigidbody:
   m_ObjectHideFlags: 0
