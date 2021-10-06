@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6069681114560016323}
   - component: {fileID: 6069681114560016322}
   - component: {fileID: 4282233351039281387}
+  - component: {fileID: 7768387161376720945}
   m_Layer: 2
   m_Name: Assault
   m_TagString: Untagged
@@ -43,16 +44,17 @@ AudioSource:
   m_GameObject: {fileID: 6069681114560016327}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 4649900b6df68784c9744a0bc3133387,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 81a6153000036344e98c354b326e080c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.27
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 161
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -250,12 +252,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunDamage: 1
-  fireRate: 0.01
+  fireRate: 0.1
   weaponRange: 50
-  hitForce: 100
+  hitForce: 400
   gunEnd: {fileID: 6069681115378858989}
   isFullAuto: 1
   laserDuration: 0.07
+--- !u!114 &7768387161376720945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6069681114560016327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f665a0f66d06864489515102925986dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 6069681114560016323}
+  audioClips:
+  - {fileID: 8300000, guid: 0c27a2282cbd4c34b9214495a2c6fe32, type: 3}
+  - {fileID: 8300000, guid: dc10dbe0b45b02d43872dc0baaabd2d7, type: 3}
+  - {fileID: 8300000, guid: 94a57e73f57af8b4f99b4d51c15f25aa, type: 3}
+  - {fileID: 8300000, guid: 674cd38a55628f94ba4a1c6de21a7983, type: 3}
 --- !u!1 &6069681115378858988
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,9 +420,6 @@ MonoBehaviour:
   isInRangeOfThisObject: 0
   isEquipped: 0
   gunObj: {fileID: 6069681114560016327}
-  player: {fileID: 0}
-  currentPosition: {fileID: 0}
-  objectDescription: weapon equipped
 --- !u!114 &1310875083202833441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,3 +435,4 @@ MonoBehaviour:
   isBeingInteracted: 0
   objectDescription: 
   playerInRange: {fileID: 0}
+  held: 0

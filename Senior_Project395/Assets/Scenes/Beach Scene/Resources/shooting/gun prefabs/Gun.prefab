@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4759895786386632389}
   - component: {fileID: 4759895786386632386}
+  - component: {fileID: 7809783534833726096}
   - component: {fileID: 4759895786386632387}
   - component: {fileID: 3267592033577855466}
   m_Layer: 2
@@ -43,8 +44,9 @@ AudioSource:
   m_GameObject: {fileID: 4759895786386632390}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 81a6153000036344e98c354b326e080c, type: 3}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 4649900b6df68784c9744a0bc3133387,
+    type: 2}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -130,6 +132,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &7809783534833726096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759895786386632390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f665a0f66d06864489515102925986dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 4759895786386632386}
+  audioClips:
+  - {fileID: 8300000, guid: 64bbd5e27442ad54399dd608cd6029a1, type: 3}
+  - {fileID: 8300000, guid: 76caf18b766037346b0ffc89f67d1527, type: 3}
+  - {fileID: 8300000, guid: 8c897a826a49f8b4a8a191fc41c1b5fa, type: 3}
 --- !u!120 &4759895786386632387
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -252,10 +271,13 @@ MonoBehaviour:
   gunDamage: 1
   fireRate: 0.25
   weaponRange: 50
-  hitForce: 100
+  hitForce: 700
   gunEnd: {fileID: 4759895787138628332}
   isFullAuto: 0
   laserDuration: 0.07
+  interactableGun: {fileID: 0}
+  fpsCam: {fileID: 0}
+  laserLine: {fileID: 0}
 --- !u!1 &4759895787138628333
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +408,6 @@ MonoBehaviour:
   isInRangeOfThisObject: 0
   isEquipped: 0
   gunObj: {fileID: 4759895786386632390}
-  objectDescription: 
 --- !u!114 &5618606863469337437
 MonoBehaviour:
   m_ObjectHideFlags: 0

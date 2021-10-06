@@ -11,14 +11,14 @@ public class RaycastShootComplete : MonoBehaviour
     public Transform gunEnd;                                            // Holds a reference to the gun end object, marking the muzzle location of the gun
     public bool isFullAuto = false;
     public float laserDuration = 0.07f;
-    public InteractableGun interactableGun;
+    
 
-    public Camera fpsCam;                                                // Holds a reference to the first person camera
+    private Camera fpsCam;                                                // Holds a reference to the first person camera
     private WaitForSeconds shotDuration;   // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
-    private AudioSource gunAudio;                                        // Reference to the audio source which will play our shooting sound effect
-    public LineRenderer laserLine;                                        // Reference to the LineRenderer component which will display our laserline
+    private randomSoundPlayer gunAudioPlayer;                                        // Reference to the audio source which will play our shooting sound effect
+    private LineRenderer laserLine;                                        // Reference to the LineRenderer component which will display our laserline
     private float nextFire;       // Float to store the time the player will be allowed to fire again, after firing
-
+    private InteractableGun interactableGun;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class RaycastShootComplete : MonoBehaviour
         laserLine = GetComponent<LineRenderer>();
 
         // Get and store a reference to our AudioSource component
-        gunAudio = GetComponent<AudioSource>();
+        gunAudioPlayer = GetComponent<randomSoundPlayer>();
 
         // Get and store a reference to our Camera by searching this GameObject and its parents
         refreshCameraRef();
@@ -47,7 +47,6 @@ public class RaycastShootComplete : MonoBehaviour
         // Check if the player has pressed the fire button and if enough time has elapsed since they last fired
         if (interactableGun.isEquipped && (Input.GetButtonDown("Fire1") || (isFullAuto && Input.GetButton("Fire1"))) && Time.time > nextFire)
         {
-            Debug.Log("pow!");
             // Update the time when our player can fire next
             nextFire = Time.time + fireRate;
 
@@ -108,7 +107,7 @@ public class RaycastShootComplete : MonoBehaviour
     private IEnumerator ShotEffect()
     {
         // Play the shooting sound effect
-        gunAudio.Play();
+        gunAudioPlayer.playRandomSound();
 
         // Turn on our line renderer
         laserLine.enabled = true;
