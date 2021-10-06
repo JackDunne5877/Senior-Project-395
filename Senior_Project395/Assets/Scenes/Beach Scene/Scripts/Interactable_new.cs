@@ -15,32 +15,38 @@ public class Interactable_new : MonoBehaviour
     public string objectDescription;
     public GameObject playerInRange;
     private HUD_Controller playerInRangeHUD;
+    public bool held = false;
 
     private void Update()
     {
         //if a player is in range to interact, and interact key is pressed
-        if (playerInRange != null && playerInRange.GetComponent<StarterAssetsInputs>().interact)
+        if (!held)
         {
-            if (!isBeingInteracted)
+            if (playerInRange != null && playerInRange.GetComponent<StarterAssetsInputs>().interact)
             {
-                isBeingInteracted = true;
-                playerInRangeHUD.interactionDescriptionObj.GetComponentInChildren<Text>().text = objectDescription;
-                playerInRangeHUD.showInteractionDesc = true;
-                playerInRangeHUD.CheckDescriptionTextVisibility();
+                if (!isBeingInteracted)
+                {
+                    isBeingInteracted = true;
+                    playerInRangeHUD.interactionDescriptionObj.GetComponentInChildren<Text>().text = objectDescription;
+                    playerInRangeHUD.showInteractionDesc = true;
+                    playerInRangeHUD.CheckDescriptionTextVisibility();
+                }
             }
         }
-        
     }
 
     //when entering/colliding with 3d physics sphere
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (!held)
         {
-            playerInRange = other.gameObject;
-            playerInRangeHUD = playerInRange.GetComponent<HUD_Controller>();
-            playerInRangeHUD.showInteractPrompt = true;
-            playerInRangeHUD.CheckInteractPromptVisibility();
+            if (other.gameObject.CompareTag("Player"))
+            {
+                playerInRange = other.gameObject;
+                playerInRangeHUD = playerInRange.GetComponent<HUD_Controller>();
+                playerInRangeHUD.showInteractPrompt = true;
+                playerInRangeHUD.CheckInteractPromptVisibility();
+            }
         }
     }
 
@@ -62,6 +68,19 @@ public class Interactable_new : MonoBehaviour
     //when exiting range of 3d physics sphere
     private void OnTriggerExit(Collider other)
     {
-        StopInteractingWithPlayer(other.gameObject);
+        if (!held)
+        {
+            StopInteractingWithPlayer(other.gameObject);
+        }
+    }
+
+    public void ConvertToHeldItem()
+    {
+        if (playerInRange)
+            StopInteractingWithPlayer(playerInRange);
+
+        held = true;
+        playerInRange = null;
+        isBeingInteracted = false;
     }
 }

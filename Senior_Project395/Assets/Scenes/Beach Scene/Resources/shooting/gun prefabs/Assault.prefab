@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6069681114560016323}
   - component: {fileID: 6069681114560016322}
   - component: {fileID: 4282233351039281387}
-  - component: {fileID: 2064791490}
   m_Layer: 2
   m_Name: Assault
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6069681114560016327}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.08}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7199080353881455520}
@@ -255,23 +254,8 @@ MonoBehaviour:
   weaponRange: 50
   hitForce: 100
   gunEnd: {fileID: 6069681115378858989}
-  isFullAuto: 0
+  isFullAuto: 1
   laserDuration: 0.07
---- !u!114 &2064791490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6069681114560016327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6dbe30858042994f80e699cc1ac0e94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 3
-  isInteracting: 0
-  animator: {fileID: 0}
 --- !u!1 &6069681115378858988
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6069681115378858988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1526, y: 0.745, z: 2.005}
+  m_LocalPosition: {x: 0, y: 0.521, z: 2.305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7199080353881455520}
@@ -315,6 +299,7 @@ GameObject:
   - component: {fileID: 8332619923801440463}
   - component: {fileID: 2064791492}
   - component: {fileID: 2064791491}
+  - component: {fileID: 1310875083202833441}
   m_Layer: 0
   m_Name: assault4
   m_TagString: Untagged
@@ -330,7 +315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7540034973679001882}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.72, y: -0.4, z: 0.445}
+  m_LocalPosition: {x: 0, y: -0.1124, z: 0}
   m_LocalScale: {x: 0.36561, y: 0.2154, z: 0.2139}
   m_Children:
   - {fileID: 6069681115378858989}
@@ -398,7 +383,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.7086625
-  m_Center: {x: 0.48749232, y: 0.15866236, z: 0.26281273}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2064791491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,7 +399,22 @@ MonoBehaviour:
   isBeingInteracted: 0
   isInRangeOfThisObject: 0
   isEquipped: 0
-  currentGun: {fileID: 6069681114560016327}
+  gunObj: {fileID: 6069681114560016327}
   player: {fileID: 0}
   currentPosition: {fileID: 0}
   objectDescription: weapon equipped
+--- !u!114 &1310875083202833441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540034973679001882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215ccdf83de6edd449aca9ee0bb13b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBeingInteracted: 0
+  objectDescription: 
+  playerInRange: {fileID: 0}

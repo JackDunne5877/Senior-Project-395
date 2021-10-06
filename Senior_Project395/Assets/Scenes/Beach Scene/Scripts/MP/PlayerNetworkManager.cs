@@ -61,6 +61,7 @@ namespace Com.Orion.MP
 
         void OnTriggerEnter(Collider other)
         {
+            //Debug.Log("dropping player health!");
             if (!photonView.IsMine)
             {
                 return;
@@ -68,7 +69,8 @@ namespace Com.Orion.MP
             // We are only interested in Beamers
             // we should be using tags but for the sake of distribution, let's simply check by name.
             
-            Health -= 0.1f;
+            //Leaving this out for now since it was taking away player health any time they collided with another object -Chuck 10/6
+            //Health -= 0.1f;
         }
         /// <summary>
         /// MonoBehaviour method called once per frame for every Collider 'other' that is touching the trigger.

@@ -20,9 +20,8 @@ public class doorSnapOpen : MonoBehaviour
     void Update()
     {
 
-        if (!doorTouched && interactable.isBeingInteracted)
+        if (interactable.isBeingInteracted)
         {
-            doorTouched = true;
             Debug.Log("Door has been touched");
             if (doorOpen)
             {
@@ -38,16 +37,8 @@ public class doorSnapOpen : MonoBehaviour
             }
             //interactable.isBeingInteracted = false;
             doorOpen = !doorOpen;
+            interactable.isBeingInteracted = false;
         }
 
-        if(doorTouched && countdown > 0)
-        {
-            countdown -= Time.deltaTime;
-        }
-        else
-        {
-            countdown = countdownReset;
-            doorTouched = false;
-        }
     }
 }

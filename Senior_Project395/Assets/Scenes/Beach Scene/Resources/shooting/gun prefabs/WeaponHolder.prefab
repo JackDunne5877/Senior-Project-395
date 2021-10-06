@@ -28,7 +28,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6899023538168464696}
   - {fileID: 2123442013067677480}
   - {fileID: 3919496051577588839}
   m_Father: {fileID: 0}
@@ -46,40 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c859d416b6fab4749b7d8f1d9dc840eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Buttons: {fileID: 0}
   Guns:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!1 &6190490417650628358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6899023538168464696}
-  m_Layer: 2
-  m_Name: GunPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6899023538168464696
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6190490417650628358}
-  m_LocalRotation: {x: 0.0065050623, y: -0.0022220747, z: 0.0062274067, w: 0.999957}
-  m_LocalPosition: {x: 0.63323, y: -0.381, z: 0.356}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4821251354097493208}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  - {fileID: 2123442013067677483}
+  - {fileID: 3919496051577588836}
 --- !u!1001 &6879653862861316589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90,7 +58,7 @@ PrefabInstance:
     - target: {fileID: 4759895786386632389, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4759895786386632389, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
         type: 3}
@@ -105,7 +73,7 @@ PrefabInstance:
     - target: {fileID: 4759895786386632389, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4759895786386632389, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
         type: 3}
@@ -147,8 +115,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 5618606863469337437, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
+        type: 3}
+      propertyPath: held
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9071ec5a9a394bc780f7dc1b7c6007d, type: 3}
+--- !u!1 &2123442013067677483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4759895786386632390, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6879653862861316589}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2123442013067677480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4759895786386632389, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
@@ -162,10 +141,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4821251354097493208}
     m_Modifications:
+    - target: {fileID: 1310875083202833441, guid: ee037b589be4e4bf79e45c65fcb75c4a,
+        type: 3}
+      propertyPath: held
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6069681114560016324, guid: ee037b589be4e4bf79e45c65fcb75c4a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6069681114560016324, guid: ee037b589be4e4bf79e45c65fcb75c4a,
         type: 3}
@@ -180,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 6069681114560016324, guid: ee037b589be4e4bf79e45c65fcb75c4a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6069681114560016324, guid: ee037b589be4e4bf79e45c65fcb75c4a,
         type: 3}
@@ -222,8 +206,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Assault
       objectReference: {fileID: 0}
+    - target: {fileID: 7199080353881455520, guid: ee037b589be4e4bf79e45c65fcb75c4a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.3065
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee037b589be4e4bf79e45c65fcb75c4a, type: 3}
+--- !u!1 &3919496051577588836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6069681114560016327, guid: ee037b589be4e4bf79e45c65fcb75c4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7088399958527386531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3919496051577588839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6069681114560016324, guid: ee037b589be4e4bf79e45c65fcb75c4a,

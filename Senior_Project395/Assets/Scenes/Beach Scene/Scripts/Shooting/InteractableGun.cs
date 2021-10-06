@@ -11,88 +11,32 @@ public class InteractableGun : MonoBehaviour
     public bool isBeingInteracted = false;
     public bool isInRangeOfThisObject = false;
     public bool isEquipped = false;
-    public GameObject currentGun;
-    public GameObject player;
-    public GameObject currentPosition;
+    public GameObject gunObj;
+    private GameObject player;
 
-    //dynamic text box to change description for each object
-    public string objectDescription;
+    private Interactable_new interactable;
 
     private void Start()
     {
-        currentGun.SetActive(true);
+        interactable = this.GetComponent<Interactable_new>();
+        gunObj.SetActive(true);
     }
 
 
     private void Update()
     {
-        //if we're in range to interact
-        //NOTE: clean up all input settings (here, interactable objects, gunsmenu), to be operated consistently
-        if (/*StarterAssetsInputs.pickUpGun*/ Input.GetKeyDown(KeyCode.F) && isInRangeOfThisObject && !isEquipped)
+        //if we interact
+        if (interactable.isBeingInteracted)
         {
-            isBeingInteracted = true;
-            ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = objectDescription;
-            ShowUI.showDesc = true;
-            ShowUI.descriptionChecker();
-
+            player = interactable.playerInRange;
             //add gun to inventory
             Debug.Log("adding weapon to inventory");
-            player.GetComponentInChildren<GunsMenu>().addWeapon(currentGun);
-            isEquipped = true;
-            currentPosition = GameObject.Find("GunPosition");
+            player.GetComponentInChildren<GunsMenu>().addWeapon(gunObj);
+            isEquipped = false;
 
-            //instantiate currentGun as child of WeaponHolder, and reset positioning
-            currentGun.transform.parent = GameObject.Find("WeaponHolder").transform;
-            currentGun.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            currentGun.transform.localPosition = Vector3.zero;
-
-            currentGun.transform.GetChild(0).localPosition = currentPosition.transform.localPosition;
-            currentGun.transform.GetChild(0).localRotation = currentPosition.transform.localRotation;
-
-            currentGun.SetActive(false);
-
-            //reset conditions (as ontrigger exit doesn't work after deleting gun
-            isInRange = false;
-            isInRangeOfThisObject = false;
-            isBeingInteracted = false;
-            ShowUI.showTxt = false;
-            ShowUI.showDesc = false;
-            ShowUI.InteractChecker();
-            Debug.Log("Player no longer in range");
-            //StarterAssetsInputs.interact = false;
-            ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = "";
-
-            
-
+            //tell interactable it is being held so triggers and text no longer work
+            interactable.ConvertToHeldItem();
         }
 
-    }
-
-    //when entering/colliding with 3d physics sphere
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") && !isEquipped)
-        {
-            isInRangeOfThisObject = true;
-            isInRange = true;
-            ShowUI.showTxt = true;
-            ShowUI.InteractChecker();
-            player = other.gameObject;
-        }
-    }
-
-    //when exiting range of 3d physics sphere
-    private void OnTriggerExit(Collider other)
-    {
-        isInRange = false;
-        isInRangeOfThisObject = false;
-        isBeingInteracted = false;
-        ShowUI.showTxt = false;
-        ShowUI.showDesc = false;
-        ShowUI.InteractChecker();
-        Debug.Log("Player no longer in range");
-        
-        //StarterAssetsInputs.interact = false;
-        ShowUI.uiObjectDesc.GetComponentInChildren<Text>().text = "";
     }
 }
