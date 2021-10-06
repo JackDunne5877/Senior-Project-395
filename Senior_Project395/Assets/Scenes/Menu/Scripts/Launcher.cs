@@ -120,7 +120,7 @@ namespace Com.Orion.MP
         {
             if (isConnecting)
             {
-                Debug.Log("Launcher: OnConnectedToMaster() was called by PUN");
+                //Debug.Log("Launcher: OnConnectedToMaster() was called by PUN");
                 // PhotonNetwork.JoinRandomRoom();
                 JoinRandomRoom();
             }
@@ -132,13 +132,13 @@ namespace Com.Orion.MP
                 progressLabel.SetActive(false);
                 controlPanel.SetActive(true);
             }
-            Debug.LogWarningFormat("Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
+            //Debug.LogWarningFormat("Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
             isConnecting = false;
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            Debug.Log("Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+            //Debug.Log("Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
             // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
             //PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
@@ -147,10 +147,10 @@ namespace Com.Orion.MP
 
         public override void OnJoinedRoom()
         {
-            Debug.Log("Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+            //Debug.Log("Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
             if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
-                Debug.Log("Load level index: " + levelIndex);
+                //Debug.Log("Load level index: " + levelIndex);
 
                 // #Critical
                 // Load the Level.

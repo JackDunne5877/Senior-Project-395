@@ -50,8 +50,8 @@ MonoBehaviour:
   voiceDetection: 1
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
-  unityMicrophoneDevice: Microphone (Realtek(R) Audio)
-  photonMicrophoneDeviceId: 0
+  unityMicrophoneDevice: 
+  photonMicrophoneDeviceId: -1
   interestGroup: 0
   debugEchoMode: 0
   reliableMode: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisconnectAfterKeepAlive: 0
   KeepAliveInBackground: 5000
-  ApplyDontDestroyOnLoad: 1
+  ApplyDontDestroyOnLoad: 0
   logLevel: 3
   enableSupportLogger: 0
   updateInterval: 50
@@ -130,7 +130,7 @@ MonoBehaviour:
     NetworkLogging: 1
   ShowSettings: 0
   MinimalTimeScaleToDispatchInFixedUpdate: -1
-  AutoCreateSpeakerIfNotFound: 1
+  AutoCreateSpeakerIfNotFound: 0
   AutoConnectAndJoin: 1
   AutoLeaveAndDisconnect: 1
   WorkInOfflineMode: 1

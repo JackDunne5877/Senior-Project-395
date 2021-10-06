@@ -100,10 +100,12 @@ namespace Com.Orion.MP
             if (photonView.IsMine)
             {
                 PlayerNetworkManager.LocalPlayerInstance = this.gameObject;
-                cam.SetActive(true);
+                //cam.SetActive(true);
+                TurnOnCameraComponents(true);
             }
             else {
-                cam.SetActive(false);
+                TurnOnCameraComponents(false);
+                //cam.SetActive(false);
             }
             // #Critical
             // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
@@ -132,6 +134,14 @@ namespace Com.Orion.MP
         #endregion
 
         #region Custom
+
+        void TurnOnCameraComponents(bool isOn) {
+            cam.GetComponent<Camera>().enabled = isOn;
+            cam.GetComponent<AudioListener>().enabled = isOn;
+            cam.GetComponent<Cinemachine.CinemachineBrain>().enabled = isOn;
+            cam.transform.Find("Canvas").gameObject.SetActive(isOn);
+        }
+
 
         /// <summary>
         /// Processes the inputs. Maintain a flag representing when the user is pressing Fire.
