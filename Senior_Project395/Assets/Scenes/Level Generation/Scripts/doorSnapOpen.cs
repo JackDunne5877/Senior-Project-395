@@ -5,7 +5,7 @@ using UnityEngine;
 public class doorSnapOpen : MonoBehaviour
 {
     public GameObject objWithInteractable;
-    private Interactable interactable;
+    private Interactable_new interactable;
     public bool doorTouched = false;
     public bool doorOpen = false;
     public float countdownReset;
@@ -13,7 +13,7 @@ public class doorSnapOpen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        interactable = objWithInteractable.GetComponentInChildren<Interactable>();
+        interactable = objWithInteractable.GetComponentInChildren<Interactable_new>();
     }
 
     // Update is called once per frame
@@ -36,7 +36,7 @@ public class doorSnapOpen : MonoBehaviour
                 //open
                 this.transform.localRotation *= Quaternion.Euler(0, 0, -90);
             }
-            interactable.isBeingInteracted = false;
+            //interactable.isBeingInteracted = false;
             doorOpen = !doorOpen;
         }
 
