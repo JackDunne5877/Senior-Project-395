@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class RaycastShootComplete : MonoBehaviour
+public class RaycastShootComplete : MonoBehaviourPunCallbacks
 {
 
     public int gunDamage = 1;                                            // Set the number of hitpoints that this gun will take away from shot objects with a health script
@@ -44,6 +45,10 @@ public class RaycastShootComplete : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         // Check if the player has pressed the fire button and if enough time has elapsed since they last fired
         if (interactableGun.isEquipped && (Input.GetButtonDown("Fire1") || (isFullAuto && Input.GetButton("Fire1"))) && Time.time > nextFire)
         {
