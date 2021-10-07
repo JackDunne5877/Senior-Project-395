@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using StarterAssets;
+
 
 public class RaycastShootComplete : MonoBehaviour
 {
@@ -11,7 +13,11 @@ public class RaycastShootComplete : MonoBehaviour
     public Transform gunEnd;                                            // Holds a reference to the gun end object, marking the muzzle location of the gun
     public bool isFullAuto = false;
     public float laserDuration = 0.07f;
-    
+    public int ammoCapacity = 20;
+    private int currentAmmo;
+    public AudioClip emptyMagazineSound;
+    public AudioClip reloadSound;
+
 
     private Camera fpsCam;                                                // Holds a reference to the first person camera
     private WaitForSeconds shotDuration;   // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
@@ -19,6 +25,7 @@ public class RaycastShootComplete : MonoBehaviour
     private LineRenderer laserLine;                                        // Reference to the LineRenderer component which will display our laserline
     private float nextFire;       // Float to store the time the player will be allowed to fire again, after firing
     private InteractableGun interactableGun;
+
 
     void Start()
     {
@@ -34,6 +41,8 @@ public class RaycastShootComplete : MonoBehaviour
         shotDuration = new WaitForSeconds(0.07f);
 
         interactableGun = gameObject.GetComponentInChildren<InteractableGun>();
+
+        currentAmmo = ammoCapacity;
     }
 
     public void refreshCameraRef()
@@ -44,65 +53,104 @@ public class RaycastShootComplete : MonoBehaviour
 
     void Update()
     {
+
         // Check if the player has pressed the fire button and if enough time has elapsed since they last fired
+        if (interactableGun.isEquipped)
+        {
+            GetComponentInParent<HUD_Controller>().updateAmmoCount(currentAmmo);
+
+        }
+
         if (interactableGun.isEquipped && (Input.GetButtonDown("Fire1") || (isFullAuto && Input.GetButton("Fire1"))) && Time.time > nextFire)
         {
-            // Update the time when our player can fire next
-            nextFire = Time.time + fireRate;
-
-            // Start our ShotEffect coroutine to turn our laser line on and off
-            StartCoroutine(ShotEffect());
-
-            // Create a vector at the center of our camera's viewport
-            if (fpsCam)
+            if (currentAmmo > 0)
             {
-                Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+                Shoot();
+            }
+            else
+            {
+                IndicateOutOfAmmo();
+            }
+            
+        }
 
-                // Declare a raycast hit to store information about what our raycast has hit
-                RaycastHit hit;
+        if(interactableGun.isEquipped && GetComponentInParent<StarterAssetsInputs>().reload)
+        {
+            currentAmmo = ammoCapacity;
+            GetComponentInParent<StarterAssetsInputs>().reload = false;
+            IndicateReload();
+        }
+    }
 
-                // Set the start position for our visual effect for our laser to the position of gunEnd
-                laserLine.SetPosition(0, gunEnd.position);
+    private void Shoot()
+    {
+        // Update the time when our player can fire next
+        nextFire = Time.time + fireRate;
+
+        // Start our ShotEffect coroutine to turn our laser line on and off
+        StartCoroutine(ShotEffect());
+
+        // Create a vector at the center of our camera's viewport
+        if (fpsCam)
+        {
+            Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+
+            // Declare a raycast hit to store information about what our raycast has hit
+            RaycastHit hit;
+
+            // Set the start position for our visual effect for our laser to the position of gunEnd
+            laserLine.SetPosition(0, gunEnd.position);
+
+            //use up ammo
+            currentAmmo--;
 
 
-                // Check if our raycast has hit anything
-                if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+            // Check if our raycast has hit anything
+            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+            {
+                // Set the end position for our laser line 
+                laserLine.SetPosition(1, hit.point);
+                Debug.Log("raycast hit: " + hit.collider.gameObject.name);
+
+                // Get a reference to a health script attached to the collider we hit
+                Damageable dmgb = hit.collider.GetComponent<Damageable>();
+
+                // If there was a health script attached
+                if (dmgb != null)
                 {
-                    // Set the end position for our laser line 
-                    laserLine.SetPosition(1, hit.point);
-                    Debug.Log("raycast hit: " + hit.collider.gameObject.name);
-
-                    // Get a reference to a health script attached to the collider we hit
-                    Damageable dmgb = hit.collider.GetComponent<Damageable>();
-
-                    // If there was a health script attached
-                    if (dmgb != null)
+                    // Call the damage function of that script, passing in our gunDamage variable
+                    int pointsEarned = dmgb.doDamage(gunDamage);
+                    if (pointsEarned > 0)
                     {
-                        // Call the damage function of that script, passing in our gunDamage variable
-                        int pointsEarned = dmgb.doDamage(gunDamage);
-                        if (pointsEarned > 0)
-                        {
-                            Debug.Log("trying to add points in raycastShoot");
-                            GetComponentInParent<HUD_Controller>().AddPoints(pointsEarned);
-                        }
-                    }
-
-                    // Check if the object we hit has a rigidbody attached
-                    if (hit.rigidbody != null)
-                    {
-                        // Add force to the rigidbody we hit, in the direction from which it was hit
-                        hit.rigidbody.AddForce(-hit.normal * hitForce);
+                        Debug.Log("trying to add points in raycastShoot");
+                        GetComponentInParent<HUD_Controller>().AddPoints(pointsEarned);
                     }
                 }
-                else
+
+                // Check if the object we hit has a rigidbody attached
+                if (hit.rigidbody != null)
                 {
-                    // If we did not hit anything, set the end of the line to a position directly in front of the camera at the distance of weaponRange
-                    laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
+                    // Add force to the rigidbody we hit, in the direction from which it was hit
+                    hit.rigidbody.AddForce(-hit.normal * hitForce);
                 }
+            }
+            else
+            {
+                // If we did not hit anything, set the end of the line to a position directly in front of the camera at the distance of weaponRange
+                laserLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
             }
         }
     }
 
+    private void IndicateOutOfAmmo()
+    {
+        gunAudioPlayer.playThisSound(emptyMagazineSound);
+    }
+
+    private void IndicateReload()
+    {
+        gunAudioPlayer.playThisSound(reloadSound);
+    }
 
     private IEnumerator ShotEffect()
     {

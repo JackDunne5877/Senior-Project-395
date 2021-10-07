@@ -55,6 +55,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4821251354097493208}
     m_Modifications:
+    - target: {fileID: 3267592033577855466, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
+        type: 3}
+      propertyPath: ammoCapacity
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4759895786386632389, guid: e9071ec5a9a394bc780f7dc1b7c6007d,
         type: 3}
       propertyPath: m_RootOrder
@@ -145,6 +150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: held
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282233351039281387, guid: ee037b589be4e4bf79e45c65fcb75c4a,
+        type: 3}
+      propertyPath: ammoCapacity
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6069681114560016324, guid: ee037b589be4e4bf79e45c65fcb75c4a,
         type: 3}

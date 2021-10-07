@@ -275,9 +275,9 @@ MonoBehaviour:
   gunEnd: {fileID: 4759895787138628332}
   isFullAuto: 0
   laserDuration: 0.07
-  interactableGun: {fileID: 0}
-  fpsCam: {fileID: 0}
-  laserLine: {fileID: 0}
+  ammoCapacity: 20
+  emptyMagazineSound: {fileID: 8300000, guid: f1d6310bd0ce628418ccc9f35abd69c2, type: 3}
+  reloadSound: {fileID: 8300000, guid: f80953739a7349b4e8b18592dc595c3e, type: 3}
 --- !u!1 &4759895787138628333
 GameObject:
   m_ObjectHideFlags: 0

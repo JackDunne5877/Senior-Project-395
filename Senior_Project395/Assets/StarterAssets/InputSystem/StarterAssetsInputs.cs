@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool interact;
+		public bool reload;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -78,6 +79,15 @@ namespace StarterAssets
 			InteractInput(value.isPressed);
 
 		}
+
+		public void OnReload(InputValue value)
+        {
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			ReloadInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -131,6 +141,15 @@ namespace StarterAssets
 				return;
 			}
 			interact = newInteractState;
+		}
+
+		public void ReloadInput(bool newReloadState)
+		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			reload = newReloadState;
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID

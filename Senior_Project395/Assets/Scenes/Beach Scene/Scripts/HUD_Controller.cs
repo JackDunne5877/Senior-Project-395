@@ -9,9 +9,15 @@ public class HUD_Controller : MonoBehaviour
     // Start is called before the first frame update
     public GameObject PointsTextObj;
     public GameObject HealthBarObj;
-    
+    public GameObject AmmoTextObj;
+
+    public Color ammoCountColor;
+    public Color ammoEmptyColor;
+
+
     private PlayerNetworkManager PlayerNetManager;
     private Text pointsText;
+    private Text ammoText;
     private int Points = 0;
 
     public GameObject interactPromptObj;
@@ -23,6 +29,7 @@ public class HUD_Controller : MonoBehaviour
     {
         PlayerNetManager = GetComponentInParent<PlayerNetworkManager>();
         pointsText = PointsTextObj.GetComponent<Text>();
+        ammoText = AmmoTextObj.GetComponent<Text>();
 
         interactPromptObj.SetActive(false);
         interactionDescriptionObj.SetActive(false);
@@ -39,6 +46,20 @@ public class HUD_Controller : MonoBehaviour
         Debug.Log("Adding points");
         Points += pts;
         pointsText.text = Points.ToString();
+    }
+
+    public void updateAmmoCount(int ammo)
+    {
+        Debug.Log("Updating Ammo Count");
+        ammoText.text = ammo.ToString();
+        if(ammo == 0)
+        {
+            ammoText.color = ammoEmptyColor;
+        }
+        else
+        {
+            ammoText.color = ammoCountColor;
+        }
     }
 
     public void CheckInteractPromptVisibility()

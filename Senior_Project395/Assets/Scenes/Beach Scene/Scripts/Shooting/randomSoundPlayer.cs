@@ -14,4 +14,10 @@ public class randomSoundPlayer : MonoBehaviour
         source.PlayOneShot(audioClips[clipNum]);
         source.Play();
     }
+
+    public void playThisSound(AudioClip clip)
+    {
+        source.PlayOneShot(clip);
+        //source.Play();
+    }
 }
