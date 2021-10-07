@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level Generation/GenerativeBuilding.unity
     guid: 6cc48bc8b5d3ed2409829d9ca0cb7675
+  - enabled: 1
+    path: Assets/Scenes/Experimental Scene/Experimental Scene.unity
+    guid: b2fa8882363c4644b93046de18bcbf19
   - enabled: 0
     path: Assets/Scenes/Multiplayer/Launcher.unity
     guid: 351d21481f281d941b8ba02989920fcd
