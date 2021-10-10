@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Photon.Pun;
 
-public class RaycastShootComplete : MonoBehaviourPunCallbacks
+public class RaycastShootComplete : MonoBehaviourPun
 {
 
     public int gunDamage = 1;                                            // Set the number of hitpoints that this gun will take away from shot objects with a health script
@@ -12,7 +12,7 @@ public class RaycastShootComplete : MonoBehaviourPunCallbacks
     public Transform gunEnd;                                            // Holds a reference to the gun end object, marking the muzzle location of the gun
     public bool isFullAuto = false;
     public float laserDuration = 0.07f;
-    
+    public bool IsFiring = false;
 
     private Camera fpsCam;                                                // Holds a reference to the first person camera
     private WaitForSeconds shotDuration;   // WaitForSeconds object used by our ShotEffect coroutine, determines time laser line will remain visible
@@ -20,7 +20,6 @@ public class RaycastShootComplete : MonoBehaviourPunCallbacks
     private LineRenderer laserLine;                                        // Reference to the LineRenderer component which will display our laserline
     private float nextFire;       // Float to store the time the player will be allowed to fire again, after firing
     private InteractableGun interactableGun;
-
     void Start()
     {
         // Get and store a reference to our LineRenderer component
@@ -41,22 +40,33 @@ public class RaycastShootComplete : MonoBehaviourPunCallbacks
     {
         fpsCam = GetComponentInParent<Camera>();
     }
-
-
     void Update()
     {
-        if (!photonView.IsMine)
+        ////this makes sure that only the player you are supposed to be controlling will shoot
+        ////otherwise player1 would click shoot, and both player 1 and player 2 would shoot
+        //if (!photonView.IsMine)
+        //{
+        //    return;
+        //}
+        //// Check if the player has pressed the fire button and if enough time has elapsed since they last fired
+        if (interactableGun.isEquipped && (Input.GetButtonDown("Fire1") || (isFullAuto && Input.GetButton("Fire1"))))
         {
-            return;
+            //    photonView.RPC("Shoot", RpcTarget.All);
+            Shoot();
         }
-        // Check if the player has pressed the fire button and if enough time has elapsed since they last fired
-        if (interactableGun.isEquipped && (Input.GetButtonDown("Fire1") || (isFullAuto && Input.GetButton("Fire1"))) && Time.time > nextFire)
+    }
+
+    [PunRPC]
+    void Shoot() {
+
+        if (Time.time > nextFire)
         {
             // Update the time when our player can fire next
             nextFire = Time.time + fireRate;
 
             // Start our ShotEffect coroutine to turn our laser line on and off
             StartCoroutine(ShotEffect());
+            IsFiring = laserLine.enabled;
 
             // Create a vector at the center of our camera's viewport
             if (fpsCam)
@@ -107,8 +117,6 @@ public class RaycastShootComplete : MonoBehaviourPunCallbacks
             }
         }
     }
-
-
     private IEnumerator ShotEffect()
     {
         // Play the shooting sound effect

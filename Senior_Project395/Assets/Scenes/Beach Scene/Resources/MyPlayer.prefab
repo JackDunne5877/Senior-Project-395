@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 5850812187286623954}
   - component: {fileID: 7132703558711884178}
   - component: {fileID: 3971364093150135120}
+  - component: {fileID: 6824555306271361951}
   m_Layer: 8
   m_Name: MyPlayer
   m_TagString: Player
@@ -561,6 +562,7 @@ Transform:
   m_Children:
   - {fileID: 1830665542820414843}
   - {fileID: 7700554443738490930}
+  - {fileID: 27029146580692231}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -813,8 +815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bb7942d0a5c4e44a40e92315d82ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 1
   cam: {fileID: 6700698683558152492}
+  IsFiring: 0
+  voiceNetwork: {fileID: 7691848699313070258}
 --- !u!114 &7826836843797732450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,7 +835,7 @@ MonoBehaviour:
   recorderInUse: {fileID: 0}
   speakerInUse: {fileID: 7132703558711884178}
   AutoCreateRecorderIfNotFound: 0
-  UsePrimaryRecorder: 1
+  UsePrimaryRecorder: 0
   SetupDebugSpeaker: 0
 --- !u!82 &5850812187286623954
 AudioSource:
@@ -968,6 +971,56 @@ MonoBehaviour:
   interactionDescriptionObj: {fileID: 8530598327027033653}
   showInteractPrompt: 0
   showInteractionDesc: 0
+--- !u!114 &6824555306271361951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310052879649356839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logLevel: 3
+  ignoreGlobalLogLevel: 0
+  voiceDetection: 1
+  voiceDetectionThreshold: 0.01
+  voiceDetectionDelayMs: 500
+  unityMicrophoneDevice: 
+  photonMicrophoneDeviceId: 0
+  interestGroup: 0
+  debugEchoMode: 1
+  reliableMode: 0
+  encrypt: 0
+  transmitEnabled: 0
+  samplingRate: 24000
+  frameDuration: 20000
+  bitrate: 30000
+  sourceType: 0
+  microphoneType: 0
+  audioClip: {fileID: 0}
+  loopAudioClip: 1
+  reactOnSystemChanges: 0
+  autoStart: 1
+  audioSessionParameters:
+    Category: 4
+    Mode: 0
+    CategoryOptions: 0800000004000000
+  useCustomAudioSessionParameters: 0
+  audioSessionPresetIndex: 0
+  nativeAndroidMicrophoneSettings:
+    AcousticEchoCancellation: 0
+    AutomaticGainControl: 0
+    NoiseSuppression: 0
+  recordOnlyWhenEnabled: 0
+  skipDeviceChangeChecks: 0
+  stopRecordingWhenPaused: 0
+  useOnAudioFilterRead: 0
+  trySamplingRateMatch: 0
+  useMicrophoneTypeFallback: 1
+  recordOnlyWhenJoined: 1
 --- !u!1 &6998808769272123708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,6 +1356,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+--- !u!1 &6700698683558152492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9005220659476430823, guid: 2d3a85ecde41a8246a79669975912b74,
+    type: 3}
+  m_PrefabInstance: {fileID: 2307340033091221195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &6700698683558152494 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74,
@@ -1312,12 +1371,6 @@ Camera:
 --- !u!4 &6700698683558152489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74,
-    type: 3}
-  m_PrefabInstance: {fileID: 2307340033091221195}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6700698683558152492 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9005220659476430823, guid: 2d3a85ecde41a8246a79669975912b74,
     type: 3}
   m_PrefabInstance: {fileID: 2307340033091221195}
   m_PrefabAsset: {fileID: 0}
@@ -1400,3 +1453,95 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a18930b19d3c4196a767607bafbb023, type: 3}
+--- !u!1001 &8722244127651528781
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6690694306771920541}
+    m_Modifications:
+    - target: {fileID: 8309638645639562114, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: primaryRecorder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.542207
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 38.624012
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -21.621952
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231179, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: photonMicrophoneDeviceId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749267088657231181, guid: 7d09c459387334242975683ad25a140c,
+        type: 3}
+      propertyPath: m_Name
+      value: Voice
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8749267088657231179, guid: 7d09c459387334242975683ad25a140c, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 7d09c459387334242975683ad25a140c, type: 3}
+--- !u!4 &27029146580692231 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8749267088657231178, guid: 7d09c459387334242975683ad25a140c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8722244127651528781}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7691848699313070258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1420126408796217599, guid: 7d09c459387334242975683ad25a140c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8722244127651528781}
+  m_PrefabAsset: {fileID: 0}

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Photon.Pun;
-
+using Photon.Voice;
 using System.Collections;
 
 namespace Com.Orion.MP
@@ -16,79 +16,49 @@ namespace Com.Orion.MP
         #region IPunObservable implementation
 
 
+        //this allows us to communicate with clients and let them know we shot something
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
+            /*
             if (stream.IsWriting)
             {
                 // We own this player: send the others our data
-                //stream.SendNext(IsFiring);
-                stream.SendNext(Health);
+                stream.SendNext(IsFiring);
             }
             else
             {
                 // Network player, receive data
-                //this.IsFiring = (bool)stream.ReceiveNext();
-                this.Health = (float)stream.ReceiveNext();
+                this.IsFiring = (bool)stream.ReceiveNext();
             }
+            */
         }
 
 
         #endregion
 
         #region Public Fields
-        [Tooltip("The current Health of our player")]
-        public float Health = 1f;
+        //[Tooltip("The current Health of our player")]
+        //public float Health = 1f;
         [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
         public static GameObject LocalPlayerInstance;
         #endregion
 
         #region Private Fields
 
-        //[Tooltip("The Beams GameObject to control")]
-        //[SerializeField]
-        //private GameObject beams;
-
         [Tooltip("Camera so that only clients camera is activated")]
         [SerializeField]
         private GameObject cam;
 
+        public bool IsFiring;
 
-        ////True, when the user is firing
-        bool IsFiring;
+        [SerializeField]
+        private GameObject voiceNetwork;
+
         #endregion
 
         #region MonoBehaviour CallBacks
 
-        void OnTriggerEnter(Collider other)
-        {
-            //Debug.Log("dropping player health!");
-            if (!photonView.IsMine)
-            {
-                return;
-            }
-            // We are only interested in Beamers
-            // we should be using tags but for the sake of distribution, let's simply check by name.
-            
-            //Leaving this out for now since it was taking away player health any time they collided with another object -Chuck 10/6
-            //Health -= 0.1f;
-        }
-        /// <summary>
-        /// MonoBehaviour method called once per frame for every Collider 'other' that is touching the trigger.
-        /// We're going to affect health while the beams are touching the player
-        /// </summary>
-        /// <param name="other">Other.</param>
-        void OnTriggerStay(Collider other)
-        {
-            // we dont' do anything if we are not the local player.
-            if (!photonView.IsMine)
-            {
-                return;
-            }
-            // We are only interested in Beamers
-            // we should be using tags but for the sake of distribution, let's simply check by name.
-            // we slowly affect health when beam is constantly hitting us, so player has to move to prevent death.
-           // Health -= 0.1f * Time.deltaTime;
-        }
+
 
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -100,12 +70,18 @@ namespace Com.Orion.MP
             if (photonView.IsMine)
             {
                 PlayerNetworkManager.LocalPlayerInstance = this.gameObject;
-                //cam.SetActive(true);
-                TurnOnCameraComponents(true);
-            }
+                SetCameraActive(true);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    voiceNetwork.SetActive(true);
+                }
+                else {
+                    voiceNetwork.SetActive(false);
+                }
+            }   
             else {
-                TurnOnCameraComponents(false);
-                //cam.SetActive(false);
+                SetCameraActive(false);
             }
             // #Critical
             // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
@@ -114,20 +90,10 @@ namespace Com.Orion.MP
         }
         void Update()
         {
-
             if (photonView.IsMine)
             {
-                ProcessInputs();
-            }
-
-            
-            if (photonView.IsMine)
-            {
-                ProcessInputs();
-                if (Health <= 0f)
-                {
-                    NetworkManager.Instance.LeaveRoom();
-                }
+                //    photonView.RPC("Shoot", RpcTarget.All);
+                
             }
         }
 
@@ -135,11 +101,11 @@ namespace Com.Orion.MP
 
         #region Custom
 
-        void TurnOnCameraComponents(bool isOn) {
-            cam.GetComponent<Camera>().enabled = isOn;
-            cam.GetComponent<AudioListener>().enabled = isOn;
-            cam.GetComponent<Cinemachine.CinemachineBrain>().enabled = isOn;
-            cam.transform.Find("Canvas").gameObject.SetActive(isOn);
+        void SetCameraActive(bool state) {
+            cam.GetComponent<Camera>().enabled = state;
+            cam.GetComponent<AudioListener>().enabled = state;
+            cam.GetComponent<Cinemachine.CinemachineBrain>().enabled = state;
+            cam.transform.Find("Canvas").gameObject.SetActive(state);
         }
 
 
@@ -148,6 +114,7 @@ namespace Com.Orion.MP
         /// </summary>
         void ProcessInputs()
         {
+            /*
             if (Input.GetButtonDown("Fire1"))
             {
                 if (!IsFiring)
@@ -161,7 +128,7 @@ namespace Com.Orion.MP
                 {
                     IsFiring = false;
                 }
-            }
+            }*/
         }
 
         #endregion
