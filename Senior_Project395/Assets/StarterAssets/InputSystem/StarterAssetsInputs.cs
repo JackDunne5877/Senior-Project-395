@@ -1,17 +1,20 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+using Photon.Pun;
+#if ENABLE_INPUT_SYSTEM || STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
 
 namespace StarterAssets
 {
-	public class StarterAssetsInputs : MonoBehaviour
+	public class StarterAssetsInputs : MonoBehaviourPun
 	{
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool interact;
+		public bool reload;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -25,12 +28,22 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			MoveInput(value.Get<Vector2>());
+
 		}
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -38,12 +51,42 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+
 			JumpInput(value.isPressed);
+
 		}
 
 		public void OnSprint(InputValue value)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			SprintInput(value.isPressed);
+
+		}
+
+		public void OnInteract(InputValue value)
+		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			InteractInput(value.isPressed);
+
+		}
+
+		public void OnReload(InputValue value)
+        {
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			ReloadInput(value.isPressed);
 		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
@@ -52,29 +95,73 @@ namespace StarterAssets
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			move = newMoveDirection;
-		} 
+
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			look = newLookDirection;
+
 		}
 
 		public void JumpInput(bool newJumpState)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			jump = newJumpState;
+			Debug.Log("Jumped from StarterAssetsInputs");
+
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			sprint = newSprintState;
+
+		}
+
+		public void InteractInput(bool newInteractState)
+		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			interact = newInteractState;
+		}
+
+		public void ReloadInput(bool newReloadState)
+		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			reload = newReloadState;
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
+			if (!photonView.IsMine && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
 			SetCursorState(cursorLocked);
+
 		}
 
 		private void SetCursorState(bool newState)
@@ -85,5 +172,5 @@ namespace StarterAssets
 #endif
 
 	}
-	
+
 }
