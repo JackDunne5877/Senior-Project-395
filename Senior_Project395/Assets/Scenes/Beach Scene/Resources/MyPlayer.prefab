@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 5850812187286623954}
   - component: {fileID: 7132703558711884178}
   - component: {fileID: 3971364093150135120}
+  - component: {fileID: 6893930084650686443}
   m_Layer: 8
   m_Name: MyPlayer
   m_TagString: Player
@@ -965,7 +966,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PointsTextObj: {fileID: 1315931113833206571}
-  HealthBarObj: {fileID: 0}
   AmmoTextObj: {fileID: 8856797406948926257}
   ammoCountColor: {r: 0, g: 0.9218073, b: 1, a: 1}
   ammoEmptyColor: {r: 0.754717, g: 0.100628935, b: 0, a: 1}
@@ -973,6 +973,18 @@ MonoBehaviour:
   interactionDescriptionObj: {fileID: 8530598327027033653}
   showInteractPrompt: 0
   showInteractionDesc: 0
+--- !u!114 &6893930084650686443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310052879649356839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949ea810b2640d14bba20760aa2ceccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6998808769272123708
 GameObject:
   m_ObjectHideFlags: 0

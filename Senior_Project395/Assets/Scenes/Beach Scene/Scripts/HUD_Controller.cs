@@ -8,7 +8,6 @@ public class HUD_Controller : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject PointsTextObj;
-    public GameObject HealthBarObj;
     public GameObject AmmoTextObj;
 
     public Color ammoCountColor;
