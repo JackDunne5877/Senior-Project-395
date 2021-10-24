@@ -17,8 +17,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/")
-public class ModifiedServlet
+@Path("/newuser")
+public class NewUser
 {
 	public static final String JNDI_DATING_GAME = "java:/comp/env/jdbc/datinggame";
 	DataSource dataSource;
