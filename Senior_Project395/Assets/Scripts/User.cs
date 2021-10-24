@@ -27,6 +27,18 @@ public class User : MonoBehaviour
             this.birthday = birthday;
         }
     }
+    // used to make login user objects to convert to JSON
+    public class LoginUser
+    {
+        public string username {get; set;}
+        public string password {get; set;}
+
+        public LoginUser(string username, string password)
+        {
+            this.username = username;
+            this.password = password;
+        }
+    }
 
     // save response data
     public class HttpResponse
@@ -53,6 +65,35 @@ public class User : MonoBehaviour
 
         // url of server
         var url = "http://localhost:8080/DatingGameAPI/newuser";
+
+        // send data to server
+        var task = Task.Run(() => client.PostAsync(url,data));
+        task.Wait();
+        var response = task.Result;
+
+        // read data from server
+        var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+        task2.Wait();
+        var content = task2.Result;
+
+        // save reponse data from server
+        HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+        return httpResponse;
+    }
+
+    // used to create a new user, returns response string
+    public static HttpResponse loginUser(string username, string password)
+    {
+        var client = new HttpClient();
+
+        // creating JSON with user data
+        LoginUser loginUser = new LoginUser(username, password);
+        var json = JsonConvert.SerializeObject(loginUser);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        // url of server
+        var url = "http://localhost:8080/DatingGameAPI/login";
 
         // send data to server
         var task = Task.Run(() => client.PostAsync(url,data));
