@@ -41,8 +41,8 @@ public class User : MonoBehaviour
         }
     }
 
-    // used to create a new user
-    public void createUser(string username, string password, string first_name, string last_name, string birthday)
+    // used to create a new user, returns response string
+    public static HttpResponse createUser(string username, string password, string first_name, string last_name, string birthday)
     {
         var client = new HttpClient();
 
@@ -52,12 +52,21 @@ public class User : MonoBehaviour
         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
         // url of server
-        var url = "http://localhost:8080/DatingGameAPI";
+        var url = "http://localhost:8080/DatingGameAPI/newuser";
 
         // send data to server
         var task = Task.Run(() => client.PostAsync(url,data));
         task.Wait();
         var response = task.Result;
-        Debug.LogError(response);
+
+        // read data from server
+        var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+        task2.Wait();
+        var content = task2.Result;
+
+        // save reponse data from server
+        HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+        return httpResponse;
     }
 }
