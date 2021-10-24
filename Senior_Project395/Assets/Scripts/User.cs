@@ -28,6 +28,19 @@ public class User : MonoBehaviour
         }
     }
 
+    // save response data
+    public class HttpResponse
+    {
+        public int statusCode {get; set;}
+        public string content {get; set;}
+
+        public HttpResponse(int statusCode, string content)
+        {
+            this.statusCode = statusCode;
+            this.content = content;
+        }
+    }
+
     // used to create a new user
     public void createUser(string username, string password, string first_name, string last_name, string birthday)
     {
