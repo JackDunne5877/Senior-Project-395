@@ -73,6 +73,11 @@ namespace StarterAssets
 		private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
 
+		//variables used for crouching functionality
+		private bool crouch;
+		private Vector3 cameraPosition;
+		private Vector3 cameraChangeValue;
+
 		private const float _threshold = 0.01f;
 
 		private void Awake()
@@ -85,6 +90,10 @@ namespace StarterAssets
 			if (_mainCamera == null)
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+				crouch = false;
+				cameraPosition = _mainCamera.transform.position;
+				cameraChangeValue = new Vector3(0f, .5f, 0f);
+
 			}
 		}
 
@@ -111,6 +120,7 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			crouchCheck();
 		}
 
 		private void LateUpdate()
@@ -252,6 +262,35 @@ namespace StarterAssets
 			}
 		}
 
+
+		//crouch check function to listen for player input
+		private void crouchCheck()
+        {
+
+			//var to get current camera position
+			cameraPosition = _mainCamera.transform.position;
+
+			
+			if (Input.GetKeyDown(KeyCode.C) && crouch)
+			{
+				Vector3 newCameraPosition = cameraPosition + cameraChangeValue;
+				_mainCamera.transform.position = newCameraPosition;
+				crouch = false;
+				Debug.Log("getting up from crouch");
+
+			}
+
+			else if (Input.GetKeyDown(KeyCode.C) && crouch == false)
+            {
+				//change camera position by set amount down
+				Vector3 newCameraPosition = cameraPosition - cameraChangeValue;
+				_mainCamera.transform.position = newCameraPosition;
+				crouch = true;
+				Debug.Log("crouching down");
+            } 
+		}
+
+
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
 			if (lfAngle < -360f) lfAngle += 360f;
@@ -270,5 +309,16 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
-	}
+
+        private void OnTriggerStay(Collider other)
+        {
+			if (other.tag == "Door")
+            {
+				if (other.GetComponent<AutomaticDoor>().Moving == false)
+                {
+					other.GetComponent<AutomaticDoor>().Moving = true;
+                }
+            }
+        }
+    }
 }

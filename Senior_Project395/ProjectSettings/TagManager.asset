@@ -6,6 +6,8 @@ TagManager:
   tags:
   - CinemachineTarget
   - Voice
+  - Enemy
+  - Door
   layers:
   - Default
   - TransparentFX
