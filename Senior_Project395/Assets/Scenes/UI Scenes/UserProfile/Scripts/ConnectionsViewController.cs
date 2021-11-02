@@ -12,7 +12,7 @@ namespace Dating_Platform
         // Start is called before the first frame update
         void Start()
         {
-            player = SingletonManager.Instance.player;
+            player = SingletonManager.Instance.Player;
             foreach(string connectionId in player.connectionIds)
             {
                 Player connectionPlayer = DatabaseConnection.getConnectionPlayerInfo(player, "12345", connectionId);

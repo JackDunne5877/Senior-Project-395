@@ -26,7 +26,7 @@ namespace Dating_Platform
         int age;
         GenderOption genderIdentity;
         List<GenderOption> genderPreferences = new List<GenderOption>();
-        List<Sprite> profileImages = new List<Sprite>();
+        List<Sprite> _profileImages = new List<Sprite>();
 
         bool fillingFromDatabase = false;
         bool populatedPlayerInfo = false;
@@ -42,6 +42,8 @@ namespace Dating_Platform
             }
         }
 
+        public List<Sprite> ProfileImages { get => _profileImages; set{ _profileImages = value; showProfileImages(); } }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -49,7 +51,7 @@ namespace Dating_Platform
             foreach (int gdrOpIndex in GenderOption.GetValues(typeof(GenderOption)))
             {
                 string gdrOp = GenderOption.GetName(typeof(GenderOption), gdrOpIndex);
-                GenderIdentityDrop.options.Add(new Dropdown.OptionData(gdrOp));
+                GenderIdentityDrop.AddOptions(new List<Dropdown.OptionData>() { new Dropdown.OptionData(gdrOp) });
                 GameObject gdrOpToggle = GameObject.Instantiate(GenderTogglePrefab);
                 gdrOpToggle.GetComponentInChildren<Text>().text = gdrOp;
                 gdrOpToggle.transform.SetParent(GenderPreferencesGrid.transform);
@@ -58,16 +60,28 @@ namespace Dating_Platform
                 GenderPreferencesToggles.Add(gdrOpToggle.gameObject.GetComponent<Toggle>());
             }
 
-            if (SingletonManager.Instance.player && !populatedPlayerInfo)
+            if (SingletonManager.Instance != null && SingletonManager.Instance.Player != null)
             {
-                populatePlayerInfo();
+                if (!populatedPlayerInfo)
+                {
+                    Debug.Log("populating Player info...");
+                    populatePlayerInfo();
+                }
+                else
+                {
+                    Debug.Log("already populated Player info.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("on UserProfile view, but player is null");
             }
         }
 
         void populatePlayerInfo()
         {
             populatedPlayerInfo = true;
-            Player myPlayer = SingletonManager.Instance.player;
+            Player myPlayer = SingletonManager.Instance.Player;
             fillingFromDatabase = true;
             bioText = myPlayer.bio;
             bioTextField.text = myPlayer.bio;
@@ -75,6 +89,17 @@ namespace Dating_Platform
             ageTextField.text = myPlayer.age.ToString();
             genderIdentity = myPlayer.genderIdentity;
             GenderIdentityDrop.value = (int)genderIdentity;
+
+            foreach (GenderOption go in myPlayer.genderPreferences)
+            {
+                AddGenderPreference(go);
+            }
+
+            foreach (Sprite sp in myPlayer.PlayerImages)
+            {
+                AddProfileImage(sp);
+            }
+            
 
             fillingFromDatabase = false;
             UnsavedChanges = false;
@@ -91,32 +116,37 @@ namespace Dating_Platform
 
         public void updateBio(string newBio)
         {
-            if (fillingFromDatabase) return;
+            if (!fillingFromDatabase)
+                UnsavedChanges = true;
             bioText = newBio;
-            UnsavedChanges = true;
         }
 
         public void updateAge(string newAge)
         {
-            if (fillingFromDatabase) return;
+
             if (System.Int32.TryParse(newAge, out int ageResult))
             {
                 age = ageResult;
-                UnsavedChanges = true;
+
+                if (!fillingFromDatabase)
+                    UnsavedChanges = true;
             }
         }
 
         public void updateGenderIdentity(int newGdrIdIndex)
         {
-            if (fillingFromDatabase) return;
+            if (!fillingFromDatabase)
+                UnsavedChanges = true;
+
             genderIdentity = (GenderOption)newGdrIdIndex;
-            UnsavedChanges = true;
             Debug.Log("gender identity set: " + genderIdentity);
         }
 
         public void updateGenderPreferences()
         {
-            if (fillingFromDatabase) return;
+            if (!fillingFromDatabase)
+                UnsavedChanges = true;
+
             genderPreferences = new List<GenderOption>();
             for (int i = 0; i < GenderPreferencesToggles.Count; i++)
             {
@@ -131,7 +161,6 @@ namespace Dating_Platform
                     }
                 }
             }
-            UnsavedChanges = true;
         }
 
     IEnumerator UploadImageCoroutine()
@@ -146,11 +175,22 @@ namespace Dating_Platform
                 Texture2D tex = new Texture2D(2, 2);
                 tex.LoadImage(FileBrowserHelpers.ReadBytesFromFile(paths[0]));
                 Sprite newSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-                profileImages.Add(newSprite);
+                AddProfileImage(newSprite);
 
-                showProfileImages();
-                UnsavedChanges = true;
+                if (!fillingFromDatabase)
+                    UnsavedChanges = true;
             }
+        }
+
+        public void AddProfileImage(Sprite newSprite)
+        {
+            ProfileImages.Add(newSprite);
+            showProfileImages();
+        }
+        public void AddGenderPreference(GenderOption newGenOpt)
+        {
+            genderPreferences.Add(newGenOpt);
+            GenderPreferencesToggles[(int)newGenOpt].isOn = true;
         }
 
         public void uploadPicture()
@@ -160,16 +200,17 @@ namespace Dating_Platform
 
         void showProfileImages()
         {
+            Debug.Log("showing profile images...");
             foreach (Transform child in picsCollection.transform)
             {
                 Destroy(child.gameObject);
             }
 
-            for (int i = 0; i < profileImages.Count; i++)
+            for (int i = 0; i < ProfileImages.Count; i++)
             {
                 GameObject newPicChild = Instantiate(ImagePrefab);
                 Image newImgComponent = newPicChild.transform.GetChild(0).GetComponent<Image>();
-                newImgComponent.sprite = profileImages[i];
+                newImgComponent.sprite = ProfileImages[i];
                 newImgComponent.preserveAspect = true;
                 newPicChild.transform.SetParent(picsCollection.transform);
                 newPicChild.transform.localScale = Vector3.one;
@@ -182,9 +223,8 @@ namespace Dating_Platform
         void deleteImg(int imgToDelete)
         {
             Debug.Log("image to delete: " + imgToDelete);
-            Debug.Log("profileImagesSize: " + profileImages.Count);
-            profileImages.RemoveAt(imgToDelete);
-            showProfileImages();
+            Debug.Log("profileImagesSize: " + ProfileImages.Count);
+            ProfileImages.RemoveAt(imgToDelete);
             UnsavedChanges = true;
         }
 

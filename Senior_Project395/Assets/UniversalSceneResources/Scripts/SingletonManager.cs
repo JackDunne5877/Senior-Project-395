@@ -13,9 +13,17 @@ using Dating_Platform;
 public class SingletonManager : MonoBehaviour
 {
     public static SingletonManager Instance { get; private set; }
+    public Player Player { 
+        get => _player;
+        set {
+            _player = value;
+            Debug.Log("Singleton Player Set");
+        }
+    }
+
     public int maxPlayerHealth = 5;
     public float roundTime = 0;
-    public Player player;
+    private Player _player;
 
     private void Awake()
     {
@@ -24,7 +32,7 @@ public class SingletonManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if(Instance != this)
         {
             Destroy(gameObject);
         }

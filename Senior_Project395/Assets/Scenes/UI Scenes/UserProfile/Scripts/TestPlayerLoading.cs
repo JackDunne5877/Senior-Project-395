@@ -10,14 +10,14 @@ namespace Dating_Platform {
         // Start is called before the first frame update
         void Start()
         {
-            SingletonManager.Instance.player = new Player()
+            SingletonManager.Instance.Player = new Player()
             {
                 age = 18,
                 bio = "This is a sample player bio",
                 DisplayName = "SamplePlayerDisplayName",
                 PlayerID = "abc",
                 ProfileImg = sampleProfilePic,
-                genderIdentity = GenderOption.Male,
+                genderIdentity = GenderOption.Female,
                 genderPreferences = new GenderOption[] { GenderOption.Male, GenderOption.Female, GenderOption.NonBinary },
                 connectionIds = new string[] { "xyz" },
                 PlayerImages = samplePlayerImages,

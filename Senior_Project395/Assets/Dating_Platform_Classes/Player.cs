@@ -6,7 +6,7 @@ namespace Dating_Platform
 {
     public enum GenderOption { Male, Female, NonBinary};
     
-    public class Player : MonoBehaviour
+    public class Player
     {
         public string PlayerID;
         public string DisplayName;
