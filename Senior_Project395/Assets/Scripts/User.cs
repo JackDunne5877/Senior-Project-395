@@ -64,7 +64,7 @@ public class User : MonoBehaviour
         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
         // url of server
-        var url = "http://localhost:8080/DatingGameAPI/newuser";
+        var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/newuser";
 
         // send data to server
         var task = Task.Run(() => client.PostAsync(url,data));
@@ -93,7 +93,7 @@ public class User : MonoBehaviour
         var data = new StringContent(json, Encoding.UTF8, "application/json");
 
         // url of server
-        var url = "http://localhost:8080/DatingGameAPI/login";
+        var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/login";
 
         // send data to server
         var task = Task.Run(() => client.PostAsync(url,data));
