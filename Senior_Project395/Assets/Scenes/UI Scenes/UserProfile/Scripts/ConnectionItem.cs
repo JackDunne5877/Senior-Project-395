@@ -16,9 +16,9 @@ namespace Dating_Platform
         public Text displayNameTextObj;
         public Button msgButton;
         public Button inviteBtn;
-        public Player _player;
+        public User _player;
 
-        public Player player
+        public User player
         {
             get { return _player; }
             set { _player = value;

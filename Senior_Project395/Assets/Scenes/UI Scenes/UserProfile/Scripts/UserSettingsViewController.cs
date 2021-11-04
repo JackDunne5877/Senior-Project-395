@@ -13,8 +13,6 @@ namespace Dating_Platform
         public Text newEmailTxt;
         public Text pwValidMsg;
         public Text newPwTxt;
-        public Color invalidColor;
-        public Color validColor;
         public GameObject disableAccountToggleContainer;
         public List<Toggle> disableAccountToggles = new List<Toggle>();
 
@@ -50,18 +48,19 @@ namespace Dating_Platform
 
             Debug.Log("checking email validity");
             //check
-            bool emValid = newEmail.Contains("@");//TODO check validity
-                                                  //show ok or error
+            bool emValid = Validators.isUsernameValid(newEmail);
+
+            //show ok or error
             emailValidMsg.text = $"new email address {(emValid ? "valid" : "invalid")}";
             if (emValid)
             {
                 //enable change btn if valid
-                emailValidMsg.color = validColor;
+                emailValidMsg.color = Validators.validColor;
                 changeEmailBtn.interactable = true;
             }
             else
             {
-                emailValidMsg.color = invalidColor;
+                emailValidMsg.color = Validators.invalidColor;
                 changeEmailBtn.interactable = false;
             }
 
@@ -78,18 +77,19 @@ namespace Dating_Platform
 
             Debug.Log("checking password validity");
             //check
-            bool pwValid = newPassword.Length > 4;//TODO check validity
-                                                  //show ok or error
+            bool pwValid = Validators.isPasswordValid(newPassword);
+            
+            //show ok or error
             pwValidMsg.text = $"new password {(pwValid ? "valid" : "invalid")}";
             if (pwValid)
             {
                 //enable change btn if valid
-                pwValidMsg.color = validColor;
+                pwValidMsg.color = Validators.validColor;
                 changePasswordBtn.interactable = true;
             }
             else
             {
-                pwValidMsg.color = invalidColor;
+                pwValidMsg.color = Validators.invalidColor;
                 changePasswordBtn.interactable = false;
             }
         }
@@ -124,5 +124,6 @@ namespace Dating_Platform
                 //TODO show that we've been signed out and return to login page
             }
         }
+
     }
 }

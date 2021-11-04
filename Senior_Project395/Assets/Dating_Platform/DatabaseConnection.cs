@@ -2,30 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Dating_Platform
 {
 
     public static class DatabaseConnection
     {
+        private static HttpClient Client = new HttpClient();
         public static Sprite samplePlayerImage = Sprite.Create(new Texture2D(200, 200), new Rect(), Vector2.one);
-        public static Player getOwnedPlayerInfo(string playerId, string password)
+        public static User getOwnedPlayerInfo(string playerId, string password)
         {
             //TODO check if password works for the given playerId
-            return new Player();
+            return new User();
         }
-        public static Player getPublicPlayerInfo(string playerId)
+        public static User getPublicPlayerInfo(string playerId)
         {
-            Player resPlayer = new Player();
+            User resPlayer = new User();
             resPlayer.DisplayName = "samplePlayerName"; //TODO should be acquired from DB
             resPlayer.ProfileImg = samplePlayerImage; //TODO should be acquired from DB
             resPlayer.PlayerID = playerId;
             return resPlayer;
         }
 
-
-
-        public static Player getConnectionPlayerInfo(Player myPlayer, string password, string connectionId)
+        public static User getConnectionPlayerInfo(User myPlayer, string password, string connectionId)
         {
             //TODO check if password works for the given playerId
             if (ConfirmPlayerPassword(myPlayer.PlayerID, password))
@@ -33,7 +36,7 @@ namespace Dating_Platform
                 if (ConfirmPlayerHasConnection(myPlayer, connectionId))
                 {
                     //TODO all values should really be acquired from DB
-                    Player resPlayer = new Player();
+                    User resPlayer = new User();
                     resPlayer.DisplayName = "samplePlayerName";
                     resPlayer.ProfileImg = samplePlayerImage;
                     resPlayer.PlayerImages = new Sprite[] { samplePlayerImage, samplePlayerImage };
@@ -47,7 +50,7 @@ namespace Dating_Platform
                 else
                 {
                     Debug.LogWarning($"Get Connection Player Info: connection with {connectionId} does not exist");
-                    return new Player()
+                    return new User()
                     {
                         PlayerID = "NOTAUTHORIZED",
                         bio = "not authorized to get this connection info"
@@ -57,7 +60,7 @@ namespace Dating_Platform
             else
             {
                 Debug.LogWarning("Get Connection Player Info: password incorrect");
-                return new Player()
+                return new User()
                 {
                     PlayerID = "NOTAUTHORIZED",
                     bio = "not authorized to get this connection info"
@@ -75,7 +78,7 @@ namespace Dating_Platform
             return (myPlayerId == samplePlayerID && password == samplepassword);
         }
 
-        public static bool ConfirmPlayerHasConnection(Player myPlayer, string connectionPlayerId)
+        public static bool ConfirmPlayerHasConnection(User myPlayer, string connectionPlayerId)
         {
             //TODO get results from DB
             return (Array.IndexOf(myPlayer.connectionIds, connectionPlayerId) > -1);
@@ -111,9 +114,111 @@ namespace Dating_Platform
             }
         }
 
-        public static void logoutClicked()
+        public static bool login(string username, string password)
         {
+
+            HttpResponse response = LoginUserRequest(username, password);
+
+            if (response.statusCode >= 400)
+            {
+                // let user know that input credentials were invalid
+                return false;
+            }
+            else
+            {
+                //TODO SingletonManager.Instance.Player should be set here
+                return true;//success
+            }
+        }
+
+        public static bool createNewUser(string username, string password, string firstname, string lastname, string birthdate)
+        {
+
+            HttpResponse response = CreateUserRequest(username, password, firstname, lastname, birthdate);
+
+            if (response.statusCode >= 400)
+            {
+                return false;
+            }
+            else
+            {
+                return true;//success
+            }
+        }
+
+        public static void logout()
+        {
+            //TODO more stuff
             SingletonManager.Instance.Player = null;
+        }
+
+        // save response data
+        public class HttpResponse
+        {
+            public int statusCode { get; set; }
+            public string content { get; set; }
+
+            public HttpResponse(int statusCode, string content)
+            {
+                this.statusCode = statusCode;
+                this.content = content;
+            }
+        }
+
+        // used to create a new user, returns response string
+        public static HttpResponse CreateUserRequest(string username, string password, string first_name, string last_name, string birthday)
+        {
+
+            // creating JSON with user data
+            User.NewUser newUser = new User.NewUser(username, password, first_name, last_name, birthday);
+            var json = JsonConvert.SerializeObject(newUser);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/newuser";
+
+            // send data to server
+            var task = Task.Run(() => Client.PostAsync(url, data));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+        // used to create a new user, returns response string
+        public static HttpResponse LoginUserRequest(string username, string password)
+        {
+
+            // creating JSON with user data
+            User.LoginUser loginUser = new User.LoginUser(username, password);
+            var json = JsonConvert.SerializeObject(loginUser);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/login";
+
+            // send data to server
+            var task = Task.Run(() => Client.PostAsync(url, data));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
         }
     }
 }

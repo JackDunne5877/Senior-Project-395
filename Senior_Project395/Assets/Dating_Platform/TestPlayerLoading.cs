@@ -18,7 +18,7 @@ namespace Dating_Platform {
         public Sprite[] _samplePlayerImages;
         void Start()
         {
-            SingletonManager.Instance.Player = new Player()
+            SingletonManager.Instance.Player = new User()
             {
                 age = _age,
                 bio = _bio,

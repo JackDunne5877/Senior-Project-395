@@ -83,7 +83,7 @@ namespace Dating_Platform
         void populatePlayerInfo()
         {
             populatedPlayerInfo = true;
-            Player myPlayer = SingletonManager.Instance.Player;
+            User myPlayer = SingletonManager.Instance.Player;
             fillingFromDatabase = true;
             bioText = myPlayer.bio;
             bioTextField.text = myPlayer.bio;

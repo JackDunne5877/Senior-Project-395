@@ -6,7 +6,7 @@ namespace Dating_Platform
 {
     public class UserConnectionsViewController : MonoBehaviour
     {
-        Player player;
+        User player;
         public GameObject connectionsList;
         public GameObject connectionItemPrefab;
         // Start is called before the first frame update
@@ -16,7 +16,7 @@ namespace Dating_Platform
             foreach(string connectionId in player.connectionIds)
             {
                 Debug.Log($"trying to get data for player {connectionId}");
-                Player connectionPlayer = DatabaseConnection.getConnectionPlayerInfo(player, "12345", connectionId);
+                User connectionPlayer = DatabaseConnection.getConnectionPlayerInfo(player, "12345", connectionId);
                 GameObject connectionItem = Instantiate(connectionItemPrefab);
                 connectionItem.transform.SetParent(connectionsList.transform);
                 connectionItem.transform.localScale = Vector3.one;

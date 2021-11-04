@@ -15,7 +15,7 @@ public class SingletonManager : MonoBehaviour
     public static SingletonManager Instance { get; private set; }
     
     //Player things:
-    public Player Player { 
+    public User Player { 
         get => _player;
         set {
             _player = value;
@@ -29,7 +29,7 @@ public class SingletonManager : MonoBehaviour
 
     public int maxPlayerHealth = 5;
     public float roundTime = 0;
-    private Player _player;
+    private User _player;
 
 
     //Profile Constants:

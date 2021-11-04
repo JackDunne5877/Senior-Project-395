@@ -7,7 +7,7 @@ namespace Dating_Platform
 {
     public class ConnectionProfileViewController : MonoBehaviour
     {
-        private Player _connectionPlayer;
+        private User _connectionPlayer;
         public GameObject PlayerImagesContainer;
         public GameObject PlayerImagePrefab;
         public Image ProfileImg;
@@ -20,7 +20,7 @@ namespace Dating_Platform
 
         public List<Sprite> PlayerImages { get => _playerImages; set { _playerImages = value; showPlayerImages(); } }
 
-        public Player ConnectionPlayer { 
+        public User ConnectionPlayer { 
             get => _connectionPlayer;
             set {
                 _connectionPlayer = value;

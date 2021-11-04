@@ -4,24 +4,24 @@ using UnityEngine;
 
 namespace Dating_Platform { 
 
-public class UserLogoutViewController : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
+    public class UserLogoutViewController : MonoBehaviour
     {
+        // Start is called before the first frame update
+        void Start()
+        {
         
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
-    }
+        }
 
-    public void LogOutClicked()
-    {
-        DatabaseConnection.logoutClicked();
-        //TODO take player back to login page
+        public void LogOutClicked()
+        {
+            DatabaseConnection.logout();
+            //TODO take player back to login page
+        }
     }
-}
 }
