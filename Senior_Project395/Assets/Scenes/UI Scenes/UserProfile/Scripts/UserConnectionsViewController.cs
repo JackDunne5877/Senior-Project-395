@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Dating_Platform
 {
-    public class ConnectionsViewController : MonoBehaviour
+    public class UserConnectionsViewController : MonoBehaviour
     {
-        private Player player;
+        Player player;
         public GameObject connectionsList;
         public GameObject connectionItemPrefab;
         // Start is called before the first frame update
@@ -15,8 +15,11 @@ namespace Dating_Platform
             player = SingletonManager.Instance.Player;
             foreach(string connectionId in player.connectionIds)
             {
+                Debug.Log($"trying to get data for player {connectionId}");
                 Player connectionPlayer = DatabaseConnection.getConnectionPlayerInfo(player, "12345", connectionId);
-                GameObject connectionItem = GameObject.Instantiate(connectionItemPrefab);
+                GameObject connectionItem = Instantiate(connectionItemPrefab);
+                connectionItem.transform.SetParent(connectionsList.transform);
+                connectionItem.transform.localScale = Vector3.one;
                 connectionItem.GetComponent<ConnectionItem>().player = connectionPlayer;
             }
         }

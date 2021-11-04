@@ -27,14 +27,14 @@ public class GunsMenu : MonoBehaviour
             {
                 Guns[i].SetActive(false);
                 Guns[i].GetComponentInChildren<InteractableGun>().isEquipped = false;
-                Guns[i].GetComponent<RaycastShootComplete>().fpsCam = myfpsCam;
+                Guns[i].GetComponent<Com.Orion.MP.RaycastShootComplete>().fpsCam = myfpsCam;
             }
         }
 
         //equip the first weapon
         Guns[0].SetActive(true);
         Guns[0].GetComponentInChildren<InteractableGun>().isEquipped = true;
-        Guns[0].GetComponent<RaycastShootComplete>().fpsCam = myfpsCam;
+        Guns[0].GetComponent<Com.Orion.MP.RaycastShootComplete>().fpsCam = myfpsCam;
     }
 
     //cycle through to next weapon in Guns[]
@@ -73,7 +73,7 @@ public class GunsMenu : MonoBehaviour
         weapon.transform.localRotation = Quaternion.Euler(Vector3.zero);
         weapon.transform.localPosition = Vector3.zero;
         weapon.SetActive(false);
-        weapon.GetComponent<RaycastShootComplete>().fpsCam = myfpsCam;
+        weapon.GetComponent<Com.Orion.MP.RaycastShootComplete>().fpsCam = myfpsCam;
     }
 
 
@@ -92,7 +92,7 @@ public class GunsMenu : MonoBehaviour
         switchWeapon();
 
         foreach(Transform child in transform){
-            Camera childFpsCam = child.gameObject.GetComponent<RaycastShootComplete>().fpsCam;
+            Camera childFpsCam = child.gameObject.GetComponent<Com.Orion.MP.RaycastShootComplete>().fpsCam;
             if (childFpsCam == null)
             {
                 childFpsCam = myfpsCam;

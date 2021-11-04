@@ -13,6 +13,8 @@ using Dating_Platform;
 public class SingletonManager : MonoBehaviour
 {
     public static SingletonManager Instance { get; private set; }
+    
+    //Player things:
     public Player Player { 
         get => _player;
         set {
@@ -21,15 +23,26 @@ public class SingletonManager : MonoBehaviour
         }
     }
 
+    public string viewingConnectionPlayerId;
+
+    public GameLibrary gameLibrary;
+
     public int maxPlayerHealth = 5;
     public float roundTime = 0;
     private Player _player;
+
+
+    //Profile Constants:
+    public const string PROFILE_CONST_HOST_GENDER = "gender";
+    public const string PROFILE_CONST_GENDER_PREF = "genderpref";
+    public enum GenderOption { Male, Female, NonBinary };
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            gameLibrary = this.GetComponent<GameLibrary>();
             DontDestroyOnLoad(gameObject);
         }
         else if(Instance != this)

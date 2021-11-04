@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 namespace Dating_Platform
@@ -35,6 +36,12 @@ namespace Dating_Platform
             displayNameTextObj.text = displayName;
             //msgButton.onClick = Home>ConnectionSelected>Conversation(PlayerId=playerId)
             //inviteBtn.onClick = Home>ConnectionSelected>InviteToMinigame(PlayerId=playerId)
+        }
+
+        public void openConnectionProfile()
+        {
+            SingletonManager.Instance.viewingConnectionPlayerId = playerId;
+            SceneManager.LoadScene("ConnectionProfile");
         }
 
     }

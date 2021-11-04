@@ -7,7 +7,15 @@ namespace Com.Orion.MP
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {
+        //this property makes sure that the player joins the map that they clicked in the menu
         public const string MAP_PROP_KEY = "map";
+
+        //this property represents the hosts gender
+        public const string HOST_GENDER_PROP_KEY = "host_gender";
+
+        //this property represents if the host wants to match with males
+        public const string GENDER_PREF_PROP_KEY = "gender_pref";
+
 
         #region Private Serializable Fields
 
@@ -54,6 +62,11 @@ namespace Com.Orion.MP
 
         void Start()
         {
+            //TODO GET RID OF THIS< ITS FOR TESTING PURPOSES ONLY
+            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.Female);
+            //TODO change this to be actual gender the player wants, based on UI
+            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.Male);
+
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
         }
@@ -61,17 +74,40 @@ namespace Com.Orion.MP
 
         #region Private Methods
 
+
         //in the future, modify this function to add more room options, 
         //example, if user is male, create a room that accepts females only, etc...
         //or set settings of room to have info: ex: (is male, into females, age min 18, age max 25)
         //then filter rooms in "JoinRandomRoom" to be within those parameters
-        private Hashtable CreateRoomOptionsHashTable() {
-            return new Hashtable { { MAP_PROP_KEY, (byte)levelIndex } };
+
+        //this method is called if a player failed to find a room with their preferences, it creates a new room
+        //the options for this room will be what this player wants to match with, and what the players gender is
+        private Hashtable CreateRoomOptionsHashTable()
+        {
+
+            //get stored preferences and gender, if there is none default to nonbinary
+            int hostgender = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.NonBinary);
+            int genderPref = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.NonBinary);
+
+            //this property makes sure that the player joins the map that they clicked in the menu
+            return new Hashtable { { MAP_PROP_KEY, (byte)levelIndex }, { HOST_GENDER_PROP_KEY, (byte)hostgender}, {GENDER_PREF_PROP_KEY, (byte)genderPref } };
+        }
+
+        //this method is called when the player is trying to join a random room
+        //the room options it will be looking for are someone who is already in a room 
+        //that matches what this players gender is
+        private Hashtable CreateRoomOptionsHashTableForJoinRandomRoom() {
+            //look for host that matches what gender player is looking for, and that is looking for a gender that the player is
+
+            int userGender = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.NonBinary);
+            int genderPref = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.NonBinary);
+
+            return new Hashtable { { MAP_PROP_KEY, (byte)levelIndex }, {HOST_GENDER_PROP_KEY,  (byte)genderPref}, {GENDER_PREF_PROP_KEY, (byte)userGender } };
         }
         private void CreateRoom()
         {
             RoomOptions roomOptions = new RoomOptions();
-            roomOptions.CustomRoomPropertiesForLobby = new string[1]{ MAP_PROP_KEY };
+            roomOptions.CustomRoomPropertiesForLobby = new string[3]{ MAP_PROP_KEY, HOST_GENDER_PROP_KEY, GENDER_PREF_PROP_KEY };
             roomOptions.CustomRoomProperties = CreateRoomOptionsHashTable();
             roomOptions.MaxPlayers = maxPlayersPerRoom;
             PhotonNetwork.CreateRoom(null, roomOptions, null);
@@ -81,7 +117,7 @@ namespace Com.Orion.MP
         {
             //right now this is set up to match the create room, but can be easily changed to be the opposite, or to match 
             //the info on available room
-            Hashtable expectedCustomRoomProperties = CreateRoomOptionsHashTable();
+            Hashtable expectedCustomRoomProperties = CreateRoomOptionsHashTableForJoinRandomRoom();
             PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, maxPlayersPerRoom);
         }
 

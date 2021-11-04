@@ -33,8 +33,14 @@ namespace Com.Orion.MP
         [SerializeField]
         private GameObject cam;
 
+
+        //public static PhotonView pv;
+
         void Awake()
         {
+
+            //pv = PhotonView.Get(this);
+
             if (photonView.IsMine)
             {
                 PlayerNetworkManager.LocalPlayerInstance = this.gameObject;
@@ -43,7 +49,6 @@ namespace Com.Orion.MP
             else {
                 SetCameraActive(false);
             }
-
             DontDestroyOnLoad(this.gameObject);   
         }
 
@@ -54,6 +59,8 @@ namespace Com.Orion.MP
             cam.GetComponent<Cinemachine.CinemachineBrain>().enabled = state;
             cam.transform.Find("Canvas").gameObject.SetActive(state);
         }
+
+        
 
         void Update()
         {

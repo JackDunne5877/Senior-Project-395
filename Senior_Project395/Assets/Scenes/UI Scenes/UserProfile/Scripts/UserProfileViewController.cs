@@ -8,10 +8,11 @@ using SimpleFileBrowser;
 
 namespace Dating_Platform
 {
-    public class UserProfileInfoForm : MonoBehaviour
+    public class UserProfileViewController : MonoBehaviour
     {
         private bool _hasChanges = false;
 
+        public Image profileImage;
         public InputField bioTextField;
         public InputField ageTextField;
         public Dropdown GenderIdentityDrop;
@@ -21,11 +22,12 @@ namespace Dating_Platform
         public GameObject ImagePrefab;
         public GameObject GenderTogglePrefab;
         public Button SaveBtn;
+        public Text DisplayNameTxt;
 
         string bioText;
         int age;
-        GenderOption genderIdentity;
-        List<GenderOption> genderPreferences = new List<GenderOption>();
+        SingletonManager.GenderOption genderIdentity;
+        List<SingletonManager.GenderOption> genderPreferences = new List<SingletonManager.GenderOption>();
         List<Sprite> _profileImages = new List<Sprite>();
 
         bool fillingFromDatabase = false;
@@ -48,9 +50,9 @@ namespace Dating_Platform
         void Start()
         {
             //initialize all options based on Player definition
-            foreach (int gdrOpIndex in GenderOption.GetValues(typeof(GenderOption)))
+            foreach (int gdrOpIndex in SingletonManager.GenderOption.GetValues(typeof(SingletonManager.GenderOption)))
             {
-                string gdrOp = GenderOption.GetName(typeof(GenderOption), gdrOpIndex);
+                string gdrOp = SingletonManager.GenderOption.GetName(typeof(SingletonManager.GenderOption), gdrOpIndex);
                 GenderIdentityDrop.AddOptions(new List<Dropdown.OptionData>() { new Dropdown.OptionData(gdrOp) });
                 GameObject gdrOpToggle = GameObject.Instantiate(GenderTogglePrefab);
                 gdrOpToggle.GetComponentInChildren<Text>().text = gdrOp;
@@ -89,8 +91,10 @@ namespace Dating_Platform
             ageTextField.text = myPlayer.age.ToString();
             genderIdentity = myPlayer.genderIdentity;
             GenderIdentityDrop.value = (int)genderIdentity;
+            profileImage.sprite = myPlayer.ProfileImg;
+            DisplayNameTxt.text = myPlayer.DisplayName;
 
-            foreach (GenderOption go in myPlayer.genderPreferences)
+            foreach (SingletonManager.GenderOption go in myPlayer.genderPreferences)
             {
                 AddGenderPreference(go);
             }
@@ -138,7 +142,7 @@ namespace Dating_Platform
             if (!fillingFromDatabase)
                 UnsavedChanges = true;
 
-            genderIdentity = (GenderOption)newGdrIdIndex;
+            genderIdentity = (SingletonManager.GenderOption)newGdrIdIndex;
             Debug.Log("gender identity set: " + genderIdentity);
         }
 
@@ -147,17 +151,17 @@ namespace Dating_Platform
             if (!fillingFromDatabase)
                 UnsavedChanges = true;
 
-            genderPreferences = new List<GenderOption>();
+            genderPreferences = new List<SingletonManager.GenderOption>();
             for (int i = 0; i < GenderPreferencesToggles.Count; i++)
             {
                 Toggle genderPref = GenderPreferencesToggles[i];
                 if (genderPref.isOn)
                 {
-                    genderPreferences.Add((GenderOption)i);
+                    genderPreferences.Add((SingletonManager.GenderOption)i);
                     Debug.Log("gender prefs:");
-                    foreach (GenderOption pref in genderPreferences)
+                    foreach (SingletonManager.GenderOption pref in genderPreferences)
                     {
-                        Debug.Log(GenderOption.GetName(typeof(GenderOption), pref));
+                        Debug.Log(SingletonManager.GenderOption.GetName(typeof(SingletonManager.GenderOption), pref));
                     }
                 }
             }
@@ -187,7 +191,16 @@ namespace Dating_Platform
             ProfileImages.Add(newSprite);
             showProfileImages();
         }
-        public void AddGenderPreference(GenderOption newGenOpt)
+        public void RemoveProfileImage(int imgIndex)
+        {
+            if (imgIndex < ProfileImages.Count)
+            {
+                ProfileImages.RemoveAt(imgIndex);
+                showProfileImages();
+                UnsavedChanges = true;
+            }
+        }
+        public void AddGenderPreference(SingletonManager.GenderOption newGenOpt)
         {
             genderPreferences.Add(newGenOpt);
             GenderPreferencesToggles[(int)newGenOpt].isOn = true;
@@ -215,38 +228,104 @@ namespace Dating_Platform
                 newPicChild.transform.SetParent(picsCollection.transform);
                 newPicChild.transform.localScale = Vector3.one;
                 Debug.Log("adding delegate to delete: " + i);
-                int copy = i; //thanks Jon Skeet
-                newPicChild.GetComponentInChildren<Button>().onClick.AddListener(delegate { deleteImg(copy); });
+                int copyIndex = i; //thanks Jon Skeet
+                newPicChild.GetComponentInChildren<Button>().onClick.AddListener(delegate { RemoveProfileImage(copyIndex); });
             }
         }
 
-        void deleteImg(int imgToDelete)
-        {
-            Debug.Log("image to delete: " + imgToDelete);
-            Debug.Log("profileImagesSize: " + ProfileImages.Count);
-            ProfileImages.RemoveAt(imgToDelete);
-            UnsavedChanges = true;
-        }
+        /*
+        //janky trash system but whatever
+        private GenderPrefsCombos convertListToGenderPrefs(List<GenderOption> lis) {
+            bool male = false;
+            bool female = false;
+            bool non = false;
+
+            foreach (var g in lis) {
+                if (g == GenderOption.Male) {
+                    male = true;
+                }
+                else if (g == GenderOption.Female)
+                {
+                    female = true;
+                }
+                else if (g == GenderOption.NonBinary)
+                {
+                    non = true;
+                }
+            }
+
+            if (male && female && non) {
+                return GenderPrefsCombos.MFN;
+            }
+            if (male && female)
+            {
+                return GenderPrefsCombos.MF;
+            }
+
+            if (male && non)
+            {
+                return GenderPrefsCombos.MN;
+            }
+
+            if (female && non)
+            {
+                return GenderPrefsCombos.FN;
+            }
+
+            if (male)
+            {
+                return GenderPrefsCombos.M;
+            }
+            else if (female)
+            {
+                return GenderPrefsCombos.F;
+            }
+            else if(non)
+            {
+                return GenderPrefsCombos.N;
+            }
+            //default case is return they have no preference
+            return GenderPrefsCombos.MFN;
+        }*/
 
         public void saveChanges()
         {
-            //TODO send cahnges to server
+            //Potential things to save:
+            /*
+            string bioText;
+            int age;
+            GenderOption genderIdentity;
+            List<GenderOption> genderPreferences = new List<GenderOption>();
+            List<Sprite> _profileImages = new List<Sprite>();
+            */
+
+            //TODO send changes to server
             UnsavedChanges = false;
 
+            //For now save to PlayerPrefs on player's disk
+            genderPreferences.Add(SingletonManager.GenderOption.NonBinary);
+            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)genderIdentity);
+            //TODO change this to be actual gender the player wants, based on UI
+            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)genderIdentity);
+            PlayerPrefs.Save();
+
+            //List<GenderOption> gIdentity = new List<GenderOption>();
+            //gIdentity.Add(genderIdentity);
+            //save players gender
+            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)convertListToGenderPrefs(gIdentity));
+            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)convertListToGenderPrefs(genderPreferences));
         }
 
         public void cleanUpForViewSwitch()
         {
             Debug.Log("cleaning up...");
             SaveBtn.gameObject.SetActive(false);
-            //cleanedup = true;
         }
 
         public void reloadForViewSwitch()
         {
             Debug.Log("reloading...");
             SaveBtn.gameObject.SetActive(UnsavedChanges);
-            //cleanedup = false;
         }
 
     }

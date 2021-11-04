@@ -4,16 +4,18 @@ using UnityEngine;
 
 namespace Dating_Platform
 {
-    public enum GenderOption { Male, Female, NonBinary};
+    //public enum GenderOption { Male, Female, NonBinary};
+    //public enum GenderPrefsCombos { M, F, N, MFN, MN, MF, FN};
     
     public class Player
     {
+        //TODO probably makes sense to make most of these API calls just so you always have up-to-date info
         public string PlayerID;
         public string DisplayName;
         public Sprite ProfileImg;
         public Sprite[] PlayerImages;
-        public GenderOption genderIdentity;
-        public GenderOption[] genderPreferences;
+        public SingletonManager.GenderOption genderIdentity;
+        public SingletonManager.GenderOption[] genderPreferences;
         public int age;
         public string bio;
         public string[] connectionIds;

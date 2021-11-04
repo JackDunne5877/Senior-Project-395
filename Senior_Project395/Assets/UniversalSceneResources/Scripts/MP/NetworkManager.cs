@@ -108,6 +108,7 @@ namespace Com.Orion.MP
         {
             PhotonNetwork.LeaveRoom();
         }
+
         #endregion
     }
 }
