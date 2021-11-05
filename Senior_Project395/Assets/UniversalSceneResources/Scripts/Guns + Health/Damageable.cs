@@ -16,6 +16,7 @@ public class Damageable : MonoBehaviourPun
     }
     public int doDamage(int damageAmount) //returns points
     {
+        
         pv.RPC("updateHealthAndModel", RpcTarget.All, damageAmount);
 
         //Check if health has fallen below zero
@@ -35,7 +36,10 @@ public class Damageable : MonoBehaviourPun
         currentHealth -= (float)damageAmount;
         int currentMatIdx = (int)Mathf.Ceil((currentHealth / healthCapacity) * (float)(damageLevelMats.Length - 1));
         //Debug.Log("current Mat: " + currentMatIdx);
-        gameObject.GetComponentInChildren<Renderer>().material = damageLevelMats[currentMatIdx];
+        if (currentMatIdx < damageLevelMats.Length)
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = damageLevelMats[currentMatIdx];
+        }
     }
 
     [PunRPC]
