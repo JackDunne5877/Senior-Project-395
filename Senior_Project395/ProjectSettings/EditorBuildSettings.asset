@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/LabLevel/LabLevel.unity
     guid: b2fa8882363c4644b93046de18bcbf19
   - enabled: 1
-    path: Assets/Scenes/Home Page/Home Page.unity
+    path: Assets/Scenes/UI Scenes/Home/Home Page.unity
     guid: fb32ea562399f374380c47b938743bdc
   - enabled: 1
     path: Assets/Scenes/UI Scenes/UserProfile/UserProfile.unity
@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/OfficeLevel/OfficeLevel.unity
     guid: 6df5cfa465195e0468c020a55eb79e66
+  - enabled: 1
+    path: Assets/Scenes/UI Scenes/Post Game/PostGame.unity
+    guid: 147085ef0a4261d41a1e0e80754e9df9
   - enabled: 0
     path: Assets/Scenes/Multiplayer/Launcher.unity
     guid: 351d21481f281d941b8ba02989920fcd

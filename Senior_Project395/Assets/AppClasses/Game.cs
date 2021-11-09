@@ -5,8 +5,9 @@ using UnityEngine;
 public class Game
 {
     public int sceneNumber;//reference to build settings scene number
+    public string sceneName;//for scripts that reference name instead
     public Sprite coverImage;
-    public string name;
+    public string name;//only used for display
     public string desc;
 
     // Start is called before the first frame update

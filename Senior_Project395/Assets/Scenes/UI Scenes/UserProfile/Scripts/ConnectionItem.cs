@@ -40,7 +40,7 @@ namespace Dating_Platform
 
         public void openConnectionProfile()
         {
-            SingletonManager.Instance.viewingConnectionPlayerId = playerId;
+            SingletonManager.Instance.viewingConnectionPlayer = player;
             SceneManager.LoadScene("ConnectionProfile");
         }
 

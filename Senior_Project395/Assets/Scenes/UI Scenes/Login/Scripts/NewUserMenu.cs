@@ -27,6 +27,8 @@ namespace Dating_Platform
 
         public Button SubmitBtn;
 
+        public GameObject ConfirmationView;
+
         public void Start()
         {
             pwValidMsg.text = "";
@@ -203,18 +205,20 @@ namespace Dating_Platform
             string ln = LNameTxt.text;
             string bd = BDParsed;
 
-            bool result = DatabaseConnection.createNewUser(un, pw,fn,ln,bd);
+            (bool result, int statusCode, string reason) = DatabaseConnection.createNewUser(un, pw,fn,ln,bd);
 
             if (result)
             {
-                SceneManager.LoadScene("Login");
+                ConfirmationView.SetActive(true);
+                this.gameObject.SetActive(false);
             }
             else
             {
                 //stay here and wipe everything
-                usernameValidMsg.text = "Account creation failed: username taken (I assume)";
+                Debug.LogWarning($"Account creation failed: {statusCode}: {reason}");
+                usernameValidMsg.text = $"Account creation failed: {reason.Substring(0,50)}";
                 usernameTxt.text = "";
-                usernameTxt.color = Validators.invalidColor;
+                usernameValidMsg.color = Validators.invalidColor;
             }
 
         }

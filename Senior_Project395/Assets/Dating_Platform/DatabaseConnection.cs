@@ -14,6 +14,8 @@ namespace Dating_Platform
     {
         private static HttpClient Client = new HttpClient();
         public static Sprite samplePlayerImage = Sprite.Create(new Texture2D(200, 200), new Rect(), Vector2.one);
+
+        #region gettingPlayerInfo
         public static User getOwnedPlayerInfo(string playerId, string password)
         {
             //TODO check if password works for the given playerId
@@ -67,7 +69,7 @@ namespace Dating_Platform
                 };
             }
 
-            
+
         }
 
         public static bool ConfirmPlayerPassword(string myPlayerId, string password)
@@ -84,9 +86,13 @@ namespace Dating_Platform
             return (Array.IndexOf(myPlayer.connectionIds, connectionPlayerId) > -1);
         }
 
+        #endregion
+
+        #region accountOperations
+
         public static void setNewAccountEmail(string myPlayerId, string password, string newEmailAddress)
         {
-            if(ConfirmPlayerPassword(myPlayerId, password))
+            if (ConfirmPlayerPassword(myPlayerId, password))
             {
                 //TODO send new email to the database
             }
@@ -114,36 +120,30 @@ namespace Dating_Platform
             }
         }
 
-        public static bool login(string username, string password)
+        public static (bool, int, string) login(string username, string password)
         {
 
             HttpResponse response = LoginUserRequest(username, password);
 
-            if (response.statusCode >= 400)
-            {
-                // let user know that input credentials were invalid
-                return false;
-            }
-            else
-            {
-                //TODO SingletonManager.Instance.Player should be set here
-                return true;//success
-            }
+            return (response.statusCode < 400, response.statusCode, response.content);
         }
 
-        public static bool createNewUser(string username, string password, string firstname, string lastname, string birthdate)
+        public static (bool, int, string) createNewUser(string username, string password, string firstname, string lastname, string birthdate)
         {
 
             HttpResponse response = CreateUserRequest(username, password, firstname, lastname, birthdate);
 
-            if (response.statusCode >= 400)
-            {
-                return false;
-            }
-            else
-            {
-                return true;//success
-            }
+            return (response.statusCode < 400, response.statusCode, response.content);
+
+            //if (response.statusCode >= 400)
+            //{
+            //    Debug.LogWarning($"{response.statusCode}: {response.content}");
+            //    return (false, response.content);
+            //}
+            //else
+            //{
+            //    return (true, response.content);//success
+            //}
         }
 
         public static void logout()
@@ -220,5 +220,60 @@ namespace Dating_Platform
 
             return httpResponse;
         }
+        #endregion
+
+        #region Scores And Likes
+        public static (bool, int, string) sendScore(string playerIdA, string playerIdB, string game, int score)
+        {
+            Debug.LogError("DBConnection.sendScore() not implemented");
+            return (false, 000, "not implemented");
+
+            // TODO: create game+score class
+            var json = JsonConvert.SerializeObject(score);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // url of server
+            var url = "http://localhost:8080/DatingGameAPI";
+
+            // send data to server
+            var task = Task.Run(() => Client.PostAsync(url, data));
+            task.Wait();
+            var response = task.Result;
+            Debug.LogError(response);
+        }
+
+        public static (int score, string team, string date)[] leaderboardGameScoresRequest(string game)
+        {
+            //TODO
+            Debug.LogError("DBConnection.leaderboardGameScoresRequest() not implemented");
+            return new (int, string, string)[] { (000, "not implemented", "not implemented") };
+        }
+
+        public static (bool, int, string) likePlayer(User playerThatIsLiked)
+        {
+            //TODO
+            Debug.LogError("DBConnection.likePlayer() not implemented");
+            User playerWhoIsSending = SingletonManager.Instance.Player;
+            return (false, 000, "not implemented");
+            //return (successful?, statuscode, msg);
+        }
+
+        public static (bool, int, string) dislikePlayer(User playerThatIsDisliked)
+        {
+            //TODO
+            Debug.LogError("DBConnection.dislikePlayer() not implemented");
+            User playerWhoIsSending = SingletonManager.Instance.Player;
+            return (false, 000, "not implemented");
+            //return (successful?, statuscode, msg);
+        }
+
+        public static (bool, int, string) reportPlayer(User playerThatIsReported)
+        {
+            //TODO
+            Debug.LogError("DBConnection.reportPlayer() not implemented");
+            return (false, 000, "not implemented");
+            //return (successful?, statuscode, msg);
+        }
+        #endregion
     }
 }

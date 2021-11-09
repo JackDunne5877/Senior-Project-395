@@ -146,7 +146,8 @@ public class HUD_Controller : MonoBehaviourPun
         //play die animation
         playerAnim.SetBool("isDead", true);
     }
-    public void playerRespawn()
+   
+   public void playerRespawn()
     {
         //store local state
         isDead = false;

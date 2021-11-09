@@ -23,7 +23,9 @@ public class SingletonManager : MonoBehaviour
         }
     }
 
-    public string viewingConnectionPlayerId;
+    public User viewingConnectionPlayer;
+    public User playingWithOtherPlayer; //TODO set when put into room with another player
+    public Game currentPlayingGame;
 
     public GameLibrary gameLibrary;
 

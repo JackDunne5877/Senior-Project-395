@@ -94,7 +94,7 @@ namespace Dating_Platform
         {
             string un = usernameTxt.text;
             string pw = pwTxt.text;
-            bool result = DatabaseConnection.login(un,pw);
+            (bool result, int statuscode, string responseMsg) = DatabaseConnection.login(un,pw);
             if (result)
             {
                 SceneManager.LoadScene("Menu");
@@ -102,6 +102,7 @@ namespace Dating_Platform
             else 
             {
                 //stay here and wipe everything
+                //TODO could change msg based on retrieved msg^
                 usernameValidMsg.text = "Login failed: username or password invalid";
                 usernameValidMsg.color = Validators.invalidColor;
                 pwValidMsg.text = "";
