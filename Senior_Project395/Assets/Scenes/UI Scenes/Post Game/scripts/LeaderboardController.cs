@@ -11,7 +11,8 @@ namespace Dating_Platform {
         // Start is called before the first frame update
         void Start()
         {
-            getLeaderboardData(SingletonManager.Instance.currentPlayingGame.sceneName);
+            //TODO fix with new Game definition
+            //getLeaderboardData(SingletonManager.Instance.currentPlayingGame.sceneName);
         }
 
         public void getLeaderboardData(string minigameName)

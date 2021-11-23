@@ -92,6 +92,10 @@ namespace Com.Orion.MP
         [PunRPC]
         public void Shoot()
         {
+            if (!this.gameObject.activeInHierarchy)
+            {
+                return;
+            }
             // Update the time when our player can fire next
             nextFire = Time.time + fireRate;
 

@@ -304,16 +304,10 @@ namespace Dating_Platform
 
             //For now save to PlayerPrefs on player's disk
             genderPreferences.Add(SingletonManager.GenderOption.NonBinary);
-            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)genderIdentity);
+            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)genderIdentity);
             //TODO change this to be actual gender the player wants, based on UI
-            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)genderIdentity);
-            PlayerPrefs.Save();
-
-            //List<GenderOption> gIdentity = new List<GenderOption>();
-            //gIdentity.Add(genderIdentity);
-            //save players gender
-            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)convertListToGenderPrefs(gIdentity));
-            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)convertListToGenderPrefs(genderPreferences));
+            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)genderIdentity);
+            //PlayerPrefs.Save();
         }
 
         public void cleanUpForViewSwitch()

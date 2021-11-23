@@ -12,27 +12,35 @@ public class GameLibrary : MonoBehaviour
     void Start()
     {
         games = new List<Game>() {
-        new Game{
-            sceneNumber = 2, //index in build settings
-            sceneName = "Bots", //actual name of the scene object in the project
-            name="Bots", //a name just for display
-            coverImage = BotsCoverImg, //img to represent the game in menus
-            desc = "fight some zombie bots" //description just for display
-        },
-        new Game{
-            sceneNumber = 10,
-            sceneName = "OfficeLevel",
-            name="Office",
-            coverImage = OfficeCoverImg,
-            desc = "battle some zombies and have those reports on my desk by the end of the day"
-        },
         new Game
         {
-            sceneNumber = 7,
-            sceneName = "Level1",
-            name="Reception/Atrium",
+            name="Zombies",
+            GameControllerType = "ZombieGameController",
             coverImage = ReceptionAtriumCoverImg,
-            desc = "welcome to our innovative zombie filled company"
+            desc = "welcome to our innovative zombie filled company",
+            levels = new List<Level>(){
+                new Level{
+                    sceneNumber = 7,
+                    sceneName = "Level1",
+                },
+                new Level{
+                    sceneNumber = 10,
+                    sceneName = "OfficeLevel",
+                },
+                new Level{
+                    sceneNumber = 12,
+                    sceneName = "CafeteriaLevel",
+                },
+                new Level{
+                    sceneNumber = 14,
+                    sceneName = "ServersLevel",
+                },
+                new Level{
+                    sceneNumber = 4,
+                    sceneName = "LabLevel",
+                },
+            }
+
         }
 
 

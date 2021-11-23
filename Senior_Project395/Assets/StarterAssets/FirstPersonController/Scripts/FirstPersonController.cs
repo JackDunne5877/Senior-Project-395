@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -310,15 +311,110 @@ namespace StarterAssets
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-			if (other.tag == "Door")
+				if (other.tag == "Door")
+				{
+					AutomaticDoor autoDoor = other.GetComponent<AutomaticDoor>();
+					Debug.Log("collided with door");
+
+					if (autoDoor == null)
+					{
+						Debug.Log("autoDoor null in door collision");
+					}
+
+				//if the door is in process of closing when trigger enter, wait before opening
+				if (autoDoor.Closing)
+					{
+						StartCoroutine(waitForSeconds(2));
+					}
+
+					//trigger booleans to open doors
+					if (autoDoor.Moving == false)
+					{
+						autoDoor.Moving = true;
+						autoDoor.Opening = true;
+					}
+				}
+				//trigger enter for level exit doors, checks to see if they're unlocked
+				else if (other.tag == "LockedDoor")
+				{
+					LockedDoor lockedDoor = other.GetComponent<LockedDoor>();
+					Debug.Log("collided with LockedDoor");
+
+					if (lockedDoor == null)
+					{
+						Debug.Log("locked door null in lockeddoor collision");
+					}
+
+					
+
+					if (!lockedDoor.Locked)
+					{
+						//if the door is in process of closing when trigger enter, wait before opening
+						if (lockedDoor.Closing)
+						{
+							StartCoroutine(waitForSeconds(2));
+						}
+
+						//trigger booleans to open doors
+						if (lockedDoor.Moving == false)
+						{
+							lockedDoor.Moving = true;
+							lockedDoor.Opening = true;
+						}
+					}
+				}
+		}
+
+		private IEnumerator waitForSeconds(int s) {
+			yield return new WaitForSeconds(2);
+		}
+
+
+        private void OnTriggerExit(Collider other)
+        { 
+			//trigger exit infor for automatic elevator doors
+            if(other.tag == "Door")
             {
-				if (other.GetComponent<AutomaticDoor>().Moving == false)
+				Debug.Log("collided with door");
+				//if the door is in process of opening when exit trigger, wait before closing
+                if (other.GetComponent<AutomaticDoor>().Opening)
                 {
+					StartCoroutine(waitForSeconds(2));
+				}
+
+				//trigger booleans to close doors
+				if(other.GetComponent<AutomaticDoor>().Moving == false)
+                {
+					Debug.Log("Closing Doors");
+					other.GetComponent<AutomaticDoor>().Closing = true;
 					other.GetComponent<AutomaticDoor>().Moving = true;
-                }
+				}
+
+				
             }
-        }
+
+			//trigger exit for locked door, checks if door is locked. if not, proceed with opening
+			if (other.tag == "LockedDoor" && !other.GetComponent<LockedDoor>().Locked)
+			{
+				Debug.Log("collided with lockedDoor");
+				//if the door is in process of opening when exit trigger, wait before closing
+				if (other.GetComponent<LockedDoor>().Opening)
+				{
+					StartCoroutine(waitForSeconds(2));
+				}
+
+				//trigger booleans to close doors
+				if (other.GetComponent<LockedDoor>().Moving == false)
+				{
+					Debug.Log("Closing Doors");
+					other.GetComponent<LockedDoor>().Closing = true;
+					other.GetComponent<LockedDoor>().Moving = true;
+				}
+
+
+			}
+		}
     }
 }

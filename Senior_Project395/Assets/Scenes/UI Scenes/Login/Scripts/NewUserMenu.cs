@@ -57,7 +57,6 @@ namespace Dating_Platform
                 return;
             }
 
-            Debug.Log("checking username validity");
             //check
             UnValid = Validators.isUsernameValid(newUsername);
 
@@ -93,7 +92,6 @@ namespace Dating_Platform
                 return;
             }
 
-            Debug.Log("checking password validity");
             //check
             PwValid = Validators.isPasswordValid(newPassword);
 
@@ -138,7 +136,6 @@ namespace Dating_Platform
                 return;
             }
 
-            Debug.Log("checking birthdate validity");
             //check
             BDParsed = System.String.Format("{0}-{1}-{2}", BDYearText.text, BDMonthText.text, BDDayText.text);
             BDValid = Validators.isDateValid(BDParsed);
@@ -180,7 +177,6 @@ namespace Dating_Platform
                 return;
             }
 
-            Debug.Log("checking name validity");
             //check
             NameValid = Validators.isNameValid(FNameTxt.text, LNameTxt.text);
 
@@ -204,6 +200,7 @@ namespace Dating_Platform
             string fn = FNameTxt.text;
             string ln = LNameTxt.text;
             string bd = BDParsed;
+
 
             (bool result, int statusCode, string reason) = DatabaseConnection.createNewUser(un, pw,fn,ln,bd);
 

@@ -18,10 +18,11 @@ namespace Dating_Platform
                 Debug.Log($"trying to get data for player {connectionId}");
                 User connectionPlayer = DatabaseConnection.getConnectionPlayerInfo(player, "12345", connectionId);
                 GameObject connectionItem = Instantiate(connectionItemPrefab);
-                connectionItem.transform.SetParent(connectionsList.transform);
-                connectionItem.transform.localScale = Vector3.one;
+                connectionItem.transform.SetParent(connectionsList.transform, false);
                 connectionItem.GetComponent<ConnectionItem>().player = connectionPlayer;
             }
+
+            SendMessageUpwards("updateHomeConnectionListButtonOnClicks", SendMessageOptions.DontRequireReceiver);
         }
 
         // Update is called once per frame

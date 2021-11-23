@@ -37,7 +37,7 @@ public class PostGameController : MonoBehaviour
     {
         //Stay in room, load the level again
         //TODO add confirmation that the other player wants to play again
-        PhotonNetwork.LoadLevel(SingletonManager.Instance.currentPlayingGame.sceneName);
+        //PhotonNetwork.LoadLevel(SingletonManager.Instance.currentPlayingGame.);//fix with new game definition
     }
 
     public void playWithNewClicked()
@@ -47,5 +47,4 @@ public class PostGameController : MonoBehaviour
 
         //TODO send player to matchmaking, with this game still selected
     }
-    // Update is called once per frame
 }

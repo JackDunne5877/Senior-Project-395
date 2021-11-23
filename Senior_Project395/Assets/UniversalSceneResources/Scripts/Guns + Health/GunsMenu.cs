@@ -4,17 +4,24 @@ using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class GunsMenu : MonoBehaviour
+
+
+public class GunsMenu : MonoBehaviourPun
 {
     public GameObject playerRoot;
     public List<GameObject> Guns = new List<GameObject>();
     public Camera myfpsCam;
     int currentGun = 0;
 
+    private PhotonView pv;
+
     void Start()
     {
-        foreach(Transform child in transform)
+
+        pv = PhotonView.Get(this);
+        foreach (Transform child in transform)
         {
             Guns.Add(child.gameObject);
         }
@@ -40,6 +47,10 @@ public class GunsMenu : MonoBehaviour
     //cycle through to next weapon in Guns[]
     public void NextGun()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         Guns[currentGun].SetActive(false);
         Guns[currentGun].GetComponentInChildren<InteractableGun>().isEquipped = false;
         currentGun++;
@@ -52,6 +63,10 @@ public class GunsMenu : MonoBehaviour
     //cycle through to previous weapon in Guns[]
     public void PreviousGun()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         Guns[currentGun].SetActive(false);
         currentGun--;
         if (currentGun < 0)
@@ -63,6 +78,10 @@ public class GunsMenu : MonoBehaviour
     //used when picking up a weapon or item, adds weapon to Guns[]
     public void addWeapon(GameObject weapon)
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         //int tmpLength = Guns.Count + 1;
         //Array.Resize(ref Guns, tmpLength);
         //Guns[tmpLength - 1] = weapon;

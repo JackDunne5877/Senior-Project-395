@@ -39,8 +39,11 @@ public class MinigameSelectionViewController : MonoBehaviour
         focusedGameName.GetComponent<Text>().text = gameToFocus.name;
         playFocusedGameBtn.GetComponentInChildren<Text>().text = $"Play {gameToFocus.name}";
         playFocusedGameBtn.onClick.AddListener(delegate { 
-            GameObject.Find("Multiplayer Launcher").GetComponent<Launcher>().Connect(gameToFocus.sceneNumber);
             SingletonManager.Instance.currentPlayingGame = gameToFocus;
+            SingletonManager.Instance.gameObject.SendMessage($"activate{gameToFocus.GameControllerType}");
+
+            //GameObject.Find("Multiplayer Launcher").GetComponent<Launcher>().Connect(gameToFocus.levels[0].sceneNumber);
+            //this should now be called in the game's controller
         });
     }
 

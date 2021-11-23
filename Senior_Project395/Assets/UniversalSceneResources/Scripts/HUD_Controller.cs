@@ -9,18 +9,14 @@ using StarterAssets;
 public class HUD_Controller : MonoBehaviourPun
 {
     // Start is called before the first frame update
-    public GameObject PointsTextObj;
-    public GameObject AmmoTextObj;
-    public GameObject TimerTextObj;
-    public GameObject RespawnTextObj;
-
     public Color ammoCountColor;
     public Color ammoEmptyColor;
 
     private PlayerNetworkManager PlayerNetManager;
-    private Text pointsText;
-    private Text ammoText;
-    private Text timerText;
+    public Text pointsText;
+    public Text ammoText;
+    public Text timerText;
+    public Text respawnText;
     private int Points = 0;
     private bool isDead = false;
     private Animator playerAnim;
@@ -35,16 +31,13 @@ public class HUD_Controller : MonoBehaviourPun
     void Start()
     {
         PlayerNetManager = GetComponentInParent<PlayerNetworkManager>();
-        pointsText = PointsTextObj.GetComponent<Text>();
-        ammoText = AmmoTextObj.GetComponent<Text>();
-        timerText = TimerTextObj.GetComponent<Text>();
 
         playerAnim = GetComponentInChildren<Animator>();
 
         interactPromptObj.SetActive(false);
         interactionDescriptionObj.SetActive(false);
+        respawnText.transform.parent.gameObject.SetActive(false);
         pv = PhotonView.Get(this);
-
 
     }
 
@@ -142,7 +135,7 @@ public class HUD_Controller : MonoBehaviourPun
         //store local state
         isDead = true;
         //show respawn text
-        RespawnTextObj.SetActive(true);
+        respawnText.transform.parent.gameObject.SetActive(true);
         //play die animation
         playerAnim.SetBool("isDead", true);
     }
@@ -152,7 +145,8 @@ public class HUD_Controller : MonoBehaviourPun
         //store local state
         isDead = false;
         //show respawn text
-        RespawnTextObj.SetActive(false);
+        respawnText.transform.parent.gameObject.SetActive(false);
+        //RespawnTextObj.gameObject.SetActive(false);
         //play die animation
         playerAnim.SetBool("isDead", false);
     }

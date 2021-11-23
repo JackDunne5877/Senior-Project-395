@@ -683,7 +683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &81967903
 Transform:
   m_ObjectHideFlags: 0
@@ -2510,6 +2510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -2781,6 +2782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -3893,6 +3895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -4645,6 +4648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -5524,6 +5528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -10514,6 +10519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -11880,6 +11886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -14320,6 +14327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -15748,6 +15756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -17048,6 +17057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -17186,6 +17196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -17369,6 +17380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -19583,6 +19595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}
@@ -20725,6 +20738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCapacity: 4
+  currentHealth: 0
   points: 100
   damageLevelMats:
   - {fileID: 2100000, guid: f1b80d9e10a33ef43803cb9accb93c89, type: 2}

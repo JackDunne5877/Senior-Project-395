@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class TakeZombieDamage : MonoBehaviour
 {
     public static int health; // Player starting health
-    private HealthBar healthBar; // Health bar GUI
+    public HealthBar healthBar; // Health bar GUI
     public GameObject TakeDamageOverlay;
     
 
@@ -21,10 +21,16 @@ public class TakeZombieDamage : MonoBehaviour
         // Get player health
         health = SingletonManager.Instance.maxPlayerHealth;
         Debug.Log("Starting player health is " + health);
-
-        // Initialize the health bar to be full
-        healthBar = this.gameObject.GetComponentInChildren<HealthBar>();
         
+        
+        if(healthBar == null)
+        {
+            Debug.LogError("healthbar obj null");
+        }
+        if (healthBar.slider == null)
+        {
+            Debug.LogError("slider obj null");
+        }
         healthBar.slider.maxValue = health;
         healthBar.slider.value = health;
     }
@@ -48,7 +54,7 @@ public class TakeZombieDamage : MonoBehaviour
         }
         else
         {
-            GetComponent<HUD_Controller>().playerDie();
+            GetComponentInParent<HUD_Controller>().playerDie();
         }
     }
 

@@ -7,12 +7,12 @@ using StarterAssets;
 public class LevelLoaderTrigger : MonoBehaviourPun
 {
     [SerializeField]
-    private string levelName = "";
+    public string levelName = "";
     [SerializeField]
-    private bool isLoadingUIScene = false;
+    public bool isLoadingUIScene = false;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something entered");
+        //Debug.Log("Something entered");
         if (other.CompareTag("Player")) {
 
             if (isLoadingUIScene)
@@ -27,7 +27,7 @@ public class LevelLoaderTrigger : MonoBehaviourPun
 
             PhotonNetwork.LoadLevel(levelName);
 
-            Debug.Log("Player entered");
+            //Debug.Log("Player entered");
         }
     }
 }

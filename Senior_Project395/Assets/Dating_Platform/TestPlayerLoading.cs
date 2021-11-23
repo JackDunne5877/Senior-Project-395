@@ -14,7 +14,7 @@ namespace Dating_Platform {
         public Sprite _sampleProfilePic;
         public SingletonManager.GenderOption _genderIdentity = SingletonManager.GenderOption.Female;
         public SingletonManager.GenderOption[] _genderPreferences = new SingletonManager.GenderOption[] { SingletonManager.GenderOption.Male, SingletonManager.GenderOption.Female, SingletonManager.GenderOption.NonBinary};
-        public string[] _connectionIds = new string[] { "xyz" };
+        public string[] _connectionIds = new string[] { "conn1", "conn2", "conn3"};
         public Sprite[] _samplePlayerImages;
         void Start()
         {

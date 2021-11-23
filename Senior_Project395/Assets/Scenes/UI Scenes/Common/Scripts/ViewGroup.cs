@@ -5,17 +5,16 @@ using UnityEngine;
 public class ViewGroup : MonoBehaviour
 {
     public GameObject[] views;
-    public TabGroup tabs;
     public int viewIdx;
     // Start is called before the first frame update
     void Start()
     {
-        showCurrentView();
     }
 
     void showCurrentView()
     {
-        for(int i = 0; i < views.Length; i++)
+
+        for (int i = 0; i < views.Length; i++)
         {
             if (i == viewIdx){
                 views[i].gameObject.SetActive(true);
@@ -35,6 +34,7 @@ public class ViewGroup : MonoBehaviour
 
             }
         }
+
 
     }
 

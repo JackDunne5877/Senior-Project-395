@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Dating_Platform
 {
@@ -37,17 +38,7 @@ namespace Dating_Platform
             {
                 if (ConfirmPlayerHasConnection(myPlayer, connectionId))
                 {
-                    //TODO all values should really be acquired from DB
-                    User resPlayer = new User();
-                    resPlayer.DisplayName = "samplePlayerName";
-                    resPlayer.ProfileImg = samplePlayerImage;
-                    resPlayer.PlayerImages = new Sprite[] { samplePlayerImage, samplePlayerImage };
-                    resPlayer.age = 18;
-                    resPlayer.bio = "sample Player Bio";
-                    resPlayer.genderIdentity = SingletonManager.GenderOption.Male;
-                    resPlayer.genderPreferences = new SingletonManager.GenderOption[] { SingletonManager.GenderOption.Male, SingletonManager.GenderOption.Female, SingletonManager.GenderOption.NonBinary };
-                    resPlayer.PlayerID = connectionId;
-                    return resPlayer;
+                    return SingletonManager.Instance.gameObject.GetComponent<SampleConnections>().sampleUsers.Where(x => x.PlayerID == connectionId).FirstOrDefault();
                 }
                 else
                 {

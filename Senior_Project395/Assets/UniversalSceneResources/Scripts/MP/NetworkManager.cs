@@ -107,6 +107,8 @@ namespace Com.Orion.MP
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
+            //indicate that the player is no longer in a game,
+            SingletonManager.Instance.currentPlayingGame = null;
         }
 
         #endregion

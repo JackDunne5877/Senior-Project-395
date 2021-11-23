@@ -35,7 +35,6 @@ public class GameListing : MonoBehaviour
         {
             Debug.Log("populating game Info into a gamelisting obj");
             Debug.Log(game.name);
-            Debug.Log(game.sceneNumber);
             var obj = gameTitle.GetComponent<Text>().text;
             if(obj == null)
             {

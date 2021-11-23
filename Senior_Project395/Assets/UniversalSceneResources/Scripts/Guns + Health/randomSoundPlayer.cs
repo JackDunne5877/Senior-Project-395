@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class randomSoundPlayer : MonoBehaviour
+
+public class randomSoundPlayer : MonoBehaviourPun
 {
     public AudioSource source;
     public AudioClip[] audioClips;
+    private PhotonView pv;
+
+
+    private void Start()
+    {
+        pv = PhotonView.Get(this);
+    }
 
     public void playRandomSound()
     {
@@ -18,6 +27,5 @@ public class randomSoundPlayer : MonoBehaviour
     public void playThisSound(AudioClip clip)
     {
         source.PlayOneShot(clip);
-        //source.Play();
     }
 }

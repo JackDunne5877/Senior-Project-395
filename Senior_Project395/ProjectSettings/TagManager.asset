@@ -8,6 +8,8 @@ TagManager:
   - Voice
   - Enemy
   - Door
+  - Objective
+  - LockedDoor
   layers:
   - Default
   - TransparentFX

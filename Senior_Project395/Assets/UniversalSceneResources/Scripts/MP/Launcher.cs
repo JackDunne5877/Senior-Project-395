@@ -63,9 +63,9 @@ namespace Com.Orion.MP
         void Start()
         {
             //TODO GET RID OF THIS< ITS FOR TESTING PURPOSES ONLY
-            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.Female);
+            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.Female);
             //TODO change this to be actual gender the player wants, based on UI
-            PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.Male);
+            //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.Male);
 
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
@@ -84,10 +84,12 @@ namespace Com.Orion.MP
         //the options for this room will be what this player wants to match with, and what the players gender is
         private Hashtable CreateRoomOptionsHashTable()
         {
-
+            //TODO have this actually grab player data
+            string userID = "";
+            string passwd = "";
             //get stored preferences and gender, if there is none default to nonbinary
-            int hostgender = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.NonBinary);
-            int genderPref = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.NonBinary);
+            int hostgender = (int) Dating_Platform.DatabaseConnection.getOwnedPlayerInfo(userID, passwd).genderIdentity;//PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.NonBinary);
+            int genderPref = 1;//PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.NonBinary);
 
             //this property makes sure that the player joins the map that they clicked in the menu
             return new Hashtable { { MAP_PROP_KEY, (byte)levelIndex }, { HOST_GENDER_PROP_KEY, (byte)hostgender}, {GENDER_PREF_PROP_KEY, (byte)genderPref } };
@@ -99,8 +101,8 @@ namespace Com.Orion.MP
         private Hashtable CreateRoomOptionsHashTableForJoinRandomRoom() {
             //look for host that matches what gender player is looking for, and that is looking for a gender that the player is
 
-            int userGender = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.NonBinary);
-            int genderPref = PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.NonBinary);
+            int userGender = 1;//PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_HOST_GENDER, (int)SingletonManager.GenderOption.NonBinary);
+            int genderPref = 1;//PlayerPrefs.GetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.NonBinary);
 
             return new Hashtable { { MAP_PROP_KEY, (byte)levelIndex }, {HOST_GENDER_PROP_KEY,  (byte)genderPref}, {GENDER_PREF_PROP_KEY, (byte)userGender } };
         }

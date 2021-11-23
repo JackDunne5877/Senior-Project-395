@@ -35,8 +35,8 @@ public class SingletonManager : MonoBehaviour
 
 
     //Profile Constants:
-    public const string PROFILE_CONST_HOST_GENDER = "gender";
-    public const string PROFILE_CONST_GENDER_PREF = "genderpref";
+    public const string PROFILE_CONST_HOST_GENDER = "male";
+    public const string PROFILE_CONST_GENDER_PREF = "male";
     public enum GenderOption { Male, Female, NonBinary };
 
     private void Awake()
