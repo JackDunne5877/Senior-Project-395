@@ -153,6 +153,39 @@ public class User
 		}
 	}
 
+	/** get user profile picture from database */
+	@GET
+	@Path("profilePicture")
+	public byte[] getProfilePicture(@PathParam("userId") int userID) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		selectWithUserId = connection.prepareStatement(
+					"select image from profile_picture where user_id = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		selectWithUserId.setInt(parameterIndex++, userID);
+		//xt().lookup(JNDI_DATING_GAME));
+
+		// execute insert statement
+		ResultSet result = selectWithUserId.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// return user profile picture
+			return result.getBytes(1);
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	/** put a profile picture into database */
 	@PUT
 	@Path("profilePicture")
