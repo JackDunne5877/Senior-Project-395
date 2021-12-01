@@ -50,4 +50,37 @@ public class User
 			return null;
 		}
 	}
+
+	/** get birthday from database */
+	@GET
+	@Path("birthday")
+	@Produces("application/html")
+	public String getBirthday(@PathParam("userId") int userId) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		selectWithUserId = connection.prepareStatement(
+					"select birthday from user where id = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		selectWithUserId.setInt(parameterIndex++, userId);
+
+		// execute insert statement
+		ResultSet result = selectWithUserId.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// return date
+			return result.getString(1);
+		}
+		else
+		{
+			return null;
+		}
+	}
 }
