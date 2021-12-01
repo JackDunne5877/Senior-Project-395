@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 @Path("user/{userId}")
 public class User
@@ -18,6 +20,7 @@ public class User
 	DataSource dataSource;
 	Connection connection;
 	private PreparedStatement selectWithUserId;
+	private PreparedStatement insertProfilePicture;
 
 	/** get first and last name from database */
 	@GET
@@ -148,5 +151,54 @@ public class User
 		{
 			return null;
 		}
+	}
+
+	/** put a profile picture into database */
+	@PUT
+	@Path("profilePicture")
+	public Response addProfilePicture(byte[] input, @PathParam("userId") int userId) throws Exception
+	{
+		// log received image
+		java.util.logging.Logger.getLogger(User.class.getCanonicalName())
+			.log(
+				java.util.logging.Level.INFO,
+				"image data (hex): {0}",
+				javax.xml.bind.DatatypeConverter.printHexBinary(input)
+			);
+
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+
+		// try to update existing image
+		insertProfilePicture = connection.prepareStatement(
+				"update profile_picture set image = ? where user_id = ?;"
+			);
+
+		// fill in parameters of insert statement
+		int parameterIndex = 1;
+		insertProfilePicture.setBytes(parameterIndex++, input);
+		insertProfilePicture.setInt(parameterIndex++, userId);
+
+		// execute insert statement
+		if (insertProfilePicture.executeUpdate() == 1)
+		{
+			return Response.status(200).entity("success").build();
+		}
+
+		// creates insert statement for new profile picture
+		insertProfilePicture = connection.prepareStatement(
+					"insert into profile_picture set (user_id, image) values (?, ?);"
+				);
+
+		// fill in parameters of insert statement
+		parameterIndex = 1;
+		insertProfilePicture.setInt(parameterIndex++, userId);
+		insertProfilePicture.setBytes(parameterIndex++, input);
+
+		// execute insert statement
+		insertProfilePicture.executeUpdate();
+
+		return Response.status(200).entity("success").build();
 	}
 }
