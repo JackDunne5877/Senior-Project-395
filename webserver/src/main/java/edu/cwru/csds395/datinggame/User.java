@@ -116,4 +116,37 @@ public class User
 			return null;
 		}
 	}
+
+	/** get gender from database */
+	@GET
+	@Path("gender")
+	@Produces("application/html")
+	public String getGender(@PathParam("userId") int userId) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		selectWithUserId = connection.prepareStatement(
+					"select gender from user where id = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		selectWithUserId.setInt(parameterIndex++, userId);
+
+		// execute insert statement
+		ResultSet result = selectWithUserId.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// return date
+			return result.getString(1);
+		}
+		else
+		{
+			return null;
+		}
+	}
 }
