@@ -25,6 +25,7 @@ public class User
 	public static final String JNDI_DATING_GAME = "java:/comp/env/jdbc/datinggame";
 	DataSource dataSource;
 	Connection connection;
+	private PreparedStatement getUser;
 	private PreparedStatement selectWithUserId;
 	private PreparedStatement insertProfilePicture;
 	private PreparedStatement updateEmail;
@@ -315,6 +316,68 @@ public class User
 		else
 		{
 			throw new Exception();
+		}
+	}
+
+	/** confirm user with pass */
+	@POST
+	@Path("confirmPlayer")
+	@Produces(MediaType.TEXT_HTML)
+	public Response ConfirmPlayerPassword(String input) throws Exception
+	{
+		System.out.println(input);
+		// parses Json input
+		JsonReader jsonReader = Json.createReader(new StringReader(input));
+		JsonObject object = jsonReader.readObject();
+		jsonReader.close();
+
+		// check if user with given username exists in database
+		if (confirmIdWithPass(object.getString("myPlayerId"),object.getString("password")))
+		{
+			return Response.status(200).entity("success").build();
+		}
+		else
+		{
+			return Response.status(400).entity("Invalid credentials").build();
+		}
+	}
+
+	/** confirm with sql database */
+	public boolean confirmIdWithPass(String userId, String inputPassword) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		getUser = connection.prepareStatement(
+					"select password from user where id = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		getUser.setString(parameterIndex++, userId);
+
+		// execute insert statement
+		ResultSet result = getUser.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// store password of user with the input username
+			String realPassword = result.getString(1);
+			// return true if input password is equal to the stored password
+			if (realPassword.equals(inputPassword))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
 		}
 	}
 }
