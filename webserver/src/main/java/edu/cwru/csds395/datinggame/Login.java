@@ -47,7 +47,7 @@ public class Login
 		}
 	}
 
-	// insert into sql database
+	// confirm with sql database
 	public boolean checkForUserWithPass(String username, String inputPassword) throws Exception
 	{
 		// connect to database
