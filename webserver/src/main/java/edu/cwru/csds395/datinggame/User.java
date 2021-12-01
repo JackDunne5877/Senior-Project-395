@@ -1,16 +1,22 @@
 package edu.cwru.csds395.datinggame;
 
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("user/{userId}")
@@ -21,6 +27,7 @@ public class User
 	Connection connection;
 	private PreparedStatement selectWithUserId;
 	private PreparedStatement insertProfilePicture;
+	private PreparedStatement updateEmail;
 
 	/** get first and last name from database */
 	@GET
@@ -233,5 +240,81 @@ public class User
 		insertProfilePicture.executeUpdate();
 
 		return Response.status(200).entity("success").build();
+	}
+
+	@POST
+	@Path("newemail")
+	@Produces(MediaType.TEXT_HTML)
+	public Response setNewAccountEmail(@PathParam("userId") int userId, String input) throws Exception
+	{
+		System.out.println(input);
+		// parses Json input
+		JsonReader jsonReader = Json.createReader(new StringReader(input));
+		JsonObject object = jsonReader.readObject();
+		jsonReader.close();
+
+		// check if user with given username exists in database
+		if (updateEmail(userId,object.getString("password"), object.getString("newEmailAddress")))
+		{
+			return Response.status(200).entity("success").build();
+		}
+		else
+		{
+			return Response.status(400).entity("Invalid credentials").build();
+		}
+	}
+
+	/** update email in sql database */
+	public boolean updateEmail(int userId, String inputPassword, String newEmail) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		selectWithUserId = connection.prepareStatement(
+					"select count(id) from user where id = ? and password = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		selectWithUserId.setInt(parameterIndex++, userId);
+		selectWithUserId.setString(parameterIndex++, inputPassword);
+
+		// execute insert statement
+		ResultSet result = selectWithUserId.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// count of users with the input username
+			int count = result.getInt(1);
+			// return true if user exists
+			if (count > 0)
+			{
+				// creates update statement
+				updateEmail = connection.prepareStatement(
+							"update user set email = ? where id = ? and password = ?;"
+						);
+
+				// fill in parameters of select statement
+				parameterIndex = 1;
+				updateEmail.setString(parameterIndex++, newEmail);
+				updateEmail.setInt(parameterIndex++, userId);
+				updateEmail.setString(parameterIndex++, inputPassword);
+
+				// execute insert statement
+				int updated = updateEmail.executeUpdate();
+
+				return updated == 1;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			throw new Exception();
+		}
 	}
 }
