@@ -29,6 +29,7 @@ public class User
 	private PreparedStatement selectWithUserId;
 	private PreparedStatement insertProfilePicture;
 	private PreparedStatement updateEmail;
+	private PreparedStatement deleteUser;
 
 	/** get first and last name from database */
 	@GET
@@ -368,6 +369,79 @@ public class User
 			// return true if input password is equal to the stored password
 			if (realPassword.equals(inputPassword))
 			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/** delete user from database */
+	@POST
+	@Path("disableaccount")
+	@Produces(MediaType.TEXT_HTML)
+	public Response disableAccount(String input) throws Exception
+	{
+		System.out.println(input);
+		// parses Json input
+		JsonReader jsonReader = Json.createReader(new StringReader(input));
+		JsonObject object = jsonReader.readObject();
+		jsonReader.close();
+
+		// check if user with given username exists in database
+		if (disableAccountWithPass(object.getString("myPlayerId"),object.getString("password")))
+		{
+			// TODO
+			return Response.status(200).entity("success").build();
+		}
+		else
+		{
+			return Response.status(400).entity("Invalid credentials").build();
+		}
+	}
+
+	/** confirm with sql database */
+	public boolean disableAccountWithPass(String userId, String inputPassword) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		getUser = connection.prepareStatement(
+					"select password from user where id = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		getUser.setString(parameterIndex++, userId);
+
+		// execute insert statement
+		ResultSet result = getUser.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// store password of user with the input username
+			String realPassword = result.getString(1);
+			// deleted user and return true if input password is equal to the stored password
+			if (realPassword.equals(inputPassword))
+			{
+				deleteUser = connection.prepareStatement(
+						"delete from user where id = ?;"
+						);
+
+				// fill in parameters of select statement
+				parameterIndex = 1;
+				getUser.setString(parameterIndex++, userId);
+
+				// execute insert statement
+				result = getUser.executeQuery();
 				return true;
 			}
 			else
