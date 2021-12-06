@@ -90,6 +90,7 @@ public class HUD_Controller : MonoBehaviourPun
         Debug.Log("Adding points");
         Points += pts;
         pointsText.text = Points.ToString();
+        SingletonManager.Instance.playerScore = Points;
     }
 
     public void updateAmmoCount(int ammo)
@@ -126,6 +127,9 @@ public class HUD_Controller : MonoBehaviourPun
         {
             showInteractPrompt = false;
             interactionDescriptionObj.SetActive(true);
+            if(string.IsNullOrWhiteSpace(interactionDescriptionObj.GetComponentInChildren<Text>().text))
+                interactionDescriptionObj.SetActive(false);
+
             interactPromptObj.SetActive(false);
         }
     }

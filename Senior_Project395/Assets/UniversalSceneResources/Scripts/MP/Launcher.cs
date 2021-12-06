@@ -26,15 +26,15 @@ namespace Com.Orion.MP
 
         [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
         [SerializeField]
-        private byte maxPlayersPerRoom = 2;
+        public byte maxPlayersPerRoom = 2;
 
-        [Tooltip("The UI Panel to let the user enter name, connect and play")]
-        [SerializeField]
-        private GameObject controlPanel;
+        //[Tooltip("The UI Panel to let the user enter name, connect and play")]
+        //[SerializeField]
+        //private GameObject controlPanel;
 
-        [Tooltip("The UI Label to inform the user that the connection is in progress")]
-        [SerializeField]
-        private GameObject progressLabel;
+        //[Tooltip("The UI Label to inform the user that the connection is in progress")]
+        //[SerializeField]
+        //private GameObject progressLabel;
 
         #endregion
 
@@ -67,8 +67,8 @@ namespace Com.Orion.MP
             //TODO change this to be actual gender the player wants, based on UI
             //PlayerPrefs.SetInt(SingletonManager.PROFILE_CONST_GENDER_PREF, (int)SingletonManager.GenderOption.Male);
 
-            progressLabel.SetActive(false);
-            controlPanel.SetActive(true);
+            //progressLabel.SetActive(false);
+            //controlPanel.SetActive(true);
         }
         #endregion
 
@@ -134,8 +134,8 @@ namespace Com.Orion.MP
         /// </summary>
         public void Connect(int level)
         {
-            progressLabel.SetActive(true);
-            controlPanel.SetActive(false);
+            //progressLabel.SetActive(true);
+            //controlPanel.SetActive(false);
             levelIndex = level;
             // we check if we are connected or not, we join if we are , else we initiate the connection to the server.
             if (PhotonNetwork.IsConnected)
@@ -165,11 +165,11 @@ namespace Com.Orion.MP
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            if (progressLabel != null && controlPanel != null)
-            {
-                progressLabel.SetActive(false);
-                controlPanel.SetActive(true);
-            }
+            //if (progressLabel != null && controlPanel != null)
+            //{
+            //    progressLabel.SetActive(false);
+            //    controlPanel.SetActive(true);
+            //}
             Debug.LogWarningFormat("Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
             isConnecting = false;
         }

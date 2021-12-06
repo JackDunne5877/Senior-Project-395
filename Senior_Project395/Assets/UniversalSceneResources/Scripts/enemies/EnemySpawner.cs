@@ -6,17 +6,20 @@ using Photon.Pun;
 namespace BotScripts
 {
     public class EnemySpawner : MonoBehaviourPun//, IPunObservable
-    { [SerializeField]
-        [Tooltip("Number Of Enemies to be maintained on the map")]
-        private int maxEnemies = 3;
+    { 
+        [SerializeField]
+        [Tooltip("Number Of Enemies to exist on the map at one time")]
+        public int maxInstantiatedEnemies = 3;
+
+        [SerializeField]
+        [Tooltip("Number Of avaliable enemies to spawn in this scene")]
+        public int enemyStockCount = 10;
 
         [SerializeField]
         [Tooltip("Time Between Spawns")]
         private float timeBetweenSpawns = 5f;
 
-        [SerializeField]
-        [Tooltip("Empty game objects to represent where you want the enemies to spawn")]
-        private Transform[] spawnPoints;
+        private List<Transform> spawnPoints = new List<Transform>();
         private int spawnIndex;
 
         public int numberOfEnemies = 0;
@@ -24,9 +27,19 @@ namespace BotScripts
         // Start is called before the first frame update
         void Start()
         {
+            foreach(Transform point in this.gameObject.transform)
+            {
+                spawnPoints.Add(point);
+            }
+
             if (PhotonNetwork.IsMasterClient)
             {
+                Debug.Log("enemy spawner is spawning...");
                 InvokeRepeating("SpawnEnemies", 1.0f, timeBetweenSpawns);
+            }
+            else
+            {
+                Debug.Log("enemy spawner not spawning: not master client");
             }
         }
 
@@ -37,7 +50,7 @@ namespace BotScripts
         }
 
         private void IncrementSpawnIndex() {
-            if (spawnIndex + 1 < spawnPoints.Length)
+            if (spawnIndex + 1 < spawnPoints.Count)
             {
                 spawnIndex++;
             }
@@ -46,12 +59,20 @@ namespace BotScripts
             }
         }
 
+        private int enemyStockUsed = 0;
         private void SpawnEnemies() {
-            numberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-            if (numberOfEnemies < maxEnemies) {
-                PhotonNetwork.Instantiate("Bot", spawnPoints[spawnIndex].position, Quaternion.identity);
-                IncrementSpawnIndex();
+            Debug.Log("spawning enemy...");
+            if(enemyStockUsed < enemyStockCount || enemyStockCount == -1) //stock count of -1 is infinite
+            {
+                numberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+                if (numberOfEnemies < maxInstantiatedEnemies)
+                {
+                    PhotonNetwork.Instantiate("Bot", spawnPoints[spawnIndex].position, Quaternion.identity);
+                    IncrementSpawnIndex();
+                    enemyStockUsed++;
+                }
             }
+            
         }
     }
 }

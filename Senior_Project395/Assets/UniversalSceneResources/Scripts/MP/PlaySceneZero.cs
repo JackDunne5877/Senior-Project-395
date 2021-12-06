@@ -7,11 +7,11 @@ public class PlaySceneZero : MonoBehaviour
 {
     //this script will just play the menu scene if singleton manager is not set up
     public bool bypass = false;
-    void Start()
+    void Awake()
     {
         if (SingletonManager.Instance == null && !bypass)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Home");
         }
     }
 }

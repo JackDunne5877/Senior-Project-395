@@ -26,18 +26,6 @@ public class AutomaticDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (moving)
-        {
-            if (opening)
-            {
-                MoveDoor(doorEndPosition);
-            }
-            else
-            {
-                MoveDoor(doorStartPosition);
-            }
-        } */
 
         if(moving)
         {
@@ -87,30 +75,11 @@ public class AutomaticDoor : MonoBehaviour
 
             else if (closing)
             {
-                delay2 += Time.deltaTime;
-
-                
                 Debug.Log("Done closing");
-                //closing = false;
-                //opening = false;
-                //moving = false;
-                //moving = false;
                 opening = true;
-                closing = false;
-                
-                
+                closing = false;   
             }
 
-            //neither opening or closing
-            else
-            {
-                /*
-                Debug.Log("Not opening or closing");
-                moving = false;
-
-                opening = true;
-                closing = false; */
-            }
         }
 
         

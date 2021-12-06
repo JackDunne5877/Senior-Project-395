@@ -10,6 +10,7 @@ TagManager:
   - Door
   - Objective
   - LockedDoor
+  - Lock
   layers:
   - Default
   - TransparentFX

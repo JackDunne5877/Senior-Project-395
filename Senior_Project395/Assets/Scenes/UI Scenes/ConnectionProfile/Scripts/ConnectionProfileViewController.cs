@@ -32,7 +32,7 @@ namespace Dating_Platform
         void Start()
         {
             //connectionPlayer = DatabaseConnection.getConnectionPlayerInfo(SingletonManager.Instance.Player, "12345", SingletonManager.Instance.viewingConnectionPlayerId);
-            ConnectionPlayer = SingletonManager.Instance.Player; //TODO switch
+            ConnectionPlayer = SingletonManager.Instance.viewingConnectionPlayer;
             Debug.Log("tried to set connection Player to show info");
             FullGallery.SetActive(false);
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
+using Dating_Platform;
 
 public class PostGameController : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class PostGameController : MonoBehaviour
     private Button playAgainBtn;
     [SerializeField]
     private Button playWithNewBtn;
+    [SerializeField]
+    private Text scoreTxt;
 
     // Start is called before the first frame update
     void Start()
     {
         bool singletonHasGame = (SingletonManager.Instance != null && SingletonManager.Instance.currentPlayingGame != null);
-        homeBtn.interactable = singletonHasGame;
+        homeBtn.interactable = true;
+        scoreTxt.text = $"Score: {SingletonManager.Instance.playerScore}";
         playAgainBtn.interactable =
             singletonHasGame
             && (false); //TODO add check if the other player is still in the room
@@ -28,9 +32,10 @@ public class PostGameController : MonoBehaviour
 
     public void goHomeClicked()
     {
-        NetworkManager netMan = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        netMan.LeaveRoom();
-        SceneManager.LoadScene("Menu");
+        //NetworkManager netMan = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        //netMan.LeaveRoom();
+
+        SceneManager.LoadScene("Home");
     }
 
     public void playAgainClicked()

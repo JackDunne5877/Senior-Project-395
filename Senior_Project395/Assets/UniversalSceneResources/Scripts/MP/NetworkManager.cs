@@ -18,13 +18,9 @@ namespace Com.Orion.MP
         public GameObject playerPrefab;
         public static NetworkManager Instance;
 
-        [Tooltip("Spawn point for player")]
+        [Tooltip("Spawn point and angle for player")]
         [SerializeField]
-        private Vector3 spawnPoint;
-
-        [Tooltip("Spawn angle for player")]
-        [SerializeField]
-        private Vector3 spawnAngle;
+        private Transform spawnPointObj;
 
         void Start()
         {
@@ -39,7 +35,8 @@ namespace Com.Orion.MP
                 {
                     Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                     // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                    PhotonNetwork.Instantiate(this.playerPrefab.name, spawnPoint, Quaternion.Euler(spawnAngle), 0);
+                    //PhotonNetwork.Instantiate(this.playerPrefab.name, spawnPointObj.position, Quaternion.Euler(spawnPointObj.localRotation), 0);
+                    PhotonNetwork.Instantiate(this.playerPrefab.name, spawnPointObj.position, spawnPointObj.localRotation, 0);
                 }
                 else
                 {
@@ -81,8 +78,8 @@ namespace Com.Orion.MP
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-                //LoadArena();
-                
+                                                                                                         //LoadArena();
+
             }
         }
 
@@ -98,7 +95,7 @@ namespace Com.Orion.MP
 
         public override void OnLeftRoom()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Home");
         }
         #endregion
 
@@ -108,6 +105,9 @@ namespace Com.Orion.MP
         {
             PhotonNetwork.LeaveRoom();
             //indicate that the player is no longer in a game,
+            //deactivate current game controller
+            SingletonManager.Instance.gameObject.SendMessage($"deactivate{SingletonManager.Instance.currentPlayingGame.GameControllerType}", SendMessageOptions.DontRequireReceiver);
+            //store that we aren't in any game
             SingletonManager.Instance.currentPlayingGame = null;
         }
 

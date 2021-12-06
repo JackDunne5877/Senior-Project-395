@@ -9,7 +9,7 @@ namespace Dating_Platform {
         // Start is called before the first frame update
         public int _age = 18;
         public string _bio = "This is a sample player bio";
-        public string _DisplayName = "SamplePlayerDisplayName";
+        public string _DisplayName = "ChuckR";
         public string _PlayerID = "abc";
         public Sprite _sampleProfilePic;
         public SingletonManager.GenderOption _genderIdentity = SingletonManager.GenderOption.Female;

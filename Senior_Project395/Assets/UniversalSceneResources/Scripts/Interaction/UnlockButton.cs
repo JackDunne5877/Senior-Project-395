@@ -4,27 +4,48 @@ using UnityEngine;
 
 public class UnlockButton : MonoBehaviour
 {
-    public GameObject objWithInteractable;
+    public GameObject interactableButton;
+    public GameObject doorLockObj;
+    public List<LockedDoor> doors;
     private Interactable_new interactable;
     public bool doorTouched = false;
     public bool doorOpen = false;
     public float countdownReset;
     private float countdown;
+
+    public GameObject InteractableButton { 
+        get => interactableButton;
+        set { 
+            interactableButton = value;
+            interactable = interactableButton.GetComponent<Interactable_new>();
+            doorLockObj.SetActive(true);
+            Debug.Log("set the Elevator's interactable button");
+        } 
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        interactable = objWithInteractable.GetComponent<Interactable_new>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (interactable.isBeingInteracted)
+        if (interactable != null && interactable.isBeingInteracted)
         {
             //assign the variable locked in LockedDoor script to be false, allowing it to be triggered to open
-            GameObject.FindGameObjectWithTag("LockedDoor").GetComponent<LockedDoor>().Locked = false;
-            Debug.Log("unlock button set lockeddoor locked to false");
+            foreach (LockedDoor lockedDoor in doors)
+            {
+                lockedDoor.Locked = false;
+            }
+            //deactivate the lock on the doors
+            if(doorLockObj != null)
+            {
+                doorLockObj.SetActive(false);
+            }
+            Debug.Log("unlocked doors");
         }
 
     }

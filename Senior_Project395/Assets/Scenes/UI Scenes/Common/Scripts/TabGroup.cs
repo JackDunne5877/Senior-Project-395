@@ -9,7 +9,7 @@ public class TabGroup : MonoBehaviour
     public ViewGroup viewGroup;
     public Color inactiveTabColorTint;
     private Color inactiveTabColor;
-    private Color ActiveTabColor;
+    public Color ActiveTabColor;
     public int tabIdx = 0;
     // Start is called before the first frame update
     void Awake()
@@ -37,15 +37,16 @@ public class TabGroup : MonoBehaviour
 
     void showCurrentTab()
     {
+        Debug.Log("showingCurrentTab in Tab Group");
         for (int i = 0; i < tabs.Count; i++)
         {
             if(i == tabIdx)
             {
-                tabs[i].gameObject.GetComponentInChildren<Image>().color = ActiveTabColor;
+                tabs[i].GetComponent<Image>().color = ActiveTabColor;
             }
             else
             {
-                tabs[i].gameObject.GetComponentInChildren< Image > ().color = inactiveTabColor;
+                tabs[i].GetComponent< Image > ().color = inactiveTabColor;
             }
         }
     }

@@ -13,11 +13,13 @@ using Dating_Platform;
 public class SingletonManager : MonoBehaviour
 {
     public static SingletonManager Instance { get; private set; }
-    
+
     //Player things:
-    public User Player { 
+    public User Player
+    {
         get => _player;
-        set {
+        set
+        {
             _player = value;
             Debug.Log("Singleton Player Set");
         }
@@ -32,6 +34,7 @@ public class SingletonManager : MonoBehaviour
     public int maxPlayerHealth = 5;
     public float roundTime = 0;
     private User _player;
+    public int playerScore = 0;
 
 
     //Profile Constants:
@@ -47,7 +50,7 @@ public class SingletonManager : MonoBehaviour
             gameLibrary = this.GetComponent<GameLibrary>();
             DontDestroyOnLoad(gameObject);
         }
-        else if(Instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }

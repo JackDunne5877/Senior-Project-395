@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Dating_Platform;
 using TMPro;
@@ -67,8 +68,8 @@ public class HomeController : MonoBehaviour
         get => invitingToGame;
         set { 
             invitingToGame = value;
-            invitingCancelBtn.SetActive(invitingToGame);
-            selectedConnectionToolbarItem.inviteBtn.interactable = !invitingToGame;
+            //invitingCancelBtn.SetActive(invitingToGame);
+            //selectedConnectionToolbarItem.inviteBtn.interactable = !invitingToGame;
             selectedConnectionToolbarItem.inviteBtn.gameObject.GetComponentInChildren<Image>().color = (invitingToGame ? activeBtnColor : buttonStartingColor);
             selectedConnectionToolbarItem.inviteBtn.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = (invitingToGame ? inviteBtnActiveMsg : inviteBtnStartingMsg);
 
@@ -86,19 +87,38 @@ public class HomeController : MonoBehaviour
 
     public void Update()
     {
-        //check if focused player has switched
-        if (FocusedConnection != null && FocusedConnection.PlayerID != SingletonManager.Instance.viewingConnectionPlayer.PlayerID)
-            FocusedConnection = SingletonManager.Instance.viewingConnectionPlayer;
+        if(!((SingletonManager.Instance.viewingConnectionPlayer == null) && (FocusedConnection == null)))
+        {
+            //if they're not both null, check that they're different
+            if (
+            SingletonManager.Instance.viewingConnectionPlayer == null ||
+            FocusedConnection == null ||
+            FocusedConnection.PlayerID != SingletonManager.Instance.viewingConnectionPlayer.PlayerID)
+            {
+
+                FocusedConnection = SingletonManager.Instance.viewingConnectionPlayer;
+            }
+        }
+        //this makes sure nothing will happen if they're both null or both the same value
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        if(SingletonManager.Instance.Player == null)
+        {
+            SceneManager.LoadScene("Login");
+            return;
+        }
+
         inviteBtnStartingMsg = selectedConnectionToolbarItem.inviteBtn.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
         chatBtnStartingMsg = selectedConnectionToolbarItem.chatBtn.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
         buttonStartingColor = selectedConnectionToolbarItem.chatBtn.GetComponentInChildren<Image>().color;
 
         thisPlayer = SingletonManager.Instance.Player;
+        SingletonManager.Instance.currentPlayingGame = null;
+        SingletonManager.Instance.playingWithOtherPlayer = null;
 
         profileImgObj.sprite = thisPlayer.ProfileImg;
         FocusedConnection = SingletonManager.Instance.viewingConnectionPlayer;
@@ -158,7 +178,6 @@ public class HomeController : MonoBehaviour
         InvitingToGame = true;
         //open the game panel, 
         homeTabs.setTabIndex(0);//strongly coupled to the order of views in tabGroup
-
     }
 
     public void stopInviting()

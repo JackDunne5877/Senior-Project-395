@@ -97,7 +97,7 @@ namespace Dating_Platform
             (bool result, int statuscode, string responseMsg) = DatabaseConnection.login(un,pw);
             if (result)
             {
-                SceneManager.LoadScene("Menu");
+                SceneManager.LoadScene("Home");
             }
             else 
             {

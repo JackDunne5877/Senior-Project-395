@@ -9,7 +9,7 @@ public class MissionWaypoint : MonoBehaviour
     private Image img;
 
     [SerializeField]
-    private Transform target;
+    private Transform ObjectiveTarget;
 
     [SerializeField]
     private Text meter;
@@ -19,15 +19,18 @@ public class MissionWaypoint : MonoBehaviour
 
     private void Update()
     {
+        if(ObjectiveTarget == null)
+            ObjectiveTarget = GameObject.FindGameObjectWithTag("Objective").transform;
+
         float minX = img.GetPixelAdjustedRect().width / 2;
         float maxX = Screen.width - minX;
         
         float minY = img.GetPixelAdjustedRect().height / 2;
         float maxY = Screen.height - minY;
 
-        Vector2 pos = Camera.main.WorldToScreenPoint(target.position + offset);
+        Vector2 pos = Camera.main.WorldToScreenPoint(ObjectiveTarget.position + offset);
         
-        if (Vector3.Dot((target.position - transform.position), transform.forward) < 0)
+        if (Vector3.Dot((ObjectiveTarget.position - transform.position), transform.forward) < 0)
         {
             if (pos.x < Screen.width / 2)
             {
@@ -42,6 +45,6 @@ public class MissionWaypoint : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         img.transform.position = pos;
-        meter.text = ((int)Vector3.Distance(target.position, transform.position)).ToString() + "m";
+        meter.text = ((int)Vector3.Distance(ObjectiveTarget.position, transform.position)).ToString() + "m";
     }
 }

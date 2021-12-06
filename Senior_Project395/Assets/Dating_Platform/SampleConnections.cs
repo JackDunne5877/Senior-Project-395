@@ -13,7 +13,7 @@ namespace Dating_Platform
         {
             sampleUsers = new List<User>() {
                 new User(){
-                    DisplayName = "sampleConnection1",
+                    DisplayName = "Oliver111",
                     ProfileImg = sampleImages[0],
                     PlayerImages = sampleImages.ToArray(),
                     age = 45,
@@ -23,7 +23,7 @@ namespace Dating_Platform
                     PlayerID = "conn1",
                 },
                 new User(){
-                    DisplayName = "sampleConnection2",
+                    DisplayName = "Tommy222",
                     ProfileImg = sampleImages[1],
                     PlayerImages = sampleImages.ToArray(),
                     age = 21,
@@ -33,7 +33,7 @@ namespace Dating_Platform
                     PlayerID = "conn2",
                 },
                 new User(){
-                    DisplayName = "sampleConnection3",
+                    DisplayName = "Theresa333",
                     ProfileImg = sampleImages[2],
                     PlayerImages = sampleImages.ToArray(),
                     age = 33,

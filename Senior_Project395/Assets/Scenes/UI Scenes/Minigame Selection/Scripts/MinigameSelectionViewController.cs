@@ -37,6 +37,7 @@ public class MinigameSelectionViewController : MonoBehaviour
         focusedGameDesc.GetComponent<Text>().text = gameToFocus.desc;
         focusedGameImg.GetComponent<Image>().sprite = gameToFocus.coverImage;
         focusedGameName.GetComponent<Text>().text = gameToFocus.name;
+        playFocusedGameBtn.gameObject.SetActive(true);
         playFocusedGameBtn.GetComponentInChildren<Text>().text = $"Play {gameToFocus.name}";
         playFocusedGameBtn.onClick.AddListener(delegate { 
             SingletonManager.Instance.currentPlayingGame = gameToFocus;

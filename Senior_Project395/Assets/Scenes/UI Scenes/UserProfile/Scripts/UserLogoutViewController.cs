@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Dating_Platform { 
 
@@ -21,7 +22,7 @@ namespace Dating_Platform {
         public void LogOutClicked()
         {
             DatabaseConnection.logout();
-            //TODO take player back to login page
+            SceneManager.LoadScene("Login");
         }
     }
 }
