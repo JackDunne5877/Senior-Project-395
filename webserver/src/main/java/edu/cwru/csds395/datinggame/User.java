@@ -402,7 +402,7 @@ public class User
 	@POST
 	@Path("confirmPlayer")
 	@Produces(MediaType.TEXT_HTML)
-	public Response ConfirmPlayerPassword(String input) throws Exception
+	public Response ConfirmPlayerPassword(@PathParam("userId") String userId, String input) throws Exception
 	{
 		System.out.println(input);
 		// parses Json input
@@ -422,7 +422,7 @@ public class User
 	}
 
 	/** confirm with sql database */
-	public boolean confirmIdWithPass(String userId, String inputPassword) throws Exception
+	public boolean confirmIdWithPass(@PathParam("userId") String userId, String inputPassword) throws Exception
 	{
 		// connect to database
 		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
@@ -464,7 +464,7 @@ public class User
 	@POST
 	@Path("disableaccount")
 	@Produces(MediaType.TEXT_HTML)
-	public Response disableAccount(String input) throws Exception
+	public Response disableAccount(@PathParam("userId") String userId, String input) throws Exception
 	{
 		System.out.println(input);
 		// parses Json input
@@ -485,7 +485,7 @@ public class User
 	}
 
 	/** confirm with sql database */
-	public boolean disableAccountWithPass(String userId, String inputPassword) throws Exception
+	public boolean disableAccountWithPass(@PathParam("userId") String userId, String inputPassword) throws Exception
 	{
 		// connect to database
 		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
