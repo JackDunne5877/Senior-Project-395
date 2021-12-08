@@ -29,6 +29,7 @@ public class User
 	private PreparedStatement selectWithUserId;
 	private PreparedStatement insertProfilePicture;
 	private PreparedStatement updateEmail;
+	private PreparedStatement updatePassword;
 	private PreparedStatement deleteUser;
 
 	/** get first and last name from database */
@@ -306,6 +307,83 @@ public class User
 
 				// execute insert statement
 				int updated = updateEmail.executeUpdate();
+
+				return updated == 1;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			throw new Exception();
+		}
+	}
+
+	@POST
+	@Path("newpassword")
+	@Produces(MediaType.TEXT_HTML)
+	//@Consumes(MediaType.APPLICATION_JSON)
+	public Response setNewAccountPassword(@PathParam("userId") int userId, String input) throws Exception
+	{
+		System.out.println(input);
+		// parses Json input
+		JsonReader jsonReader = Json.createReader(new StringReader(input));
+		JsonObject object = jsonReader.readObject();
+		jsonReader.close();
+
+		// check if user with given username exists in database
+		if (updatePassword(userId,object.getString("password"), object.getString("newPassword")))
+		{
+			return Response.status(200).entity("success").build();
+		}
+		else
+		{
+			return Response.status(400).entity("Invalid credentials").build();
+		}
+	}
+
+	/** update password in sql database */
+	public boolean updatePassword(int userId, String inputPassword, String newPassword) throws Exception
+	{
+		// connect to database
+		dataSource = (DataSource)(new InitialContext().lookup(JNDI_DATING_GAME));
+		connection = dataSource.getConnection();
+		// creates select statement
+		selectWithUserId = connection.prepareStatement(
+					"select count(id) from user where id = ? and password = ?;"
+				);
+
+		// fill in parameters of select statement
+		int parameterIndex = 1;
+		selectWithUserId.setInt(parameterIndex++, userId);
+		selectWithUserId.setString(parameterIndex++, inputPassword);
+
+		// execute insert statement
+		ResultSet result = selectWithUserId.executeQuery();
+
+		// check if result exists
+		if (result.next())
+		{
+			// count of users with the input username
+			int count = result.getInt(1);
+			// return true if user exists
+			if (count > 0)
+			{
+				// creates update statement
+				updatePassword = connection.prepareStatement(
+							"update user set password = ? where id = ? and password = ?;"
+						);
+
+				// fill in parameters of select statement
+				parameterIndex = 1;
+				updatePassword.setString(parameterIndex++, newPassword);
+				updatePassword.setInt(parameterIndex++, userId);
+				updatePassword.setString(parameterIndex++, inputPassword);
+
+				// execute insert statement
+				int updated = updatePassword.executeUpdate();
 
 				return updated == 1;
 			}
