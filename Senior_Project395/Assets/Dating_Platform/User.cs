@@ -49,6 +49,29 @@ namespace Dating_Platform
                 this.password = password;
             }
         }
+        // used to make new email objects to convert to JSON
+        public class NewEmail
+        {
+            public string password { get; set; }
+            public string newEmail { get; set; }
+
+            public NewEmail(string password, string newEmail)
+            {
+                this.password = password;
+                this.newEmail = newEmail;
+            }
+        }
+
+        // used to make objects to convert to JSON with password and ID
+        public class ConfirmPlayerPassword
+        {
+            public string password { get; set; }
+
+            public ConfirmPlayerPassword(string password)
+            {
+                this.password = password;
+            }
+        }
     }
 }
 
