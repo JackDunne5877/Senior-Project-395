@@ -24,8 +24,18 @@ namespace Dating_Platform
         public static User getPublicPlayerInfo(string playerId)
         {
             User resPlayer = new User();
-            resPlayer.DisplayName = "samplePlayerName"; //TODO should be acquired from DB
-            resPlayer.ProfileImg = samplePlayerImage; //TODO should be acquired from DB
+            // get Name response from database
+            HttpResponse nameRepsonse = DatabaseConnection.GetNameRequest(playerId);
+            // check status code
+            if (nameRepsonse.statusCode < 400)
+            {
+                resPlayer.DisplayName = nameRepsonse.content;
+            }
+            // get profile picture response from database using url
+            WWW www = new WWW(DatabaseConnection.GetProfilePicture(playerId));
+            //yield return www;
+            resPlayer.ProfileImg = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+            // set player id
             resPlayer.PlayerID = playerId;
             return resPlayer;
         }
@@ -39,12 +49,63 @@ namespace Dating_Platform
                 {
                     //TODO all values should really be acquired from DB
                     User resPlayer = new User();
-                    resPlayer.DisplayName = "samplePlayerName";
-                    resPlayer.ProfileImg = samplePlayerImage;
+
+                    // get Name response from database
+                    HttpResponse nameRepsonse = DatabaseConnection.GetNameRequest(connectionId);
+                    // check status code
+                    if (nameRepsonse.statusCode < 400)
+                    {
+                        resPlayer.DisplayName = nameRepsonse.content;
+                    }
+                    
+                    // get profile picture response from database using url
+                    WWW www = new WWW(DatabaseConnection.GetProfilePicture(connectionId));
+                    //yield return www;
+                    resPlayer.ProfileImg = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+
                     resPlayer.PlayerImages = new Sprite[] { samplePlayerImage, samplePlayerImage };
-                    resPlayer.age = 18;
-                    resPlayer.bio = "sample Player Bio";
-                    resPlayer.genderIdentity = SingletonManager.GenderOption.Male;
+
+                    // get birthday response from database
+                    HttpResponse dateResponse = DatabaseConnection.GetBirthdayRequest(connectionId);
+                    // check status code
+                    if (dateResponse.statusCode < 400)
+                    {
+                        // calculate age based on difference between birth and date
+                        resPlayer.age = (int)(System.DateTime.Today - System.Convert.ToDateTime(dateResponse.content)).TotalDays/365;
+                    }
+
+                    // get bio response from database
+                    HttpResponse bioResponse = DatabaseConnection.GetBioRequest(connectionId);
+                    // check status code
+                    if (dateResponse.statusCode < 400)
+                    {
+                        resPlayer.bio = bioResponse.content;
+                    }
+
+                    // get gender response from database
+                    HttpResponse genderResponse = DatabaseConnection.GetGenderRequest(connectionId);
+                    // check status code
+                    if (dateResponse.statusCode < 400)
+                    {
+                        // set appropriate gender
+                        switch (bioResponse.content) {
+                            
+                        case "male":
+                            resPlayer.genderIdentity = SingletonManager.GenderOption.Male;
+                            break;
+                
+                        case "female":
+                            resPlayer.genderIdentity = SingletonManager.GenderOption.Female;
+                            break;
+                
+                        case "nonbinary":
+                            resPlayer.genderIdentity = SingletonManager.GenderOption.NonBinary;
+                            break;
+                
+                        default:
+                            break;
+                        }
+                    }
                     resPlayer.genderPreferences = new SingletonManager.GenderOption[] { SingletonManager.GenderOption.Male, SingletonManager.GenderOption.Female, SingletonManager.GenderOption.NonBinary };
                     resPlayer.PlayerID = connectionId;
                     return resPlayer;
@@ -75,9 +136,8 @@ namespace Dating_Platform
         public static bool ConfirmPlayerPassword(string myPlayerId, string password)
         {
             //TODO make legit database password check OR convert this to a token system
-            string samplepassword = "12345";
-            string samplePlayerID = "abc";
-            return (myPlayerId == samplePlayerID && password == samplepassword);
+            HttpResponse confirmPlayer = DatabaseConnection.ConfirmPlayerPasswordRequest(myPlayerId, password);
+            return (confirmPlayer.statusCode == 200);
         }
 
         public static bool ConfirmPlayerHasConnection(User myPlayer, string connectionPlayerId)
@@ -94,7 +154,10 @@ namespace Dating_Platform
         {
             if (ConfirmPlayerPassword(myPlayerId, password))
             {
-                //TODO send new email to the database
+                // send new email to the database
+                HttpResponse response = NewEmailRequest(myPlayerId, password, newEmailAddress);
+
+                //return (response.statusCode < 400, response.statusCode, response.content);
             }
         }
 
@@ -103,6 +166,9 @@ namespace Dating_Platform
             if (ConfirmPlayerPassword(myPlayerId, password))
             {
                 //TODO send new password to the database
+                HttpResponse response = NewPasswordRequest(myPlayerId, password, newPassword);
+
+                //return (response.statusCode < 400, response.statusCode, response.content);
             }
         }
 
@@ -220,6 +286,187 @@ namespace Dating_Platform
 
             return httpResponse;
         }
+
+        // request user's name given player id
+        public static HttpResponse GetNameRequest(string playerId)
+        {
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId;
+
+            // send data to server
+            var task = Task.Run(() => Client.GetAsync(url));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+// TODO test
+        // confirm user's id given password
+        public static HttpResponse ConfirmPlayerPasswordRequest(string playerId, string password)
+        {
+            // creating JSON with user data
+            User.ConfirmPlayerPassword confirmPlayer = new User.ConfirmPlayerPassword(password);
+            var json = JsonConvert.SerializeObject(confirmPlayer);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/confirmPlayer";
+
+            // send data to server
+            var task = Task.Run(() => Client.PostAsync(url, data));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+        // request user's birthday given player id
+        public static HttpResponse GetBirthdayRequest(string playerId)
+        {
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/birthday";
+
+            // send data to server
+            var task = Task.Run(() => Client.GetAsync(url));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+        // request user's bio given player id
+        public static HttpResponse GetBioRequest(string playerId)
+        {
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/bio";
+
+            // send data to server
+            var task = Task.Run(() => Client.GetAsync(url));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+        // request user's gender given player id
+        public static HttpResponse GetGenderRequest(string playerId)
+        {
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/gender";
+
+            // send data to server
+            var task = Task.Run(() => Client.GetAsync(url));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+        // return url of user's profile picture given player id
+        public static string GetProfilePicture(string playerId)
+        {
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/profilePicture";
+            return url;
+        }
+
+//todo test:
+        // used to edit user email
+        public static HttpResponse NewEmailRequest(string playerId, string password, string newEmail)
+        {
+            // creating JSON with user data
+            User.NewEmail newEmailData = new User.NewEmail(password, newEmail);
+            var json = JsonConvert.SerializeObject(newEmailData);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/newemail";
+
+            // send data to server
+            var task = Task.Run(() => Client.PostAsync(url, data));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
+//todo test:
+        // used to edit user password
+        public static HttpResponse NewPasswordRequest(string playerId, string password, string newPassword)
+        {
+            // creating JSON with user data
+            User.NewEmail newEmail = new User.NewEmail(password, newPassword);
+            var json = JsonConvert.SerializeObject(newPassword);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // url of server
+            var url = "https://mira-csds395-server-el7.gigabyteproductions.net/DatingGameAPI/user/" + playerId + "/newpassword";
+
+            // send data to server
+            var task = Task.Run(() => Client.PostAsync(url, data));
+            task.Wait();
+            var response = task.Result;
+
+            // read data from server
+            var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+            task2.Wait();
+            var content = task2.Result;
+
+            // save reponse data from server
+            HttpResponse httpResponse = new HttpResponse((int)response.StatusCode, content);
+
+            return httpResponse;
+        }
+
         #endregion
 
         #region Scores And Likes
