@@ -410,8 +410,10 @@ public class User
 		JsonObject object = jsonReader.readObject();
 		jsonReader.close();
 
+		String password = object.getString("password");
+
 		// check if user with given username exists in database
-		if (confirmIdWithPass(object.getString("myPlayerId"),object.getString("password")))
+		if (confirmIdWithPass(userId, password))
 		{
 			return Response.status(200).entity("success").build();
 		}
@@ -473,7 +475,7 @@ public class User
 		jsonReader.close();
 
 		// check if user with given username exists in database
-		if (disableAccountWithPass(object.getString("myPlayerId"),object.getString("password")))
+		if (disableAccountWithPass(userId,object.getString("password")))
 		{
 			// TODO
 			return Response.status(200).entity("success").build();
